@@ -5,19 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChallengeTiles.Server.Controllers
 {
-    //Attributes
+    //Attributes - define routing
     [Route("api/[controller]")] //base URL route for controller
     [ApiController] //Marks class as an API controller
+
+    //Handle route-specific logic
     public class GameController : ControllerBase
     {
         private readonly TilesDbContext _context; //reference db context
-        //constructor. TilesDbContext injected by ASP.Net dis
+
+        //constructor. TilesDbContext injected by ASP.Net
         public GameController(TilesDbContext context)
         {
             _context = context; //assign context to use throughout controller
         }
 
-        //Get method: fetch games from db
+        /*Get method: fetch games from db
         [HttpGet]
         public async Task<IActionResult> GetGames()
         {
@@ -31,6 +34,6 @@ namespace ChallengeTiles.Server.Controllers
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetGames), new { id = game.Id }, game);
-        }
+        }*/
     }
 }

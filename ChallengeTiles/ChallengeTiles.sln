@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeTiles.Server", "ChallengeTiles.Server\ChallengeTiles.Server.csproj", "{5881BED7-4293-403A-9EB3-E8E430BFFF7F}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "challengetiles.client", "challengetiles.client\challengetiles.client.esproj", "{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeTilesTests", "ChallengeTilesTests\ChallengeTilesTests.csproj", "{D4666050-781F-414A-9A7C-CDAF1E80AA8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D4666050-781F-414A-9A7C-CDAF1E80AA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4666050-781F-414A-9A7C-CDAF1E80AA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4666050-781F-414A-9A7C-CDAF1E80AA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4666050-781F-414A-9A7C-CDAF1E80AA8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
