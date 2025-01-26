@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3SBMjppstW4=",
-  "success": true,
-  "projectFilePath": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\ChallengeTiles.Server.csproj",
+  "dgSpecHash": "5XylwWCRhPw=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\ChallengeTiles.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\turns\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.12\\microsoft.aspnetcore.spaproxy.8.0.12.nupkg.sha512",
@@ -19,7 +19,6 @@
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.1\\microsoft.entityframeworkcore.abstractions.9.0.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.1\\microsoft.entityframeworkcore.analyzers.9.0.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.entityframeworkcore.design\\9.0.1\\microsoft.entityframeworkcore.design.9.0.1.nupkg.sha512",
-    "C:\\Users\\turns\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.1\\microsoft.entityframeworkcore.relational.9.0.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.1\\microsoft.extensions.caching.abstractions.9.0.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.1\\microsoft.extensions.caching.memory.9.0.1.nupkg.sha512",
@@ -57,10 +56,9 @@
   ],
   "logs": [
     {
-      "code": "NU1608",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Pomelo.EntityFrameworkCore.MySql 8.0.2 requires Microsoft.EntityFrameworkCore.Relational (>= 8.0.2 && <= 8.0.999) but version Microsoft.EntityFrameworkCore.Relational 9.0.1 was resolved.",
+      "code": "NU1107",
+      "level": "Error",
+      "message": "Version conflict detected for Microsoft.EntityFrameworkCore.Relational. Install/reference Microsoft.EntityFrameworkCore.Relational 9.0.1 directly to project ChallengeTiles.Server to resolve this issue. \r\n ChallengeTiles.Server -> Microsoft.EntityFrameworkCore.Design 9.0.1 -> Microsoft.EntityFrameworkCore.Relational (>= 9.0.1) \r\n ChallengeTiles.Server -> Pomelo.EntityFrameworkCore.MySql 8.0.2 -> Microsoft.EntityFrameworkCore.Relational (>= 8.0.2 && <= 8.0.999).",
       "libraryId": "Microsoft.EntityFrameworkCore.Relational",
       "targetGraphs": [
         "net8.0"
