@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lJ7NznL6JOg=",
+  "dgSpecHash": "XIS5x8g4LDc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\ChallengeTiles.Server.csproj",
+  "projectFilePath": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\ChallengeTiles.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\turns\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\turns\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.12\\microsoft.aspnetcore.spaproxy.8.0.12.nupkg.sha512",

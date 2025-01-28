@@ -8,22 +8,21 @@
         public Deal(TileDeck tileDeck)
         {
             this._tileDeck = tileDeck;
-            prepareDeck();
+            PrepareDeck();
         }
 
         //create stack of tiles available for play
-        public void prepareDeck()
+        public void PrepareDeck()
         {
             _tileDeck.CreateTileDeck();
             _tileDeck.ShuffleTiles();
         }
 
         //deal tile to player
-        public void dealTile(Player player)
+        public void DealTile(Player player)
         {
             Tile tile = _tileDeck.RemoveTile(0);
             Hand hand = player.Hand;
-
         }
     }
 }

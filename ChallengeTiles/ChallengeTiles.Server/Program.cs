@@ -23,7 +23,7 @@ namespace ChallengeTiles.Server
             
             // Swagger (added from asp.net core project)
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(); // register swagger into apps dependency injection container
+            builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
             //Launch server
             var app = builder.Build();

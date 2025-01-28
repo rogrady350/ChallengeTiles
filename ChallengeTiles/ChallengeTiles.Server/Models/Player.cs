@@ -4,25 +4,15 @@
     {
         private static int idCounter = 1;
 
-        //default constructor
-        public Player(Hand hand)
-        {
-            if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
-
-            this.Name = "Player";
-            this.Id = GenerateId();
-            this.Hand = hand;
-        }
-
-        //Constructor with name entered by player
+        //Constructor
         public Player(string name, Hand hand)
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
             if (name == null) throw new ArgumentNullException(nameof(name), "Hand cannot be null");
 
-            this.Id = GenerateId();
-            this.Name = name;
-            this.Hand = hand;
+            Id = GenerateId();
+            Name = name;
+            Hand = hand;
         }
 
         //auto generate player id

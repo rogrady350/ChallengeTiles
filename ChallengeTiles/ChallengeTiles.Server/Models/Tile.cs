@@ -12,12 +12,12 @@
         public Tile(int id, int number, string color)
         {
             //set attributes
-            this.Id = id;
-            this.Number = number;
-            this.Color = color;
+            Id = id;
+            Number = number;
+            Color = color;
 
             //set tile values
-            setTileImage();
+            SetTileImage();
         }
 
         //attributes, getters, setters (no setters for tiles, tiles immutible)
@@ -28,9 +28,9 @@
 
 
         //Method to assign images to tiles. images will be stored on aws. verify path
-        private void setTileImage()
+        private void SetTileImage()
         {
-            this.TileImageUrl = $"{BucketUrl}/tile_{Number}_{Color}";
+            TileImageUrl = $"{BucketUrl}/tile_{Number}_{Color}";
         }
 
         //ToString

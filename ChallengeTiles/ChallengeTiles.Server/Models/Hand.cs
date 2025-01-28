@@ -5,12 +5,6 @@
         //list tiles player has
         public List<Tile> HandTiles { get; private set; }
 
-        //default constructor
-        public Hand()
-        {
-            HandTiles = new List<Tile>();
-        }
-
         //constructor with list of tiles being played
         public Hand(Tile[] playedTiles)
         {
