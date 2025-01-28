@@ -12,10 +12,10 @@ namespace ChallengeTiles.Server.Controllers
     //Handle route-specific logic
     public class GameController : ControllerBase
     {
-        private readonly TilesDbContext _context; //reference db context
+        private readonly MysqlDbContext _context; //reference db context
 
         //constructor. TilesDbContext injected by ASP.Net
-        public GameController(TilesDbContext context)
+        public GameController(MysqlDbContext context)
         {
             _context = context; //assign context to use throughout controller
         }

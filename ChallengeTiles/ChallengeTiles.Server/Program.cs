@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ChallengeTiles.Server.Helpers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.Win32;
+using ChallengeTiles.Server.Models;
+using ChallengeTiles.Server.Data;
 
 namespace ChallengeTiles.Server
 {
@@ -14,9 +16,25 @@ namespace ChallengeTiles.Server
             //configure server
             var builder = WebApplication.CreateBuilder(args);
 
+            //read db type from environment variables
+            var dbType = builder.Configuration.GetValue<string>(Constants.DbType);
+
             //use Connection Helper rather than hard coding db info
-            builder.Services.AddDbContext<Data.TilesDbContext>(options =>
-                options.UseMySql(ConnectionHelper.GetConnectionString(), new MySqlServerVersion(new Version(8, 0, 25))));
+            if (dbType == "MySQL")
+            {
+                builder.Services.AddDbContext<TilesDbContext, MysqlDbContext>(
+                    options => MysqlDbContext.Configure(ConnectionHelper.GetMySqlConnectionString())(options)
+                );
+            }
+            else if (dbType == "MongoDB")
+            {
+                
+            }
+            else
+            {
+                throw new InvalidOperationException("Unsupported database type.");
+            }
+
 
             // Add services to the container.
             builder.Services.AddControllers(); //enable MVC controllers

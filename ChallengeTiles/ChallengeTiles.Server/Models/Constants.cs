@@ -1,4 +1,6 @@
-﻿namespace ChallengeTiles.Server.Models
+﻿using System.Data;
+
+namespace ChallengeTiles.Server.Models
 {
     public class Constants
     {
@@ -11,5 +13,7 @@
         //constants for min and max values of tiles
         public const int TileMin = 1;
         public const int TileMax = 13;
+
+        public const string DbType = "DB_TYPE";
     }
 }

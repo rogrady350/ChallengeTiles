@@ -1,15 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ChallengeTiles.Server.Models;
+﻿using ChallengeTiles.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChallengeTiles.Server.Data
 {
-    public class TilesDbContext : DbContext
+    public interface TilesDbContext
     {
-        //constructor, creates connection to db, use dependency injection. connection set in appsettings.json
-        public TilesDbContext(DbContextOptions<TilesDbContext> options) : base(options) { }
-
-        public DbSet<Player> Players { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Tile> Tiles { get; set; }
+        DbSet<Player> Players { get; }
+        DbSet<Game> Games { get; }
+        DbSet<Tile> Tiles { get; }
     }
 }
