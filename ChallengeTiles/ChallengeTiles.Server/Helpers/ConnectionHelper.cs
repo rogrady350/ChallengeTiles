@@ -5,10 +5,10 @@
         //connection string for using MySQL
         public static string GetMySqlConnectionString()
         {
-            var server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost";
-            var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "WildTiles";
-            var user = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
-            var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "password";
+            var server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "challengetiles-mysql.cp6syg6cu1dj.us-east-2.rds.amazonaws.com"; //AWS RDS endpoint
+            var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "Challenge_Tiles"; //Need to create db in MySQL workbench
+            var user = Environment.GetEnvironmentVariable("DB_USER") ?? "admin"; //RDS user name
+            var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "challengetiles"; //RDS pw
 
             return $"Server={server};Database={database};User={user};Password={password};";
         }
@@ -41,7 +41,5 @@
         {
             return Environment.GetEnvironmentVariable("MONGO_DB") ?? "WildTiles";
         }
-    }
-
     }
 }
