@@ -22,7 +22,7 @@ namespace ChallengeTiles.Server
             //use Connection Helper rather than hard coding db info
             if (dbType == "MySQL")
             {
-                builder.Services.AddDbContext<TilesDbContext, MysqlDbContext>(
+                builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(
                     options => MysqlDbContext.Configure(ConnectionHelper.GetMySqlConnectionString())(options)
                 );
             }

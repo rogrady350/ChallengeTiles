@@ -65,9 +65,9 @@
               "target": "Package",
               "version": "[8.0.12, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "MongoDB.Driver": {
               "target": "Package",
-              "version": "[8.0.12, )"
+              "version": "[3.1.0, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -76,6 +76,12 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[7.2.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [

@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\helpers\\connectionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\helpers\\connectionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\data\\mongodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\data\\mongodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\data\\mysqldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\data\\mysqldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\helpers\\mongodbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\helpers\\mongodbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\data\\tilesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\data\\tilesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\helpers\\connectionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\helpers\\connectionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +30,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Program.cs",
-              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Program.cs",
-              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Program.cs",
-              "RelativeToolTip": "ChallengeTiles.Server\\Program.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwB8AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-28T23:41:15.262Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ConnectionHelper.cs",
               "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Helpers\\ConnectionHelper.cs",
               "RelativeDocumentMoniker": "ChallengeTiles.Server\\Helpers\\ConnectionHelper.cs",
               "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Helpers\\ConnectionHelper.cs",
               "RelativeToolTip": "ChallengeTiles.Server\\Helpers\\ConnectionHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAmwCIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-28T23:40:43.796Z",
+              "WhenOpened": "2025-01-29T13:12:55.209Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MysqlDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\MysqlDbContext.cs",
-              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Data\\MysqlDbContext.cs",
-              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\MysqlDbContext.cs",
-              "RelativeToolTip": "ChallengeTiles.Server\\Data\\MysqlDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAuAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "MongoDbSettings.cs",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Helpers\\MongoDbSettings.cs",
+              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Helpers\\MongoDbSettings.cs",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Helpers\\MongoDbSettings.cs",
+              "RelativeToolTip": "ChallengeTiles.Server\\Helpers\\MongoDbSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-28T23:39:33.379Z",
+              "WhenOpened": "2025-01-29T13:12:53.089Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MongoDbContext.cs",
               "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\MongoDbContext.cs",
               "RelativeDocumentMoniker": "ChallengeTiles.Server\\Data\\MongoDbContext.cs",
               "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\MongoDbContext.cs",
               "RelativeToolTip": "ChallengeTiles.Server\\Data\\MongoDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-28T22:56:55.268Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TilesDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\TilesDbContext.cs",
-              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Data\\TilesDbContext.cs",
-              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Data\\TilesDbContext.cs",
-              "RelativeToolTip": "ChallengeTiles.Server\\Data\\TilesDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-28T22:36:52.029Z",
+              "WhenOpened": "2025-01-29T13:06:44.538Z",
               "EditorCaption": ""
             }
           ]
