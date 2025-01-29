@@ -12,28 +12,17 @@ namespace ChallengeTiles.Server.Controllers
     //Handle route-specific logic
     public class GameController : ControllerBase
     {
-        private readonly MysqlDbContext _context; //reference db context
+        private readonly MongoDbContext? _mongoContext;
+        private readonly MysqlDbContext? _mysqlContext;
 
-        //constructor. TilesDbContext injected by ASP.Net
-        public GameController(MysqlDbContext context)
+        //constructor. DbContext injected by ASP.Net
+        public GameController(MongoDbContext? mongoContext, MysqlDbContext? mysqlContext)
         {
-            _context = context; //assign context to use throughout controller
+            //assign context to use throughout controller
+            _mongoContext = mongoContext;
+            _mysqlContext = mysqlContext;
         }
 
-        /*Get method: fetch games from db
-        [HttpGet]
-        public async Task<IActionResult> GetGames()
-        {
-            return Ok(await _context.Games.Include(g => g.Tiles).ToListAsyn());
-        }
-
-        //Post method: create new game in db
-        [HttpPost]
-        public async Task<IActionResult> CreateGame(Game game)
-        {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetGames), new { id = game.Id }, game);
-        }*/
+        
     }
 }

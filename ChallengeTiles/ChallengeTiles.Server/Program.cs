@@ -16,10 +16,10 @@ namespace ChallengeTiles.Server
             //configure server
             var builder = WebApplication.CreateBuilder(args);
 
-            //read db type from environment variables
+            //read db type from constant, referenceing in appsettings.json
             var dbType = builder.Configuration.GetValue<string>(Constants.DbType);
 
-            //use Connection Helper rather than hard coding db info
+            //use Helpers rather than hard coding db info. can use either MySQL db or Mongo db
             if (dbType == "MySQL")
             {
                 builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(
@@ -28,7 +28,15 @@ namespace ChallengeTiles.Server
             }
             else if (dbType == "MongoDB")
             {
-                
+                var mongoSettings = new MongoDbSettings
+                {
+                    ConnectionString = ConnectionHelper.GetMongoConnectionString(),
+                    DatabaseName = ConnectionHelper.GetMongoDbName()
+                };
+
+                //only one instance of MongoDbContext created, then reused
+                builder.Services.AddSingleton(mongoSettings);
+                builder.Services.AddSingleton<MongoDbContext>();
             }
             else
             {
@@ -37,9 +45,8 @@ namespace ChallengeTiles.Server
 
 
             // Add services to the container.
-            builder.Services.AddControllers(); //enable MVC controllers
-            
-            // Swagger (added from asp.net core project)
+            builder.Services.AddControllers(); //enable MVC controllers 
+            // Swagger services (added from asp.net core project)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
