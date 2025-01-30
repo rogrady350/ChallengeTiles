@@ -1,0 +1,10 @@
+.home-container {
+    text-align: center;
+    padding: 50px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #222;
+}
