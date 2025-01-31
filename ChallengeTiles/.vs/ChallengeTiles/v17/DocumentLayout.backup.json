@@ -1,22 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\",
+  "WorkspaceRootPath": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\services\\authservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\services\\authservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\components\\header.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\components\\header.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\services\\gameservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\services\\gameservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\pages\\home.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\pages\\home.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\services\\playservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\services\\playservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,83 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\index.html",
-              "RelativeDocumentMoniker": "challengetiles.client\\index.html",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\index.html",
-              "RelativeToolTip": "challengetiles.client\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-01-30T21:18:33.917Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Header.jsx",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Header.jsx",
-              "RelativeDocumentMoniker": "challengetiles.client\\src\\components\\Header.jsx",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Header.jsx",
-              "RelativeToolTip": "challengetiles.client\\src\\components\\Header.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-01-30T20:50:07.679Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Home.jsx",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\pages\\Home.jsx",
-              "RelativeDocumentMoniker": "challengetiles.client\\src\\pages\\Home.jsx",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\pages\\Home.jsx",
-              "RelativeToolTip": "challengetiles.client\\src\\pages\\Home.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-01-30T20:43:42.676Z",
+              "DocumentIndex": 0,
+              "Title": "authService.js",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\authService.js",
+              "RelativeDocumentMoniker": "challengetiles.client\\src\\services\\authService.js",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\authService.js",
+              "RelativeToolTip": "challengetiles.client\\src\\services\\authService.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-31T12:20:22.357Z",
               "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "493f5b98-de84-4e5d-b238-0963db4a7b0e",
-        "Display": 0,
-        "X": 1503,
-        "Y": 349,
-        "Width": 1062,
-        "Height": 1056,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "gameService.js",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\gameService.js",
+              "RelativeDocumentMoniker": "challengetiles.client\\src\\services\\gameService.js",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\gameService.js",
+              "RelativeToolTip": "challengetiles.client\\src\\services\\gameService.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-31T12:20:20.194Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "App.jsx",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\App.jsx",
-              "RelativeDocumentMoniker": "challengetiles.client\\src\\App.jsx",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\App.jsx",
-              "RelativeToolTip": "challengetiles.client\\src\\App.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-01-30T20:43:51.035Z",
+              "Title": "playService.js",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\playService.js",
+              "RelativeDocumentMoniker": "challengetiles.client\\src\\services\\playService.js",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\services\\playService.js",
+              "RelativeToolTip": "challengetiles.client\\src\\services\\playService.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-31T12:20:17.077Z",
               "EditorCaption": ""
             }
           ]
