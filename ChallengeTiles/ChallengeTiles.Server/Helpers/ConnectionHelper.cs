@@ -39,7 +39,7 @@
         //dynamically get name of db. MongoDB connections do not specify a database in the connection string
         public static string GetMongoDbName()
         {
-            return Environment.GetEnvironmentVariable("MONGO_DB") ?? "WildTiles";
+            return Environment.GetEnvironmentVariable("MONGO_DB") ?? "ChallengeTiles";
         }
     }
 }

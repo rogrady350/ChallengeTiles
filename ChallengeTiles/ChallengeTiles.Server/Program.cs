@@ -16,7 +16,9 @@ namespace ChallengeTiles.Server
             //configure server
             var builder = WebApplication.CreateBuilder(args);
 
-            //read db type from constant, referenceing in appsettings.json
+            /*read db type from constant, referenceing in appsettings.json or environment variables
+              IConfiguration in ASP.NET Core accesses config values
+              allows switching of db type and configure based on environment (locally, ec2, lambda)*/
             var dbType = builder.Configuration.GetValue<string>(Constants.DbType);
 
             //use Helpers rather than hard coding db info. can use either MySQL db or Mongo db
