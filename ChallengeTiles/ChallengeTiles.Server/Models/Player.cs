@@ -2,9 +2,19 @@
 {
     public class Player
     {
-        private static int idCounter = 1;
+        private static int idCounter = 1; //need to get last id added to player db
 
-        //Constructor
+        //Constructor for guest not saving game data
+        public Player(Hand hand)
+        {
+            if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
+
+            Id = 0;
+            Name = "Guest";
+            Hand = hand;
+        }
+
+        //Constructor for player with account
         public Player(string name, Hand hand)
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");

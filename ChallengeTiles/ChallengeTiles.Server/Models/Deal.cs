@@ -23,6 +23,7 @@
         {
             Tile tile = _tileDeck.RemoveTile(0);
             Hand hand = player.Hand;
+            hand.AddTile(tile);
         }
     }
 }
