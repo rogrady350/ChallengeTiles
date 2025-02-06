@@ -26,6 +26,20 @@ namespace ChallengeTiles.Server.Controllers
             _mysqlContext = mysqlContext;
         }
 
-        
+        //API end point for Tile component
+        [HttpGet("tiles")]
+        public IActionResult GetTiles()
+        {
+            //hardcoded list for testing
+            var tiles = new List<Tile>
+            {
+                new Tile(1, 1, "red"),
+                new Tile(2, 2, "blue"),
+                new Tile(3, 3, "green"),
+                new Tile(4, 4, "yellow")
+            };
+
+            return Ok(tiles); //returns list in JSON format
+        }
     }
 }

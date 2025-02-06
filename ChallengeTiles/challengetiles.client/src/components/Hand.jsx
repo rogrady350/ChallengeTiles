@@ -1,0 +1,2 @@
+//component for hand object
+
