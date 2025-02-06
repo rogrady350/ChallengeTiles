@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChallengeTiles.Server.Controllers
 {
+    /*Class purpose: Manage HTTP API end points for game actions
+       start a game, make a move*/
+
     //Attributes - define routing
     [Route("api/[controller]")] //base URL route for controller
     [ApiController] //Marks class as an API controller

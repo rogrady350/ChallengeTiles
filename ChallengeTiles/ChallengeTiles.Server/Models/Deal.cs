@@ -2,28 +2,29 @@
 {
     public class Deal
     {
-        private readonly TileDeck _tileDeck;
-
         //constructor
         public Deal(TileDeck tileDeck)
         {
-            this._tileDeck = tileDeck;
+            this.TileDeck = tileDeck;
             PrepareDeck();
         }
 
         //create stack of tiles available for play
         public void PrepareDeck()
         {
-            _tileDeck.CreateTileDeck();
-            _tileDeck.ShuffleTiles();
+            TileDeck.CreateTileDeck();
+            TileDeck.ShuffleTiles();
         }
 
         //deal tile to player
         public void DealTile(Player player)
         {
-            Tile tile = _tileDeck.RemoveTile(0);
+            Tile tile = TileDeck.RemoveTile(0);
             Hand hand = player.Hand;
             hand.AddTile(tile);
         }
+
+        //attributes/getters
+        public TileDeck TileDeck { get; }
     }
 }

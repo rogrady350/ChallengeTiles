@@ -2,14 +2,12 @@
 {
     public class Player
     {
-        private static int idCounter = 1; //need to get last id added to player db
-
-        //Constructor for guest not saving game data
+        //Constructor for guest player (player data not stored in db)
         public Player(Hand hand)
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
 
-            Id = 0;
+            Id = "guest-" + Guid.NewGuid().ToString(); //unique session-based ID
             Name = "Guest";
             Hand = hand;
         }
@@ -18,23 +16,17 @@
         public Player(string name, Hand hand)
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
-            if (name == null) throw new ArgumentNullException(nameof(name), "Hand cannot be null");
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name), "Name cannot be null or empty");
 
-            Id = GenerateId();
+            Id = Guid.NewGuid().ToString(); //unique persistent ID
             Name = name;
             Hand = hand;
         }
 
-        //auto generate player id
-        private static int GenerateId()
-        {
-            return idCounter++;
-        }
-
         //attributres, getters, setters
-        public int Id { get; }
-        public string Name { get; }
-        public Hand Hand { get; }
+        public string Id { get; private set; } //unique player id
+        public string Name { get; private set; }
+        public Hand Hand { get; private set; }
 
         //ToString
         public override string ToString()
