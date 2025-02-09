@@ -1,22 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\",
+  "WorkspaceRootPath": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\components\\tile.jsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\components\\tile.jsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\components\\tile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\components\\tile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.server\\models\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5881BED7-4293-403A-9EB3-E8E430BFFF7F}|ChallengeTiles.Server\\ChallengeTiles.Server.csproj|solutionrelative:challengetiles.server\\models\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\onedrive\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\components\\gameboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\components\\gameboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|c:\\users\\turns\\documents\\comp 296 capstone\\wildtilesv2\\challengetiles\\challengetiles.client\\src\\components\\hand.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7DC9B114-19A1-452E-AB4D-3BA0A8725C14}|challengetiles.client\\challengetiles.client.esproj|solutionrelative:challengetiles.client\\src\\components\\hand.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,54 +26,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Tile.cs",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Models\\Tile.cs",
-              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Models\\Tile.cs",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Models\\Tile.cs",
-              "RelativeToolTip": "ChallengeTiles.Server\\Models\\Tile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T17:53:50.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GameBoard.jsx",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\GameBoard.jsx",
-              "RelativeDocumentMoniker": "challengetiles.client\\src\\components\\GameBoard.jsx",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\GameBoard.jsx",
-              "RelativeToolTip": "challengetiles.client\\src\\components\\GameBoard.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-02-06T17:52:39.881Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GameController.cs",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Controllers\\GameController.cs",
-              "RelativeDocumentMoniker": "ChallengeTiles.Server\\Controllers\\GameController.cs",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\ChallengeTiles.Server\\Controllers\\GameController.cs",
-              "RelativeToolTip": "ChallengeTiles.Server\\Controllers\\GameController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T17:44:17.664Z",
+              "Title": "Tile.jsx",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Tile.jsx",
+              "RelativeDocumentMoniker": "challengetiles.client\\src\\components\\Tile.jsx",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Tile.jsx",
+              "RelativeToolTip": "challengetiles.client\\src\\components\\Tile.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-02-09T13:10:31.271Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Tile.jsx",
-              "DocumentMoniker": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Tile.jsx",
-              "RelativeDocumentMoniker": "challengetiles.client\\src\\components\\Tile.jsx",
-              "ToolTip": "C:\\Users\\turns\\OneDrive\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Tile.jsx",
-              "RelativeToolTip": "challengetiles.client\\src\\components\\Tile.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAUAAAAAAAAAA==",
+              "Title": "Hand.jsx",
+              "DocumentMoniker": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Hand.jsx",
+              "RelativeDocumentMoniker": "challengetiles.client\\src\\components\\Hand.jsx",
+              "ToolTip": "C:\\Users\\turns\\Documents\\comp 296 capstone\\WildTilesV2\\ChallengeTiles\\challengetiles.client\\src\\components\\Hand.jsx",
+              "RelativeToolTip": "challengetiles.client\\src\\components\\Hand.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-02-06T16:58:45.468Z",
+              "WhenOpened": "2025-02-09T12:53:53.099Z",
               "EditorCaption": ""
             }
           ]
