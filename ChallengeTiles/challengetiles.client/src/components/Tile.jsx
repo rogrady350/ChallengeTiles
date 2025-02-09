@@ -8,11 +8,13 @@ const Tile = ({ tile }) => {
     );
 };
 
-// Validate props
+//Validate props (attributes for Tile)
 Tile.propTypes = {
     tile: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        tileImageUrl: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,           //must be a number
+        number: PropTypes.number.isRequired,       //must be a number
+        color: PropTypes.string.isRequired,        //must be a string
+        tileImageUrl: PropTypes.string.isRequired, //must be a string
     }).isRequired,
 };
 

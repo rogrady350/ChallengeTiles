@@ -1,4 +1,4 @@
-//component for hand object
+//component for hand object. shows tiles in players hand
 import Tile from "./Tile";
 import PropTypes from "prop-types";
 
@@ -12,7 +12,7 @@ const Hand = ({ tiles }) => {
     );
 };
 
-// Validate props
+//Validate props
 Hand.propTypes = {
     tiles: PropTypes.arrayOf(
         PropTypes.shape({

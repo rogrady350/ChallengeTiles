@@ -30,7 +30,7 @@
         //Method to assign images to tiles. images will be stored on aws. verify path
         private void SetTileImage()
         {
-            TileImageUrl = $"{BucketUrl}/tile_{Number}_{Color}";
+            TileImageUrl = $"{BucketUrl}/{Number}{Color}";
         }
 
         //ToString

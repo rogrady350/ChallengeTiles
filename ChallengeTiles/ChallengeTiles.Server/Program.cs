@@ -13,9 +13,16 @@ namespace ChallengeTiles.Server
         //App initialization
         public static void Main(string[] args)
         {
-            //configure server
+            //1. configure server
             var builder = WebApplication.CreateBuilder(args);
 
+            //2. Configure configuration to read environment-specific settings
+            //Load configuration based on the environment (Development or Production)
+            builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
+            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+            //3. configure db connection
             /*read db type from constant, referenceing in appsettings.json or environment variables
               IConfiguration in ASP.NET Core accesses config values
               allows switching of db type and configure based on environment (locally, ec2, lambda)*/
@@ -45,28 +52,45 @@ namespace ChallengeTiles.Server
                 throw new InvalidOperationException("Unsupported database type.");
             }
 
+            //4. configure CORS policy
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? new[] { "http://localhost:5173" };
 
-            // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy.WithOrigins(allowedOrigins) // Load allowed origins from config
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                    });
+            });
+
+
+            //5. Add services to the container.
             builder.Services.AddControllers(); //enable MVC controllers 
             // Swagger services (added from asp.net core project)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
-            //Launch server
+            //6. Build application
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            //7. middleware
+            app.UseCors("AllowedFrontend");
+
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers(); //maps routes
+
+            //8. Enable swagger in dev
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment
             {
                 app.UseSwagger();   //generate Swagger JSON file that describes API
                 app.UseSwaggerUI(); //alows testing of API directly in browser
             }
 
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.MapControllers(); //maps routes
-
-            //start app
+            //9. start app
             app.Run();
         }
     }

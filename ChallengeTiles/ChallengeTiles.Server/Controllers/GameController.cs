@@ -1,5 +1,6 @@
 ﻿using ChallengeTiles.Server.Data;
 using ChallengeTiles.Server.Models;
+using ChallengeTiles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,17 +16,18 @@ namespace ChallengeTiles.Server.Controllers
     //Handle route-specific logic
     public class GameController : ControllerBase
     {
-        private readonly MongoDbContext? _mongoContext;
-        private readonly MysqlDbContext? _mysqlContext;
+        private readonly GameService _gameService; //Service handling game logic (deck, hand, etc.)
+        private readonly PlayerService _playerService;
 
-        //constructor. DbContext injected by ASP.Net
-        public GameController(MongoDbContext? mongoContext, MysqlDbContext? mysqlContext)
+        //Constructor creates game instance
+        public GameController(GameService gameService, PlayerService playerService)
         {
-            //assign context to use throughout controller
-            _mongoContext = mongoContext;
-            _mysqlContext = mysqlContext;
+            _gameService = gameService;
+            _playerService = playerService;
         }
 
+        //start a new game
+        
         //API end point for Tile component
         [HttpGet("tiles")]
         public IActionResult GetTiles()

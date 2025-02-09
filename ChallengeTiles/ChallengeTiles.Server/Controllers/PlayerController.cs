@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ChallengeTiles.Server.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChallengeTiles.Server.Controllers
@@ -11,5 +12,15 @@ namespace ChallengeTiles.Server.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
+        private readonly MongoDbContext? _mongoContext;
+        private readonly MysqlDbContext? _mysqlContext;
+
+        //constructor. DbContext injected by ASP.Net
+        public PlayerController(MongoDbContext? mongoContext, MysqlDbContext? mysqlContext)
+        {
+            //assign context to use throughout controller
+            _mongoContext = mongoContext;
+            _mysqlContext = mysqlContext;
+        }
     }
 }
