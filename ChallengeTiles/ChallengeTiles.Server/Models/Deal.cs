@@ -2,7 +2,7 @@
 {
     public class Deal
     {
-        //constructor
+        //constructor (prepares deck for dealing)
         public Deal(TileDeck tileDeck)
         {
             this.TileDeck = tileDeck;

@@ -6,16 +6,8 @@ namespace ChallengeTiles.Server.Models
     //Class holds game state and data
     public class Game
     {
-        //default constructor with suggested values of 2 colors and 7 tiles per hand
-        public Game(Player player1, Player player2)
-        {
-            Id = Guid.NewGuid().ToString(); //Generate Globally unique Identifier
-            NumberOfColors = 2;
-            NumberOfTiles = 7;
-            Players = new List<Player> { player1, player2 };
-            GameState = new GameState();
-            GameBoard = new GameBoard();
-        }
+        //default constructor: calls other constructor with suggested values of 2 colors and 7 tiles per hand
+        public Game(Player player1, Player player2) : this(2, 7, player1, player2) { }
 
         //constructor
         public Game(int numberOfColors, int numberOfTiles, Player player1, Player player2)
@@ -29,8 +21,16 @@ namespace ChallengeTiles.Server.Models
             NumberOfColors = numberOfColors;
             NumberOfTiles = numberOfTiles;
             Players = new List<Player> { player1, player2 };
+            
+            //Create new game objcets
             GameState = new GameState();
             GameBoard = new GameBoard();
+
+            //Create a TileDeck
+            TileDeck = new TileDeck(numberOfColors);
+
+            //Deal constructor builds and shuffles TileDeck (does not deal to players)
+            Deal = new Deal(TileDeck);
         }
 
         //attributres, getters, setters
@@ -40,6 +40,8 @@ namespace ChallengeTiles.Server.Models
         public List<Player> Players { get; private set; }
         public GameState GameState { get; private set; }
         public GameBoard GameBoard { get; private set; }
+        public TileDeck TileDeck { get; private set; }
+        public Deal Deal { get; private set; }
 
         public override string ToString()
         {

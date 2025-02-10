@@ -13,12 +13,13 @@
         }
 
         //Constructor for player with account
-        public Player(string name, Hand hand)
+        public Player(string id, string name, Hand hand)
         {
-            if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(name), "Id cannot be null or empty");
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name), "Name cannot be null or empty");
+            if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
 
-            Id = Guid.NewGuid().ToString(); //unique persistent ID
+            Id = id;
             Name = name;
             Hand = hand;
         }
