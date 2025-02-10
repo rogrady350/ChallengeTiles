@@ -2,7 +2,7 @@
 {
     public class Player
     {
-        //Constructor for guest player (player data not stored in db)
+        //Constructor for guest player (no player profile in db)
         public Player(Hand hand)
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");

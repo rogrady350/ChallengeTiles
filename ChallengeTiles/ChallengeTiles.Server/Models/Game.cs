@@ -29,7 +29,7 @@ namespace ChallengeTiles.Server.Models
             //Create a TileDeck
             TileDeck = new TileDeck(numberOfColors);
 
-            //Deal constructor builds and shuffles TileDeck (does not deal to players)
+            //Deal constructor builds and shuffles TileDeck (prepares deck to be dealt)
             Deal = new Deal(TileDeck);
         }
 
