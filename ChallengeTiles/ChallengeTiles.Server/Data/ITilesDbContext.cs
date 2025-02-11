@@ -5,10 +5,13 @@ namespace ChallengeTiles.Server.Data
 {
     public interface ITilesDbContext
     {
-        //use Task for an async operation. will not stop app during db queries
-        Task<Player> GetPlayerByIdAsync(string id);
-        Task<List<Player>> GetPlayersAsync();
-        Task<List<Game>> GetGamesAsync();
-        Task<List<Tile>> GetTilesAsync();
+        //class defines how app communicates with database
+        //DbSet - entitites correspond to db tables
+        DbSet<Player> Players { get; set; }
+        DbSet<Game> Games { get; set; }
+        DbSet<Hand> Hands { get; set; }
+
+        //EF Core method used to save changes to db
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

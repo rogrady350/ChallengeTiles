@@ -1,7 +1,6 @@
 ﻿namespace ChallengeTiles.Server.Data
 {
-    public class PlayerRepository
+    public class GameRepository
     {
-        
     }
 }

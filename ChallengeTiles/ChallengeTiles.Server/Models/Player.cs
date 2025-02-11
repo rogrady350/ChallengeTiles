@@ -7,7 +7,7 @@
         {
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
 
-            Id = "guest-" + Guid.NewGuid().ToString(); //unique session-based ID
+            PlayerId = "guest-" + Guid.NewGuid().ToString(); //unique session-based ID
             Name = "Guest";
             Hand = hand;
         }
@@ -19,20 +19,20 @@
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name), "Name cannot be null or empty");
             if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
 
-            Id = id;
+            PlayerId = id;
             Name = name;
             Hand = hand;
         }
 
         //attributres, getters, setters
-        public string Id { get; private set; } //unique player id
+        public string PlayerId { get; private set; } //unique player id
         public string Name { get; private set; }
         public Hand Hand { get; private set; }
 
         //ToString
         public override string ToString()
         {
-            return $"PlayerId:{Id}, Name:{Name}";
+            return $"PlayerId:{PlayerId}, Name:{Name}";
         }
 
         //Equals (based on unique player id)
@@ -40,7 +40,7 @@
         {
             if (obj is Player otherPlayer)
             {
-                return this.Id == otherPlayer.Id;
+                return this.PlayerId == otherPlayer.PlayerId;
             }
 
             return false;
@@ -49,7 +49,7 @@
         //Hashcode (based on unique player id)
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return PlayerId.GetHashCode();
         }
     }
 }

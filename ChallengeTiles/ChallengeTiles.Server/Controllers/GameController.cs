@@ -16,8 +16,8 @@ namespace ChallengeTiles.Server.Controllers
     //Handle route-specific logic
     public class GameController : ControllerBase
     {
-        private readonly GameService _gameService; //Service handling game logic (deck, hand, etc.)
-        private readonly PlayerService _playerService;
+        private readonly GameService _gameService; //service handling game logic (deck, hand, etc.)
+        private readonly PlayerService _playerService; //service handles database data for player profile
 
         //Constructor creates game instance
         public GameController(GameService gameService, PlayerService playerService)

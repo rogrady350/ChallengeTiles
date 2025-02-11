@@ -5,6 +5,7 @@ namespace ChallengeTiles.Server.Data
 {
     public class MongoDbContext
     {
+        //Mongo not currently being used. Class not finalized
         //MongoDb database interface. Implemented by MongoDatabase inside MongoDB driver
         private readonly IMongoDatabase _database;
 

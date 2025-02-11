@@ -11,20 +11,10 @@ namespace ChallengeTiles.Server.Data
           Has built in dependency injection for automatic db context management.*/
         public MysqlDbContext(DbContextOptions<MysqlDbContext> options) : base(options) { }
 
-        //getters, setters. may need to update based on what needs to be stored in db
+        /*Implement interface properties
+         EF Core requires properties to be explicitly declared in concrete class for DI*/
         public DbSet<Player> Players { get; set; }
         public DbSet<Game> Games { get; set; }
-        public DbSet<Tile> Tiles { get; set; }
-
-        public static Action<DbContextOptionsBuilder> Configure(string connectionString)
-        {
-            return options =>
-                options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
-        }
-
-        //async data retrieval methods. provides centralized way to fetch data
-        public async Task<List<Player>> GetPlayersAsync() => await Players.ToListAsync();
-        public async Task<List<Game>> GetGamesAsync() => await Games.ToListAsync();
-        public async Task<List<Tile>> GetTilesAsync() => await Tiles.ToListAsync();
+        public DbSet<Hand> Hands { get; set; }
     }
 }

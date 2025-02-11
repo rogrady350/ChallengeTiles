@@ -17,7 +17,7 @@ namespace ChallengeTiles.Server.Models
                 throw new ArgumentNullException("Both players must be provided.");
             }
 
-            Id = Guid.NewGuid().ToString(); //Generate GUID
+            GameId = Guid.NewGuid().ToString(); //Generate GUID
             NumberOfColors = numberOfColors;
             NumberOfTiles = numberOfTiles;
             Players = new List<Player> { player1, player2 };
@@ -34,7 +34,7 @@ namespace ChallengeTiles.Server.Models
         }
 
         //attributres, getters, setters
-        public string Id { get; private set; } //unique game ID
+        public string GameId { get; private set; } //unique game ID
         public int NumberOfColors { get; private set; } //number of colors that will be used to play
         public int NumberOfTiles { get; private set; } //number of tiles each player gets dealt
         public List<Player> Players { get; private set; }
@@ -45,7 +45,7 @@ namespace ChallengeTiles.Server.Models
 
         public override string ToString()
         {
-            return $"Game ID: {Id}, Players: {Players[0].Name} vs {Players[1].Name}, Colors: {NumberOfColors}, Tiles: {NumberOfTiles}";
+            return $"Game ID: {GameId}, Players: {Players[0].Name} vs {Players[1].Name}, Colors: {NumberOfColors}, Tiles: {NumberOfTiles}";
         }
     }
 }
