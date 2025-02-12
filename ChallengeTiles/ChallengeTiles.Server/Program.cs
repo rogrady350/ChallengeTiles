@@ -18,18 +18,7 @@ namespace ChallengeTiles.Server
             Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
-            //2. Configure configuration to read environment-specific settings
-            //Load configuration based on the environment (Development or Production)
-            builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
-            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
             //3. configure db connection
-            /*Currently set to use MySQL
-              IConfiguration in ASP.NET Core accesses config values
-              allows switching of db type and configure based on environment (locally, ec2, lambda)*/
-            var dbType = builder.Configuration.GetValue<string>(Constants.DbType);
-
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
             builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
@@ -42,10 +31,10 @@ namespace ChallengeTiles.Server
             );
 
             //4. configure CORS policy
-            /*read allowed origins from env variable or config file
+            /*read allowed origins from env variable
              ALLOWED_ORIGINS set in AWS Lambda or EC2 to switch allowed frontend URLs*/
-            var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")?.Split(',')
-                               ?? builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+            var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
+                               ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                                ?? new[] { "http://localhost:63304" };
 
             builder.Services.AddCors(options =>
