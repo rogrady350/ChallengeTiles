@@ -14,8 +14,8 @@ namespace ChallengeTiles.Server.Data
 
         /*Implement interface properties
          EF Core requires properties to be explicitly declared in concrete class for DI*/
-        public DbSet<Player> Players { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Hand> Hands { get; set; }
+        public DbSet<Player> Player { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<Hand> Hand { get; set; }
     }
 }

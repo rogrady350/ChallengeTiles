@@ -8,9 +8,9 @@ namespace ChallengeTiles.Server.Data
         /*class defines how app communicates with database
          interface, defines entitites to be implemented
          DbSet - entitites correspond to db tables*/
-        DbSet<Player> Players { get; set; }
-        DbSet<Game> Games { get; set; }
-        DbSet<Hand> Hands { get; set; }
+        DbSet<Player> Player { get; set; }
+        DbSet<Game> Game { get; set; }
+        DbSet<Hand> Hand { get; set; }
 
         //EF Core method used to save changes to db
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

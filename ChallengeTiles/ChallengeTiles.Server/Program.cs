@@ -18,7 +18,7 @@ namespace ChallengeTiles.Server
             Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
-            //3. configure db connection
+            //2. configure db connection
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
             builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
@@ -30,7 +30,7 @@ namespace ChallengeTiles.Server
                 )
             );
 
-            //4. configure CORS policy
+            //3. configure CORS policy
             /*read allowed origins from env variable
              ALLOWED_ORIGINS set in AWS Lambda or EC2 to switch allowed frontend URLs*/
             var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
@@ -48,16 +48,16 @@ namespace ChallengeTiles.Server
             });
 
 
-            //5. Add services to the container.
+            //4. Add services to the container.
             builder.Services.AddControllers(); //enable MVC controllers 
             // Swagger services (added from asp.net core project)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
-            //6. Build application
+            //5. Build application
             var app = builder.Build();
 
-            //7. middleware
+            //6. middleware
             app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
             app.UseAuthorization();

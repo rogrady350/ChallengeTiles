@@ -1,6 +1,6 @@
 ﻿namespace ChallengeTiles.Server.Services
 {
-    //Class purpose: holds game logic
+    //Class purpose: holds game play logic
     public class GameService
     {
 

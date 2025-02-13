@@ -6,7 +6,7 @@
         public static string GetMySqlConnectionString()
         {
             var server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost";
-            var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "Challenge_Tiles"; //Need to create db in MySQL workbench
+            var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "Challenge_Tiles"; 
             var user = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "password";
 
