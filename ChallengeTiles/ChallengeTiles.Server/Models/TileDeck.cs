@@ -16,7 +16,7 @@
         //Deck constructor
         public TileDeck(int playedColorsCount)
         {
-            _tiles = []; //create array of tiles being played
+            _tiles = new List<Tile>(); //create list of tiles being played
             _playedColorsCount = playedColorsCount;
         }
 

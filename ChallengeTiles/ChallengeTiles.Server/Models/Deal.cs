@@ -20,8 +20,7 @@
         public void DealTile(Player player)
         {
             Tile tile = TileDeck.RemoveTile(0);
-            Hand hand = player.Hand;
-            hand.AddTile(tile);
+            player.Hand.AddTile(tile);
         }
 
         //attributes/getters

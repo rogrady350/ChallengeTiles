@@ -6,25 +6,15 @@
         public List<Tile> HandTiles { get; private set; }
 
         //constructor with list of tiles being played
-        public Hand(Tile[] playedTiles)
+        public Hand()
         {
             HandTiles = new List<Tile>();
-
-            //add tiles from tiles being played to players hand
-            HandTiles.AddRange(playedTiles);
         }
 
         //add a single tile to players hand
         public void AddTile(Tile playedTile)
         {
             HandTiles.Add(playedTile);
-        }
-
-        //add multiple tiles
-        public void AddTile(Tile[] playedTiles)
-        {
-            HandTiles.AddRange(playedTiles);
-            //?? AddTile(new[] { playedTile });
         }
 
         //place a tile in specified positions (allows players to organize tiles)
