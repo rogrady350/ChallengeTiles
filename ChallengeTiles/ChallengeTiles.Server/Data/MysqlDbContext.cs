@@ -6,7 +6,8 @@ namespace ChallengeTiles.Server.Data
     public class MysqlDbContext : DbContext, ITilesDbContext
     {
         /*constructor, creates connection to db
-          MySQL relies on EF Core to handle configurations internall
+          Implements ITilesDContext interface
+          MySQL relies on EF Core to handle configurations internally
           EF Core provides Object-Relation Mapping (ORM) for relational DB's
           Has built in dependency injection for automatic db context management.*/
         public MysqlDbContext(DbContextOptions<MysqlDbContext> options) : base(options) { }

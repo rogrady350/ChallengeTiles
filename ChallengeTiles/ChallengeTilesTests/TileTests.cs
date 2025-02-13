@@ -14,12 +14,12 @@ namespace ChallengeTilesTests
         //Test that a tile object can be created with correct values
         public void Constructor_ShouldInitializePropertiesCorrectly()
         {
-            // Arrange: tile test data
+            //Arrange: tile test data
             int expectedId = 1;
             int expectedNumber = 5;
             string expectedColor = "Red";
 
-            // Act: create new tile object
+            //Act: create new tile object
             Tile tile = new Tile(expectedId, expectedNumber, expectedColor);
 
             // Assert: check if values are correct
