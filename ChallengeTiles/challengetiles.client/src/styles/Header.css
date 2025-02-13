@@ -1,0 +1,29 @@
+header {
+    display: flex;
+    flex-direction: column; /*Stack elements vertically*/
+    align-items: center; /*Center items horizontally*/
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: lightgray;
+}
+
+h1 {
+    margin-top: 10px; /* Add spacing below nav */
+    font-size: 2rem;
+}

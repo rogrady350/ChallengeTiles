@@ -1,0 +1,15 @@
+﻿/*Global Styles for app*/
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+}
