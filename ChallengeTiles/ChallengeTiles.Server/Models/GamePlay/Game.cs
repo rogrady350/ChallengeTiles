@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 
-namespace ChallengeTiles.Server.Models
+namespace ChallengeTiles.Server.Models.GamePlay
 {
     //Class holds game state and data
     public class Game
@@ -21,7 +21,7 @@ namespace ChallengeTiles.Server.Models
             NumberOfColors = numberOfColors;
             NumberOfTiles = numberOfTiles;
             Players = new List<Player> { player1, player2 };
-            
+
             //Create new game objcets
             GameState = new GameState();
             GameBoard = new GameBoard();

@@ -13,7 +13,6 @@ const GamePage = () => {
 
     return (
         <div className="game-page">
-            <h1>Challenge Tiles</h1>
             <GameBoard tiles={tiles} />
         </div>
     );

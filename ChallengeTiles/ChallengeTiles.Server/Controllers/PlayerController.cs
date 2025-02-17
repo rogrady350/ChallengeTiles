@@ -14,6 +14,7 @@ namespace ChallengeTiles.Server.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
+        //need to abstract - repository takes dbcontext, controller takes a service as a dpendency
         private readonly ITilesDbContext _dbContext;
 
         //constructor. DbContext injected by ASP.Net

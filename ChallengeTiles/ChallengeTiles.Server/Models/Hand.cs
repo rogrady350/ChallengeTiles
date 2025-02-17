@@ -1,14 +1,37 @@
-﻿namespace ChallengeTiles.Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+
+namespace ChallengeTiles.Server.Models
 {
     public class Hand
     {
         //list tiles player has
-        public List<Tile> HandTiles { get; private set; }
+        //attributes, getters, setters
+        [Key]
+        public int HandId { get; set; }  //primary key in Hand table
+        public string PlayerId { get; set; } //foreign key to Player table
+        public string GameId { get; set; } //forign key to Player Table
 
-        //constructor with list of tiles being played
+        public string TilesJson { get; private set; } //column for storing list of Tiles in Players Hand as JSON string
+
+        [NotMapped] //EF Core ignores when mapping the table. Uses gets/sets when reading writing
+        public List<Tile> HandTiles
+        {
+            get => string.IsNullOrEmpty(TilesJson) ? new List<Tile>() : JsonSerializer.Deserialize<List<Tile>>(TilesJson); //convert from JSON string back to list of Tiles
+            set => TilesJson = JsonSerializer.Serialize(value); //converts list of Tiles to JSON string
+        }
+
+        //constructor with list of tiles being played. used when creating hand object which is empty before deal
         public Hand()
         {
             HandTiles = new List<Tile>();
+        }
+
+        //Constructor that sets TilesJson.
+        public Hand(List<Tile> tiles)
+        {
+            HandTiles = tiles;
         }
 
         //add a single tile to players hand
