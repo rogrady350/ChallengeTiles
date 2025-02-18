@@ -23,7 +23,7 @@ namespace ChallengeTiles.Server.Models.GamePlay
             Players = new List<Player> { player1, player2 };
 
             //Create new game objcets
-            GameState = new GameState();
+            GameState = new Move();
             GameBoard = new GameBoard();
 
             //Create a TileDeck
@@ -38,7 +38,7 @@ namespace ChallengeTiles.Server.Models.GamePlay
         public int NumberOfColors { get; private set; } //number of colors that will be used to play
         public int NumberOfTiles { get; private set; } //number of tiles each player gets dealt
         public List<Player> Players { get; private set; }
-        public GameState GameState { get; private set; }
+        public Move GameState { get; private set; }
         public GameBoard GameBoard { get; private set; }
         public TileDeck TileDeck { get; private set; }
         public Deal Deal { get; private set; }

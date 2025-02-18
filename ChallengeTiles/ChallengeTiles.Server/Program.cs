@@ -18,7 +18,7 @@ namespace ChallengeTiles.Server
             Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
-            //2. configure db connection
+            //2.1. configure db connection
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
             builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
@@ -29,6 +29,8 @@ namespace ChallengeTiles.Server
                     new MySqlServerVersion(new Version(8, 0, 25))
                 )
             );
+
+            //2.2 add scoped services (services, repositories, game)
 
             //3. configure CORS policy
             /*read allowed origins from env variable
@@ -48,8 +50,8 @@ namespace ChallengeTiles.Server
             });
 
 
-            //4. Add services to the container.
-            builder.Services.AddControllers(); //enable MVC controllers 
+            //4. Add services to the container
+            builder.Services.AddControllers(); //enable MVC controllers. Registers ALL controllers, dont need to individually add
             // Swagger services (added from asp.net core project)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
@@ -57,20 +59,20 @@ namespace ChallengeTiles.Server
             //5. Build application
             var app = builder.Build();
 
-            //6. middleware
+            //6.1. middleware
             app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers(); //maps routes
 
-            //8. Enable swagger in dev
+            //6.2. Enable swagger in dev
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment
             {
                 app.UseSwagger();   //generate Swagger JSON file that describes API
                 app.UseSwaggerUI(); //alows testing of API directly in browser
             }
 
-            //9. start app
+            //7. start app
             app.Run();
         }
     }
