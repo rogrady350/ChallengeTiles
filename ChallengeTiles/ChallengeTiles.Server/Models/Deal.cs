@@ -19,6 +19,12 @@
         //deal tile to player
         public void DealTile(Player player)
         {
+            //avoid dealing from empty deck.
+            if (TileDeck.GetTileCount() == 0)
+            {
+                throw new InvalidOperationException("No more tiles available to deal.");
+            }
+
             Tile tile = TileDeck.RemoveTile(0);
             player.Hand.AddTile(tile);
         }

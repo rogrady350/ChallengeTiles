@@ -11,29 +11,24 @@ namespace ChallengeTiles.Server.Models
         [Key]
         public int HandId { get; set; }  //primary key in Hand table
         public string PlayerId { get; set; } //foreign key to Player table
-        public string GameId { get; set; } //forign key to Player Table
+        public string GameId { get; set; } //forign key to Game Table
 
-        public string TilesJson { get; private set; } //column for storing list of Tiles in Players Hand as JSON string
+        public string TilesJson { get; private set; } //column for storing list of initial Tiles in Players Hand as JSON string
 
-        [NotMapped] //EF Core ignores when mapping the table. Uses gets/sets when reading writing
-        public List<Tile> HandTiles
+        [NotMapped] //EF Core ignores when mapping the table. Used for game play logic ONLY
+        public List<Tile> HandTiles { get; private set; }
+
+        //default no args constructor for EF (not used in game play logic)
+        public Hand() { }
+
+        //constructor for dealing a new hand (stores initial hand in DB for player to reference what hand they were dealt)
+        public Hand(List<Tile> initialTiles)
         {
-            get => string.IsNullOrEmpty(TilesJson) ? new List<Tile>() : JsonSerializer.Deserialize<List<Tile>>(TilesJson); //convert from JSON string back to list of Tiles
-            set => TilesJson = JsonSerializer.Serialize(value); //converts list of Tiles to JSON string
+            HandTiles = initialTiles ?? new List<Tile>();
+            TilesJson = JsonSerializer.Serialize(HandTiles); //only set once when hand is created
         }
 
-        //constructor with list of tiles being played. used when creating hand object which is empty before deal
-        public Hand()
-        {
-            HandTiles = new List<Tile>();
-        }
-
-        //Constructor that sets TilesJson.
-        public Hand(List<Tile> tiles)
-        {
-            HandTiles = tiles;
-        }
-
+        //game logic/api methods (do not update TilesJson in db)
         //add a single tile to players hand
         public void AddTile(Tile playedTile)
         {
