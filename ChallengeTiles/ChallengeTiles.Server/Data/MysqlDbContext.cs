@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ChallengeTiles.Server.Models;
-using ChallengeTiles.Server.Models.GamePlay;
+using ChallengeTiles.Server.Models.GameLogic;
 
 namespace ChallengeTiles.Server.Data
 {
@@ -24,6 +24,20 @@ namespace ChallengeTiles.Server.Data
          Use even if DB manually built in MySQL workbench
          Explicity define constraints to ensure EF Core does use defaults
          Allows future migrations if needed*/
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            //primary keys
+            modelBuilder.Entity<Player>().HasKey(p => p.PlayerId); //Player table
+            modelBuilder.Entity<Hand>().HasKey(h => h.HandId); //Hand table
+            modelBuilder.Entity<Game>().HasKey(g => g.GameId); //Game table
+
+            //relationships
+            modelBuilder.Entity<Hand>()
+                .HasOne(h => h.Player) //hand belongs to 1 player
+                .WithMany(p => p.Hands) //player can be associated with multiple hands (different games)
+                .HasForeignKey(h => h.PlayerId);
+        }
     }
 }

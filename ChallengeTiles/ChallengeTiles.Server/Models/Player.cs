@@ -7,16 +7,9 @@ namespace ChallengeTiles.Server.Models
     public class Player
     {
         //Default no arg constructor for EF
-        public Player() { }
-
-        //Constructor for guest player (no player profile in db) (NOT implemented in initial game development)
-        public Player(Hand hand)
+        public Player()
         {
-            if (hand == null) throw new ArgumentNullException(nameof(hand), "Hand cannot be null");
-
-            GuestId = "guest-" + Guid.NewGuid().ToString(); //unique session-based ID
-            Name = "Guest";
-            Hand = hand;
+            Hands = new List<Hand>();  //initialize the collection
         }
 
         //Constructor for registered player with account
@@ -31,7 +24,8 @@ namespace ChallengeTiles.Server.Models
             PasswordHash = passwordHash;
             Email = email;
             Name = name;
-            Hand = new Hand(); //player is created with empty hand. populated during deal
+
+            Hands = new List<Hand>();  //initialize the collection
         }
 
         //attributres, getters, setters
@@ -53,7 +47,9 @@ namespace ChallengeTiles.Server.Models
         public string Email { get; set; }
 
         public string Name { get; private set; }
-        public Hand Hand { get; private set; }
+
+        //1:n relationship. Each player gets 1 Hand per game
+        public List<Hand> Hands { get; private set; }
 
         //ToString
         public override string ToString()

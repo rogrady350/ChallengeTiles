@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ChallengeTiles.Server.Models.GameLogic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
@@ -10,9 +11,15 @@ namespace ChallengeTiles.Server.Models
         //attributes, getters, setters
         [Key]
         public int HandId { get; set; }  //primary key in Hand table
-        public string PlayerId { get; set; } //foreign key to Player table
-        public string GameId { get; set; } //forign key to Game Table
 
+        public int PlayerId { get; set; } //foreign key to Player table
+        public int GameId { get; set; } //forign key to Game Table
+
+        //navigation properties
+        public Player Player { get; set; }
+        public Game Game { get; set; }
+
+        [Column]
         public string TilesJson { get; private set; } //column for storing list of initial Tiles in Players Hand as JSON string
 
         [NotMapped] //EF Core ignores when mapping the table. Used for game play logic ONLY

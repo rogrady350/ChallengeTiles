@@ -1,5 +1,5 @@
 ﻿using ChallengeTiles.Server.Models;
-using ChallengeTiles.Server.Models.GamePlay;
+using ChallengeTiles.Server.Models.GameLogic;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChallengeTiles.Server.Data

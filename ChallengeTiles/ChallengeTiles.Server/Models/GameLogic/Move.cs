@@ -1,4 +1,4 @@
-﻿namespace ChallengeTiles.Server.Models.GamePlay
+﻿namespace ChallengeTiles.Server.Models.GameLogic
 {
     public class Move
     {
