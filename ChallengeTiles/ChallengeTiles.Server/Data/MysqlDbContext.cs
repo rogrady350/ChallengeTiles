@@ -18,5 +18,12 @@ namespace ChallengeTiles.Server.Data
         public DbSet<Player> Player { get; set; }
         public DbSet<Game> Game { get; set; }
         public DbSet<Hand> Hand { get; set; }
+
+        //OnModelCreating: EF Core uses for configurations
+        /*Configures entity relationships, constraints, indexes, table management
+         Use even if DB manually built in MySQL workbench
+         Explicity define constraints to ensure EF Core does use defaults
+         Allows future migrations if needed*/
+
     }
 }

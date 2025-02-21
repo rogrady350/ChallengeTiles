@@ -56,6 +56,8 @@ namespace ChallengeTiles.Server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
+            builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
+
             //5. Build application
             var app = builder.Build();
 
