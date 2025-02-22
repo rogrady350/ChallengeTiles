@@ -34,10 +34,35 @@ namespace ChallengeTiles.Server.Data
             modelBuilder.Entity<Game>().HasKey(g => g.GameId); //Game table
 
             //relationships
+            //Player-Hand 1:n
             modelBuilder.Entity<Hand>()
-                .HasOne(h => h.Player) //hand belongs to 1 player
-                .WithMany(p => p.Hands) //player can be associated with multiple hands (different games)
-                .HasForeignKey(h => h.PlayerId);
+                .HasOne(h => h.Player) //Hand belongs to 1 Player
+                .WithMany(p => p.Hands) //Player can be associated with multiple Hands (different games)
+                .HasForeignKey(h => h.PlayerId) //PlayerId FK in hand)
+                .OnDelete(DeleteBehavior.Cascade); //if player is deleted hand also deleted (can not delete players at this time)
+
+            //Game-Hand
+            modelBuilder.Entity<Hand>()
+                .HasOne(h => h.Game) //Hand associated with 1 Game
+                .WithMany(g => g.Hands) //Game associated with many hands (1 per player)
+                .HasForeignKey(h => h.GameId) //GameId FK in hand
+                .OnDelete(DeleteBehavior.Cascade); ; //if game is deleted, hands deleted (can not delete games at this time)
+
+            //Enforce unique Player-Game combination (each player has 1 hand per game)
+            modelBuilder.Entity<Hand>()
+                .HasIndex(h => new { h.PlayerId, h.GameId })
+                .IsUnique();
+
+            //unique column constaints
+            //unique username
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.Username)
+                .IsUnique();
+
+            //unique email
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.Email)
+                .IsUnique();
         }
     }
 }

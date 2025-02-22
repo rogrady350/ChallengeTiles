@@ -22,12 +22,20 @@ namespace ChallengeTiles.Server.Models.GameLogic
             GameBoard = new GameBoard();
             TileDeck = new TileDeck(numberOfColors);
 
+            // hands added when players join. Game table connected to Player table through Hand table
+            Hands = new List<Hand>();
+
             //Deal constructor builds and shuffles TileDeck (prepares deck to be dealt)
             Deal = new Deal(TileDeck);
-
-            //hands added when players join. Game table connected to Player table through Hand table
-            Hands = new List<Hand>();
         }
+
+        //get players playing this game
+        public List<Player> GetPlayers()
+        {
+            return Hands.Select(h => h.Player).ToList();
+        }
+
+
 
         //attributres, getters, setters
         [Key]
@@ -37,8 +45,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
         public List<Hand> Hands { get; set; }
 
         //game settings
-        public int NumberOfColors { get; private set; } //number of colors that will be used to play
-        public int NumberOfTiles { get; private set; } //number of tiles each player gets dealt
+        public int NumberOfColors { get; set; } //number of colors that will be used to play
+        public int NumberOfTiles { get; set; } //number of tiles each player gets dealt
 
         //game play logic (not stored in db)
         [NotMapped]

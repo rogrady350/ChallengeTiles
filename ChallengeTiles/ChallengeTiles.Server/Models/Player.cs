@@ -24,7 +24,6 @@ namespace ChallengeTiles.Server.Models
             PasswordHash = passwordHash;
             Email = email;
             Name = name;
-
             Hands = new List<Hand>();  //initialize the collection
         }
 
