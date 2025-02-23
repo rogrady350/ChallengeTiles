@@ -32,14 +32,14 @@ namespace ChallengeTiles.Server.Services
             //2. create a new Game
             var game = new Game(numberOfColors, numberOfTiles);
 
-            //3. add Players and deal Hands
+            //3. save the Game to the database
+            _gameRepository.AddGame(game);
+
+            //4. add Players and deal Hands
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
-            //4. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
-            game.DealTiles(numberOfTiles * playerIds.Count);
-
-            //5. save the Game to the database
-            _gameRepository.AddGame(game);
+            //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
+            game.DealTiles(numberOfTiles * playerIds.Count); 
 
             //6.update database with populated Hands
             _gameRepository.UpdateGameHands(game);
