@@ -41,8 +41,11 @@ namespace ChallengeTiles.Server.Services
             //5. save the Game to the database
             _gameRepository.AddGame(game);
 
-            //6.Update database with populated Hands
+            //6.update database with populated Hands
             _gameRepository.UpdateGameHands(game);
+
+            //7.display message asking for starting player
+
 
             return game;
         }

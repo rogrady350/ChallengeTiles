@@ -93,9 +93,12 @@ namespace ChallengeTiles.Server.Models.GameLogic
                 //alternate to the next player
                 currentPlayerIndex = (currentPlayerIndex + 1) % Hands.Count;
             }
+
+            //add next tile in TileDeck to center of board
+
         }
 
-        //method to call DealTile, also will update the score
+        //method to call DrawlTile, also will update the score
 
 
         //update score function
