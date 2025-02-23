@@ -65,7 +65,7 @@
             return _tiles[index];
         }
 
-        //return all tiles
+        //return List all tiles available for play
         public List<Tile> GetTiles()
         {
             return _tiles;

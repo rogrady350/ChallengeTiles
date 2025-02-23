@@ -8,16 +8,42 @@ namespace ChallengeTiles.Server.Services
     public class GameService
     {
         private readonly GameRepository _gameRepository;
+        private readonly PlayerRepository _playerRepository;
 
-        public GameService(GameRepository gameRepository)
+        public GameService(GameRepository gameRepository, PlayerRepository playerRepository)
         {
             _gameRepository = gameRepository;
         }
 
-        public Game StartNewGame(int numberOfColors, int numberOfTiles)
+        public Game StartNewGame(List<int> playerIds, int numberOfColors, int numberOfTiles)
         {
+            //1. fetch player objects from DB by playerId
+            var players = new List<Player>();
+
+            foreach (var playerId in playerIds)
+            {
+                var player = _playerRepository.GetPlayerById(playerId);
+                if (player != null)
+                {
+                    players.Add(player);
+                }
+            }
+
+            //2. create a new Game
             var game = new Game(numberOfColors, numberOfTiles);
-            _gameRepository.CreateGame(game, numberOfColors, numberOfTiles); //save game to DB
+
+            //3. add Players and deal Hands
+            game.AddPlayers(players, numberOfTiles, game.TileDeck);
+
+            //4. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
+            game.DealTiles(numberOfTiles * playerIds.Count);
+
+            //5. save the Game to the database
+            _gameRepository.AddGame(game);
+
+            //6.Update database with populated Hands
+            _gameRepository.UpdateGameHands(game);
+
             return game;
         }
 

@@ -6,13 +6,13 @@ namespace ChallengeTiles.Server.Models
 {
     public class Player
     {
-        //Default no arg constructor for EF
+        //default no arg constructor for EF
         public Player()
         {
-            Hands = new List<Hand>();  //initialize the collection
+            Hands = new List<Hand>();  //initialize collection - ensure EF core handles the Player - Hand relationship
         }
 
-        //Constructor for registered player with account
+        //constructor for registered player with account (option to play as guest can be added later)
         public Player(string username, string passwordHash, string email, string name)
         {
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username), "Username cannot be null or empty");
@@ -24,16 +24,13 @@ namespace ChallengeTiles.Server.Models
             PasswordHash = passwordHash;
             Email = email;
             Name = name;
-            Hands = new List<Hand>();  //initialize the collection
+            Hands = new List<Hand>();  //initialize collection
         }
 
         //attributres, getters, setters
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PlayerId { get; private set; } //unique player id. auto incremented in db
-
-        [NotMapped] //exclude from db
-        public string GuestId { get; private set; } //use GUID to generate session based id
 
         [Required]
         public string Username { get; set; }

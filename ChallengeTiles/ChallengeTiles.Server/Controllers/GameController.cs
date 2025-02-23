@@ -25,23 +25,8 @@ namespace ChallengeTiles.Server.Controllers
             _gameService = gameService;
         }
 
-        [HttpPost("start")]
-        public ActionResult<Game> StartNewGame(int numberOfColors, int numberOfTiles)
-        {
-            var game = _gameService.StartNewGame(numberOfColors, numberOfTiles); //start new game
-            return CreatedAtAction(nameof(GetGame), new { id = game.GameId }, game); //return created game
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<Game> GetGame(int id)
-        {
-            var game = _gameService.GetGameById(id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-            return Ok(game);
-        }
+        //start a new game
+        
 
     }
 }
