@@ -16,7 +16,9 @@ namespace ChallengeTiles.Server.Data
             game.NumberOfTiles = numberOfTiles;
 
             _dbContext.Game.Add(game); //INSERT game record in db
+            _dbContext.SaveChanges(); //save record to generate a GameId
 
+            //Handle creating Hand record in here
             foreach (Player player in players)
             {
                 //create hand for each Player and associate it with current Game
@@ -29,14 +31,7 @@ namespace ChallengeTiles.Server.Data
                 _dbContext.Hand.Add(playerHand); //INSERT hand record into db
             }
 
-            _dbContext.SaveChanges();
-        }
-
-        //add a new game record
-        public void AddGame(Game game)
-        {
-            _dbContext.Game.Add(game);
-            _dbContext.SaveChanges();
+            _dbContext.SaveChanges(); //save changes with updated hands
         }
 
         //retrieve a game by id

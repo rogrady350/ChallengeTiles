@@ -30,13 +30,13 @@ namespace ChallengeTiles.Server.Services
                 }
             }
 
-            //2. create a new Game
+            //2. create a new Game instance
             Game game = new Game(numberOfColors, numberOfTiles);
 
-            //3. save the Game to the database
-            _gameRepository.AddGame(game);
+            //3. create both Game and Hand records in db (method handles both)
+            _gameRepository.CreateGame(game, numberOfColors, numberOfTiles, players);
 
-            //4. add Players and deal Hands
+            //4. add Players and Hands to Game object
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
             //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)

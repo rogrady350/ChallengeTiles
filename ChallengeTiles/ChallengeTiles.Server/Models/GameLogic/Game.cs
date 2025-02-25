@@ -67,6 +67,9 @@ namespace ChallengeTiles.Server.Models.GameLogic
         [NotMapped]
         public Deal Deal { get; private set; }
 
+        //dictionary for holding player hands. Allows O(1) looup time
+        private readonly Dictionary<int, Hand> _playerHands = new Dictionary<int, Hand>();  
+
         //game play functions
         //get players playing this game: extracts player from respective hand and adds to list of players playing
         public List<Player> GetPlayers()
@@ -80,7 +83,15 @@ namespace ChallengeTiles.Server.Models.GameLogic
             foreach (Player player in players)
             {
                 var initialHand = new List<Tile>(); //create an initially empty Hand
-                Hands.Add(new Hand(player.PlayerId, this.GameId, initialHand)); //assign Player and Game FK's and create record with empty hand
+
+                //assign Player and Game FK's and with empty hand
+                Hand hand = new Hand(player.PlayerId, this.GameId, initialHand)
+                {
+                    Player = player //assign the Player object
+                };
+
+                Hands.Add(hand); //add Hand to the Game's list of Hands
+                _playerHands[player.PlayerId] = hand; //add Hand to dictionary
             }
         }
 
@@ -108,22 +119,22 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //DrawlTile and UpdateScore
         public void PickUpTile(int playerId)
         {
-            //LINQ query to get the Player's hand (no case where it should be null but handle for safety)
-            Hand? playerHand = Hands.FirstOrDefault(h => h.PlayerId == playerId);
-            if (playerHand == null)
+            //find hand object associated with player
+            if (!_playerHands.TryGetValue(playerId, out Hand? playerHand))
+                if (playerHand == null)
             {
                 throw new InvalidOperationException($"Player {playerId} does not have a hand in this game.");
             }
 
             Deal.DrawTile(playerHand.Player, this.GameId);
-            UpdateScore(Score);
+            Score++;
         }
 
         //place Tile on GameBoard
         public PlacementStatus PlaceTileOnBoard(int playerId, Tile tile, int x, int y)
         {
-            Hand? playerHand = Hands.FirstOrDefault(h => h.PlayerId == playerId);
-            if (playerHand == null)
+            //find hand object associated with player
+            if (!_playerHands.TryGetValue(playerId, out Hand? playerHand))
                 throw new InvalidOperationException($"No hand found for Player {playerId}.");
 
             int tileIndex = playerHand.HandTiles.FindIndex(t => t == tile);
@@ -132,7 +143,6 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
             //validate chosen position
             PlacementStatus validationResult = GameBoard.ValidatePlacement(tile, x, y);
-
             if (validationResult != PlacementStatus.Success)
             {
                 return validationResult; // Return the failure reason
@@ -145,11 +155,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
             return PlacementStatus.Success;
         }
 
-        //update score function
-        public void UpdateScore(int points)
-        {
-            Score += points;
-        }
+        //Turn Handling
 
         //ToString
         public override string ToString()
