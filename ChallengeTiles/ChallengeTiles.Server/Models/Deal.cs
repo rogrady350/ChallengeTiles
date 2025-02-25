@@ -57,6 +57,10 @@ namespace ChallengeTiles.Server.Models
             {
                 throw new InvalidOperationException($"Player does not have a hand for Game {gameId}.");
             }
+
+            //remove tile from deck and add to player's hand
+            Tile tile = TileDeck.RemoveTile(0);
+            playerHand.AddTile(tile);
         }
     }
 }

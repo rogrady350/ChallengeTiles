@@ -1,4 +1,5 @@
 ﻿using ChallengeTiles.Server.Data;
+using ChallengeTiles.Server.Helpers;
 using ChallengeTiles.Server.Models;
 using ChallengeTiles.Server.Models.GameLogic;
 
@@ -30,7 +31,7 @@ namespace ChallengeTiles.Server.Services
             }
 
             //2. create a new Game
-            var game = new Game(numberOfColors, numberOfTiles);
+            Game game = new Game(numberOfColors, numberOfTiles);
 
             //3. save the Game to the database
             _gameRepository.AddGame(game);
@@ -48,6 +49,48 @@ namespace ChallengeTiles.Server.Services
 
 
             return game;
+        }
+
+        //Player picks up a Tile from the TileDeck
+        public void PlayerPickUpTile(int gameId, int playerId)
+        {
+            Game? game = _gameRepository.GetGameById(gameId);
+            if (game == null)
+            {
+                throw new InvalidOperationException($"Game {gameId} not found");
+            }
+
+            game.PickUpTile(playerId);
+        }
+
+        //Status of Tile
+        public PlacementStatus PlaceTile(int gameId, int playerId, Tile tile, int x, int y)
+        {
+            Game? game = _gameRepository.GetGameById(gameId);
+            if (game == null)
+                throw new InvalidOperationException("Game not found.");
+
+            //get result of placemet attempt
+            PlacementStatus result = game.PlaceTileOnBoard(playerId, tile, x, y);
+
+            //print result to console for testing
+            switch (result)
+            {
+                case PlacementStatus.Success:
+                    Console.WriteLine("Tile placed successfully!");
+                    break;
+                case PlacementStatus.PositionOccupied:
+                    Console.WriteLine("That position is already occupied.");
+                    break;
+                case PlacementStatus.NoAdjacentTile:
+                    Console.WriteLine("The tile must be placed adjacent to another tile.");
+                    break;
+                case PlacementStatus.InvalidTile:
+                    Console.WriteLine("Tile must match the color or number of an adjacent tile.");
+                    break;
+            }
+
+            return result;
         }
 
         public Game GetGameById(int gameId)

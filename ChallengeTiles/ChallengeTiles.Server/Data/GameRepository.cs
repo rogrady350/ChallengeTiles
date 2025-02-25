@@ -17,10 +17,10 @@ namespace ChallengeTiles.Server.Data
 
             _dbContext.Game.Add(game); //INSERT game record in db
 
-            foreach (var player in players)
+            foreach (Player player in players)
             {
                 //create hand for each Player and associate it with current Game
-                var playerHand = new Hand
+                Hand playerHand = new Hand
                 {
                     GameId = game.GameId,
                     PlayerId = player.PlayerId
@@ -42,7 +42,7 @@ namespace ChallengeTiles.Server.Data
         //retrieve a game by id
         public Game GetGameById(int gameId)
         {
-            var game = _dbContext.Game
+            Game? game = _dbContext.Game
                 .Include(g => g.Hands)  //include the related hands
                 .ThenInclude(h => h.Player)  //include the related players
                 .FirstOrDefault(g => g.GameId == gameId);
@@ -50,13 +50,20 @@ namespace ChallengeTiles.Server.Data
             return game;
         }
 
+        //save hand to db once populated
         public void UpdateGameHands(Game game)
         {
             _dbContext.Game.Update(game);
-            foreach (var hand in game.Hands)
+            foreach (Hand hand in game.Hands)
             {
                 _dbContext.Hand.Update(hand); //update each player's hand
             }
+            _dbContext.SaveChanges();
+        }
+
+        public void FinalizeGame(Game game, int finalScore)
+        {
+            game.Score = finalScore;
             _dbContext.SaveChanges();
         }
     }

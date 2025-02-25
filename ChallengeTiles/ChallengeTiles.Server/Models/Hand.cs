@@ -11,7 +11,7 @@ namespace ChallengeTiles.Server.Models
         //default no args constructor for EF (not used in game play logic)
         public Hand() { }
 
-        //constructor for dealing a new hand (stores initial hand in DB for player to reference what hand they were dealt)
+        //constructor for creating a new hand (stores initial hand in DB for player to reference what hand they were dealt)
         public Hand(int playerId, int gameId, List<Tile> initialTiles)
         {
             PlayerId = playerId;
