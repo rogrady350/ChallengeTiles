@@ -1,5 +1,5 @@
 ﻿using ChallengeTiles.Server.Models;
-using ChallengeTiles.Server.Models.GamePlay;
+using ChallengeTiles.Server.Models.GameLogic;
 using MongoDB.Driver;
 
 namespace ChallengeTiles.Server.Data

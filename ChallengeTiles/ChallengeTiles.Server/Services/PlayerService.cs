@@ -14,9 +14,6 @@ namespace ChallengeTiles.Server.Services
             _playerRepository = playerRepository;
         }
 
-        public async Task<Player> GetPlayerByIdAsync(string playerID)
-        {
-            return await _playerRepository.GetPlayerByIdAsync(playerID);
-        }
+       
     }
 }

@@ -17,25 +17,12 @@ namespace ChallengeTiles.Server.Controllers
         //need to abstract - repository takes dbcontext, controller takes a service as a dpendency
         private readonly ITilesDbContext _dbContext;
 
-        //constructor. DbContext injected by ASP.Net
+        //constructor
         public PlayerController(ITilesDbContext dbContext)
         {
-            //assign context to use throughout controller
-            _dbContext = dbContext;
+            
         }
 
-        //get player data from db by. primary key is id.
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(string id)
-        {
-            var player = await _dbContext.GetPlayerByIdAsync(id);
-
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(player);
-        }
+        
     }
 }
