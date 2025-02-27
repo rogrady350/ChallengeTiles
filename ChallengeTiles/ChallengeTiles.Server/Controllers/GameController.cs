@@ -109,11 +109,25 @@ namespace ChallengeTiles.Server.Controllers
         {
             try
             {
-                
-            }
-            catch
-            {
+                Game game = _gameService.GetGameById(gameId);
 
+                if (game == null)
+                    return NotFound(new { message = $"Game not found" });
+
+                //sent game info to front end
+                return Ok(new
+                {
+                    gameId = game.GameId,
+                    players = game.GetPlayers(),
+                    hands = game.Hands,
+                    tileDeck = game.TileDeck,
+                    gameBoard = game.GameBoard,
+                    currentScore = game.Score
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }

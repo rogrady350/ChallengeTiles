@@ -29,8 +29,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
             NumberOfTiles = numberOfTiles;
 
             //Create new game objcets
-            GameBoard = new GameBoard();
             TileDeck = new TileDeck(numberOfColors);
+            GameBoard = new GameBoard();
 
             //initialize collection
             Hands = new List<Hand>();
@@ -105,10 +105,10 @@ namespace ChallengeTiles.Server.Models.GameLogic
             for (int i = 0; i < totalTilesToDeal; i++)
             {
                 //get the current player (alternating through the players in the Hands list)
-                Player currentPlayer = Hands[currentPlayerIndex].Player;
+                Player currentPlayerDeal = Hands[currentPlayerIndex].Player;
 
                 //call DealTile from the Deal class to deal one tile to the current player's hand
-                Deal.DealTile(currentPlayer, this.GameId);
+                Deal.DealTile(currentPlayerDeal, this.GameId);
 
                 //alternate to the next player
                 currentPlayerIndex = (currentPlayerIndex + 1) % Hands.Count;
@@ -172,7 +172,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //Turn Handling
         public void NextTurn()
         {
-            var playerIds = GetPlayers(); //gets list current player ids
+            var playerIds = GetPlayers(); //gets list current players
+            int currentIndex = 
             
         }
 
