@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChallengeTiles.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c092574fcda5ea7223b218bb17fa994e1a04af71")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09e9ab377fb5f985c2ec3d40403343bc343114bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChallengeTiles.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChallengeTiles.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

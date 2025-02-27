@@ -49,14 +49,14 @@ namespace ChallengeTiles.Server.Controllers
             }
         }
 
-        //POST for setting the starting player: Client sends gameId selected playerId to Sever
+        //POST set the starting player: Client sends gameId selected playerId to Sever
         [HttpPost("{gameId}/set-starting-player/{playerId}")]
         public IActionResult SetStartingPlayer(int gameId, int playerId)
         {
             try
             {
                 _gameService.GameSetStartingPlayer(gameId, playerId);
-                return Ok("Starting player set.");
+                return Ok(new { message = "Starting player set." });
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace ChallengeTiles.Server.Controllers
             }
         }
 
-        //POST place a tile on the board
+        //POST place a tile on the board - Clent sends tile the player wnts to place on board
         public IActionResult PlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
             try
@@ -87,11 +87,34 @@ namespace ChallengeTiles.Server.Controllers
             }
         }
 
-        //POST pick up a tile from the TileDeck
+        //POST pick up a tile from the TileDeck - Client sends request to pick up Tile from TileDeck
         [HttpPost("{gameId}/pick-up-tile")]
         public IActionResult PickUpTile(int gameId, [FromBody] PickUpTileRequest request)
         {
-            _gameService.PlayerPickUpTile(gameId, request.PlayerId);
+            try
+            {
+                _gameService.PlayerPickUpTile(gameId, request.PlayerId);
+
+                return Ok(new { message = "Tile picked up successfully." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        //GET - Server sends state of current game objects to client for rendering
+        [HttpGet("{gameId}/game-state")]
+        public IActionResult GetGameState(int gameId)
+        {
+            try
+            {
+                
+            }
+            catch
+            {
+
+            }
         }
     }
 }
