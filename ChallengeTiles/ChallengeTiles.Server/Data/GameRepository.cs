@@ -45,6 +45,13 @@ namespace ChallengeTiles.Server.Data
             return game;
         }
 
+        //save game updates (no current situations need updating but will have for possible future needs)
+        public void UpdateGame(Game game)
+        {
+            _dbContext.Game.Update(game);
+            _dbContext.SaveChanges();
+        }
+
         //save hand to db once populated
         public void UpdateGameHands(Game game)
         {

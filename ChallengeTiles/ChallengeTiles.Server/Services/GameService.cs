@@ -45,16 +45,25 @@ namespace ChallengeTiles.Server.Services
             //6.update database with populated Hands
             _gameRepository.UpdateGameHands(game);
 
-            //7.display message asking for starting player
-
-
             return game;
+        }
+
+        //set starting player to instantiate current player
+        public void GameSetStartingPlayer(int gameId, int playerId)
+        {
+            Game game = GetGameById(gameId);
+            if(game == null)
+            {
+                throw new InvalidOperationException("Game not found");
+            }
+
+            game.SetStartingPlayer(playerId);
         }
 
         //Player picks up a Tile from the TileDeck
         public void PlayerPickUpTile(int gameId, int playerId)
         {
-            Game? game = _gameRepository.GetGameById(gameId);
+            Game? game = GetGameById(gameId);
             if (game == null)
             {
                 throw new InvalidOperationException($"Game {gameId} not found");
@@ -63,15 +72,15 @@ namespace ChallengeTiles.Server.Services
             game.PickUpTile(playerId);
         }
 
-        //Status of Tile
-        public PlacementStatus PlaceTile(int gameId, int playerId, Tile tile, int x, int y)
+        //status of Tile
+        public PlacementStatus PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
         {
-            Game? game = _gameRepository.GetGameById(gameId);
+            Game? game = GetGameById(gameId);
             if (game == null)
                 throw new InvalidOperationException("Game not found.");
 
             //get result of placemet attempt
-            PlacementStatus result = game.PlaceTileOnBoard(playerId, tile, x, y);
+            PlacementStatus result = game.PlaceTile(playerId, tile, x, y);
 
             //print result to console for testing
             switch (result)
@@ -93,6 +102,7 @@ namespace ChallengeTiles.Server.Services
             return result;
         }
 
+        //method get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly
         public Game GetGameById(int gameId)
         {
             var game = _gameRepository.GetGameById(gameId);

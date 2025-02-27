@@ -67,6 +67,9 @@ namespace ChallengeTiles.Server.Models.GameLogic
         [NotMapped]
         public Deal Deal { get; private set; }
 
+        [NotMapped]
+        public int CurrentPlayerId { get; private set; } //keep track of turn
+
         //dictionary for holding player hands. Allows O(1) looup time
         private readonly Dictionary<int, Hand> _playerHands = new Dictionary<int, Hand>();  
 
@@ -116,6 +119,17 @@ namespace ChallengeTiles.Server.Models.GameLogic
             GameBoard.PlaceTile(tile, 0, 0);
         }
 
+        //stores the player selected to make first move. Instantiate CurrentPlayerId
+        public void SetStartingPlayer(int playerId)
+        {
+            if (!Hands.Any(h => h.PlayerId == playerId))
+            {
+                throw new InvalidOperationException($"Player {playerId} is not in this game.");
+            }
+
+            CurrentPlayerId = playerId;
+        }
+
         //DrawlTile and UpdateScore
         public void PickUpTile(int playerId)
         {
@@ -131,7 +145,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
         }
 
         //place Tile on GameBoard
-        public PlacementStatus PlaceTileOnBoard(int playerId, Tile tile, int x, int y)
+        public PlacementStatus PlaceTile(int playerId, Tile tile, int x, int y)
         {
             //find hand object associated with player
             if (!_playerHands.TryGetValue(playerId, out Hand? playerHand))
@@ -156,6 +170,11 @@ namespace ChallengeTiles.Server.Models.GameLogic
         }
 
         //Turn Handling
+        public void NextTurn()
+        {
+            var playerIds = GetPlayers(); //gets list current player ids
+            
+        }
 
         //ToString
         public override string ToString()
