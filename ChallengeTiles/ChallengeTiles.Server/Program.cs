@@ -31,8 +31,6 @@ namespace ChallengeTiles.Server
                 )
             );
 
-            //2.2 add scoped services (services, repositories, game)
-
             //3. configure CORS policy
             /*read allowed origins from env variable
              ALLOWED_ORIGINS set in AWS Lambda or EC2 to switch allowed frontend URLs*/

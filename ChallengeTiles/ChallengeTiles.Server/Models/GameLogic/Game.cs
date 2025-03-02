@@ -13,7 +13,7 @@ using static System.Net.WebRequestMethods;
 
 namespace ChallengeTiles.Server.Models.GameLogic
 {
-    //Class holds game state and data
+    //Class holds data and logic
     public class Game
     {
         //default no args constructor for EF

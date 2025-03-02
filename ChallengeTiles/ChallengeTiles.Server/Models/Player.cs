@@ -42,7 +42,8 @@ namespace ChallengeTiles.Server.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public string Name { get; private set; }
+        [Required]
+        public string Name { get; set; }
 
         //1:n relationship. Each player gets 1 Hand per game
         public List<Hand> Hands { get; private set; }
