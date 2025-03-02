@@ -14,15 +14,17 @@ namespace ChallengeTiles.Server.Services
         public GameService(GameRepository gameRepository, PlayerRepository playerRepository)
         {
             _gameRepository = gameRepository;
+            _playerRepository = playerRepository;
         }
 
         public Game StartNewGame(List<int> playerIds, int numberOfColors, int numberOfTiles)
         {
-            //1. fetch player objects from DB by playerId
-            var players = new List<Player>();
+            //1. fetch Players from DB by playerId
+            var players = new List<Player>(); //list of Player Ojbects
 
             foreach (var playerId in playerIds)
             {
+                //fetch Players by Id from db to instantiate a list of Player Objects
                 var player = _playerRepository.GetPlayerById(playerId);
                 if (player != null)
                 {
@@ -40,7 +42,7 @@ namespace ChallengeTiles.Server.Services
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
             //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
-            game.DealTiles(numberOfTiles * playerIds.Count); 
+            game.DealTiles(numberOfTiles * playerIds.Count);
 
             //6.update database with populated Hands
             _gameRepository.UpdateGameHands(game);
@@ -52,7 +54,7 @@ namespace ChallengeTiles.Server.Services
         public void GameSetStartingPlayer(int gameId, int playerId)
         {
             Game game = GetGameById(gameId);
-            if(game == null)
+            if (game == null)
             {
                 throw new InvalidOperationException("Game not found");
             }
@@ -97,6 +99,15 @@ namespace ChallengeTiles.Server.Services
                 case PlacementStatus.InvalidTile:
                     Console.WriteLine("Tile must match the color or number of an adjacent tile.");
                     break;
+            }
+
+            //call turn handling method to switch turns or end game
+            game.NextTurn();
+
+            //check for end of game
+            if (game.GameOver == true)
+            {
+                _gameRepository.FinalizeGame(game, game.Score);
             }
 
             return result;

@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using ChallengeTiles.Server.Models;
 using ChallengeTiles.Server.Data;
 using DotNetEnv;
+using ChallengeTiles.Server.Services;
 
 namespace ChallengeTiles.Server
 {
@@ -50,12 +51,23 @@ namespace ChallengeTiles.Server
             });
 
 
-            //4. Add services to the container
+            //4. add services to the container
+            //4.1 add repositories
+            builder.Services.AddScoped<GameRepository>();
+            builder.Services.AddScoped<PlayerRepository>();
+
+            //4.2 add services
+            builder.Services.AddScoped<GameService>();
+            builder.Services.AddScoped<PlayerService>();
+
+            //4.3 add controllers
             builder.Services.AddControllers(); //enable MVC controllers. Registers ALL controllers, dont need to individually add
-            // Swagger services (added from asp.net core project)
+            
+            //4.4 Swagger services (added from asp.net core project for testing)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
+            //4.5 AWS Lambda service
             builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
 
             //5. Build application
@@ -67,7 +79,7 @@ namespace ChallengeTiles.Server
             app.UseAuthorization();
             app.MapControllers(); //maps routes
 
-            //6.2. Enable swagger in dev
+            //6.2. enable swagger in dev
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment
             {
                 app.UseSwagger();   //generate Swagger JSON file that describes API

@@ -8,6 +8,12 @@ namespace ChallengeTiles.Server.Data
         //class handles CRUD operations for Player entities
         private readonly MysqlDbContext _dbContext;
 
+        //constructor
+        public PlayerRepository(MysqlDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         //retrieve player by id
         public Player GetPlayerById(int playerId)
         {

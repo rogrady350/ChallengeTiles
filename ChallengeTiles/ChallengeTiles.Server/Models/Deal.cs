@@ -1,6 +1,4 @@
-﻿using ChallengeTiles.Server.Models.GameLogic;
-
-namespace ChallengeTiles.Server.Models
+﻿namespace ChallengeTiles.Server.Models
 {
     public class Deal
     {

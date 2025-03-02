@@ -1,6 +1,7 @@
 ﻿using ChallengeTiles.Server.Helpers;
 using ChallengeTiles.Server.Services;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;
@@ -70,6 +71,9 @@ namespace ChallengeTiles.Server.Models.GameLogic
         [NotMapped]
         public int CurrentPlayerId { get; private set; } //keep track of turn
 
+        [NotMapped]
+        public bool GameOver { get; private set; } = false; //flag for game status
+
         //dictionary for holding player hands. Allows O(1) looup time
         private readonly Dictionary<int, Hand> _playerHands = new Dictionary<int, Hand>();  
 
@@ -77,7 +81,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //get players playing this game: extracts player from respective hand and adds to list of players playing
         public List<Player> GetPlayers()
         {
-            return Hands.Select(h => h.Player).ToList();
+            return Hands.Select(h => h.Player).ToList(); //returns Player Object
         }
 
         //add players to the game through hand: takes list of players, number of tiles chosen for the hand, and the Deck of tiles being played with
@@ -172,9 +176,36 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //Turn Handling
         public void NextTurn()
         {
-            var playerIds = GetPlayers(); //gets list current players
-            int currentIndex = 
-            
+            //find index of current player from Hands list
+            int currentIndex = Hands.FindIndex(h => h.PlayerId == CurrentPlayerId);
+
+            //safety check for invalid CurrentPlayerId
+            if (currentIndex == -1)
+            {
+                throw new InvalidOperationException("Current PlayerId invalid");
+            }
+
+            //get next player index
+            int nextIndex = (currentIndex + 1) % Hands.Count;
+
+            //set iterations to 0 at start of while loop. used to prevent infinite loop
+            int iterations = 0;
+            //find next player with tiles (while loop chosen in anticipation of being able to play with more than 2 players in future)
+            while (Hands[nextIndex].HandTiles.Count == 0 && iterations < Hands.Count)
+            {
+                nextIndex = (nextIndex + 1) % Hands.Count; //move index to next player (moves back to current player if no other player has tiles)
+                iterations++; //increment iterations to only loop the amount of times as there are players
+            }
+
+            //if all players hands have been checked and all found to have no tiles left, end game
+            if (Hands[nextIndex].HandTiles.Count == 0)
+            {
+                Console.WriteLine("Game has ended");
+                GameOver = true; //switch flag to true to signify end of game
+                return; //game over. stop further execution.
+            }
+
+            CurrentPlayerId = Hands[nextIndex].PlayerId;
         }
 
         //ToString

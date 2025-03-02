@@ -33,13 +33,23 @@ namespace ChallengeTiles.Server.Controllers
         {
              try
             {
+                //validate numberOfColors - added for testing. swagger not seeing valid values
+                if (request.NumberOfColors <= 0 || request.NumberOfColors > Constants.availableColors.Count)
+                {
+                    return BadRequest(new { message = "Invalid number of colors selected." });
+                }
+
                 Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
 
-                //return response with game data
+                //return response with game data (GameId, relevent Player data)
                 return Ok(new
                 {
                     gameId = game.GameId,
-                    players = game.GetPlayers(),
+                    players = game.GetPlayers().Select(p => new
+                    {
+                        playerId = p.PlayerId,
+                        nameof = p.Name,
+                    }),
                     message = "Please select a starting player" //send message to ask user to select starting player.
                 });
             }
@@ -65,11 +75,22 @@ namespace ChallengeTiles.Server.Controllers
         }
 
         //POST place a tile on the board - Clent sends tile the player wnts to place on board
-        public IActionResult PlaceTile(int gameId, [FromBody] TilePlacementRequest request)
+        [HttpPost("{gameId}/player-place-tile/{playerId}")]
+        public IActionResult PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
             try
             {
                 PlacementStatus status = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
+                Game game = _gameService.GetGameById(gameId);
+
+                //check for game end
+                if (game.GameOver == true)
+                {
+                    return Ok(new
+                    {
+                        message = "Game over"
+                    });
+                }
 
                 //return result of tile placent to Client
                 return status switch
@@ -89,7 +110,7 @@ namespace ChallengeTiles.Server.Controllers
 
         //POST pick up a tile from the TileDeck - Client sends request to pick up Tile from TileDeck
         [HttpPost("{gameId}/pick-up-tile")]
-        public IActionResult PickUpTile(int gameId, [FromBody] PickUpTileRequest request)
+        public IActionResult PlayerPickUpTile(int gameId, [FromBody] PickUpTileRequest request)
         {
             try
             {

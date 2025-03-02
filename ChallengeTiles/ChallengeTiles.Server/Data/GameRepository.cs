@@ -9,6 +9,12 @@ namespace ChallengeTiles.Server.Data
         //class handles CRUD operations for Game entities
         private readonly MysqlDbContext _dbContext;
 
+        //constructor
+        public GameRepository(MysqlDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void CreateGame(Game game, int numberOfColors, int numberOfTiles, List<Player> players)
         {
             //get values for number of tiles and colors set in game
@@ -38,6 +44,7 @@ namespace ChallengeTiles.Server.Data
         public Game GetGameById(int gameId)
         {
             Game? game = _dbContext.Game
+                .AsNoTracking() //not modifying fetched entity, improve performance since no tracking needed for read operations.
                 .Include(g => g.Hands)  //include the related hands
                 .ThenInclude(h => h.Player)  //include the related players
                 .FirstOrDefault(g => g.GameId == gameId);
@@ -48,7 +55,7 @@ namespace ChallengeTiles.Server.Data
         //save game updates (no current situations need updating but will have for possible future needs)
         public void UpdateGame(Game game)
         {
-            _dbContext.Game.Update(game);
+            _dbContext.Game.Update(game); //EF updtates db record
             _dbContext.SaveChanges();
         }
 
@@ -66,6 +73,7 @@ namespace ChallengeTiles.Server.Data
         public void FinalizeGame(Game game, int finalScore)
         {
             game.Score = finalScore;
+            _dbContext.Game.Update(game);
             _dbContext.SaveChanges();
         }
     }

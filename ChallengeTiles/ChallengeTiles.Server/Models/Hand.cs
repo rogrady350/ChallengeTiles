@@ -16,7 +16,7 @@ namespace ChallengeTiles.Server.Models
         {
             PlayerId = playerId;
             GameId = gameId;
-            HandTiles = initialTiles ?? new List<Tile>();
+            HandTiles = initialTiles ?? new List<Tile>(); //list of tiles in Hand maintained througout game play
             Tiles = JsonSerializer.Serialize(HandTiles); //only set once when hand is created
         }
 

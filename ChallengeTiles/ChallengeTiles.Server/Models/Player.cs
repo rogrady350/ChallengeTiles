@@ -13,15 +13,15 @@ namespace ChallengeTiles.Server.Models
         }
 
         //constructor for registered player with account (option to play as guest can be added later)
-        public Player(string username, string passwordHash, string email, string name)
+        public Player(string username, string password, string email, string name)
         {
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username), "Username cannot be null or empty");
-            if (string.IsNullOrWhiteSpace(passwordHash)) throw new ArgumentNullException(nameof(passwordHash), "Password cannot be null or empty");
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentNullException(nameof(password), "Password cannot be null or empty");
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email), "Email cannot be null or empty");
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name), "Name cannot be null or empty");
 
             Username = username;
-            PasswordHash = passwordHash;
+            Password = password;
             Email = email;
             Name = name;
             Hands = new List<Hand>();  //initialize collection
@@ -36,7 +36,7 @@ namespace ChallengeTiles.Server.Models
         public string Username { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; } //store hashed passwords
+        public string Password { get; set; }
 
         [Required]
         [EmailAddress]
