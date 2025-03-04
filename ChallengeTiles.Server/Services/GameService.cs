@@ -75,11 +75,17 @@ namespace ChallengeTiles.Server.Services
         }
 
         //status of Tile
-        public PlacementStatus PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
+        public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
         {
+            var response = new ServiceResponse<string>();
+
             Game? game = GetGameById(gameId);
             if (game == null)
-                throw new InvalidOperationException("Game not found.");
+            {
+                response.Success = false;
+                response.Message = "Game not found";
+                return response;
+            }
 
             //get result of placemet attempt
             PlacementStatus result = game.PlaceTile(playerId, tile, x, y);
@@ -88,16 +94,24 @@ namespace ChallengeTiles.Server.Services
             switch (result)
             {
                 case PlacementStatus.Success:
-                    Console.WriteLine("Tile placed successfully!");
+                    response.Success = true;
+                   response.Data = "Tile placed successfully!";
                     break;
                 case PlacementStatus.PositionOccupied:
-                    Console.WriteLine("That position is already occupied.");
+                    response.Success = false;
+                    response.Message = "That position is already occupied.";
                     break;
                 case PlacementStatus.NoAdjacentTile:
-                    Console.WriteLine("The tile must be placed adjacent to another tile.");
+                    response.Success = false;
+                    response.Message = "The tile must be placed adjacent to another tile.";
                     break;
                 case PlacementStatus.InvalidTile:
-                    Console.WriteLine("Tile must match the color or number of an adjacent tile.");
+                    response.Success = false;
+                    response.Message = "Tile must match the color or number of an adjacent tile.";
+                    break;
+                default:
+                    response.Success = false;
+                    response.Message = "An unknon error occured";
                     break;
             }
 
@@ -108,9 +122,10 @@ namespace ChallengeTiles.Server.Services
             if (game.GameOver == true)
             {
                 _gameRepository.FinalizeGame(game, game.Score);
+                response.Message += "Game comple. Congratulations!";
             }
 
-            return result;
+            return response;
         }
 
         //method get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly

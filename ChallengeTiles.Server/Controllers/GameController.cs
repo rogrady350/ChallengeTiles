@@ -22,7 +22,7 @@ namespace ChallengeTiles.Server.Controllers
         private readonly GameService _gameService; //service handling game logic
 
         //Constructor creates game instance
-        public GameController(GameService gameService, PlayerService playerService)
+        public GameController(GameService gameService)
         {
             _gameService = gameService;
         }
@@ -80,27 +80,14 @@ namespace ChallengeTiles.Server.Controllers
         {
             try
             {
-                PlacementStatus status = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
-                Game game = _gameService.GetGameById(gameId);
-
-                //check for game end
-                if (game.GameOver == true)
+                ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
+                
+                if (!response.Success)
                 {
-                    return Ok(new
-                    {
-                        message = "Game over"
-                    });
+                    return BadRequest(new {message = response.Message});
                 }
 
-                //return result of tile placent to Client
-                return status switch
-                {
-                    PlacementStatus.Success => Ok(new { message = "Tile placed successfully!" }),
-                    PlacementStatus.PositionOccupied => BadRequest(new { message = "That position is already occupied." }),
-                    PlacementStatus.NoAdjacentTile => BadRequest(new { message = "The tile must be placed adjacent to another tile." }),
-                    PlacementStatus.InvalidTile => BadRequest(new { message = "Tile must match the color or number of an adjacent tile." }),
-                    _ => BadRequest(new { message = "An unknown error occurred." }),
-                };
+                return Ok(response);
             }
             catch (Exception ex)
             {

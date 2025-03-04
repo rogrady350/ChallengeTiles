@@ -1,5 +1,6 @@
 ﻿using ChallengeTiles.Server.Data;
 using ChallengeTiles.Server.Models;
+using ChallengeTiles.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,10 @@ namespace ChallengeTiles.Server.Controllers
     public class PlayerController : ControllerBase
     {
         //need to abstract - repository takes dbcontext, controller takes a service as a dpendency
-        private readonly ITilesDbContext _dbContext;
+        private readonly PlayerService _playerService;
 
         //constructor
-        public PlayerController(ITilesDbContext dbContext)
+        public PlayerController(PlayerService playerService)
         {
             
         }
