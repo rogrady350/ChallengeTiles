@@ -39,7 +39,8 @@ namespace ChallengeTiles.Server.Data
             return _dbContext.Player.FirstOrDefault(p => p.Name == name);
         }
 
-        //retrieve all players.EF gathers all players from db as a list 
+        //retrieve all players.EF gathers all players from db
+        //must convert from IEnumerable to a List in Controller if front end needs indexing
         public IEnumerable<Player> GetAllPlayers()
         {
             return _dbContext.Player.ToList();

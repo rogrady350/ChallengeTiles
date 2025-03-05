@@ -74,7 +74,7 @@ namespace ChallengeTiles.Server.Services
             game.PickUpTile(playerId);
         }
 
-        //status of Tile
+        //result of place Tile on board
         public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
         {
             var response = new ServiceResponse<string>();
@@ -128,11 +128,13 @@ namespace ChallengeTiles.Server.Services
             return response;
         }
 
-        //method get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly
+        //method to get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly
         public Game GetGameById(int gameId)
         {
-            var game = _gameRepository.GetGameById(gameId);
+            Game game = _gameRepository.GetGameById(gameId);
             return game;
         }
+
+        //get all games
     }
 }

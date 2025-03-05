@@ -52,6 +52,9 @@ namespace ChallengeTiles.Server.Data
             return game;
         }
 
+        //retrieve all games
+
+
         //save game updates (no current situations need updating but will have for possible future needs)
         public void UpdateGame(Game game)
         {

@@ -2,6 +2,7 @@
 using ChallengeTiles.Server.Data;
 using ChallengeTiles.Server.Helpers;
 using ChallengeTiles.Server.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChallengeTiles.Server.Services
 {
@@ -59,6 +60,15 @@ namespace ChallengeTiles.Server.Services
                 return response;
             }
 
+            //email format check
+            if (!new EmailAddressAttribute().IsValid(email))
+            {
+                response.Success = false;
+                response.Message = "Please enter a vaild email address";
+                return response;
+            }
+
+            //already used email
             if(_playerRepository.GetPlayerByName(email) != null)
             {
                 response.Success = false;
@@ -82,7 +92,7 @@ namespace ChallengeTiles.Server.Services
             //call method to validate repsonse
             ServiceResponse<Player> response = ValidateInput(username, password, email, name);
             
-            //if validation fales return failure reponse
+            //if validation fails return failure reponse
             if (!response.Success) return response;
 
             string hashedPassword = HashPassword(password);
@@ -99,6 +109,18 @@ namespace ChallengeTiles.Server.Services
             return response;
         }
 
-       
+        //retrieve a single player (used for sorting by player)
+       public Player GetPlayer(int playerId)
+        {
+            Player player = _playerRepository.GetPlayerById(playerId);
+            return player;
+        }
+
+        //retrieve all players in db
+        public IEnumerable<Player> GetAllPlayersService()
+        {
+            IEnumerable<Player> playerList = _playerRepository.GetAllPlayers();
+            return playerList;
+        }
     }
 }
