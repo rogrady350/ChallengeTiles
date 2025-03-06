@@ -87,6 +87,7 @@ namespace ChallengeTiles.Server.Services
             return response;
         }
 
+        //create a new Player profile
         public ServiceResponse<Player> RegisterProfile(string username, string password, string email, string name)
         {
             //call method to validate repsonse
@@ -117,10 +118,12 @@ namespace ChallengeTiles.Server.Services
         }
 
         //retrieve all players in db
-        public IEnumerable<Player> GetAllPlayersService()
+        public IEnumerable<Player> GetAllPlayers()
         {
             IEnumerable<Player> playerList = _playerRepository.GetAllPlayers();
             return playerList;
         }
+
+        //no options to implement UpdatePlayer() or DeletePlayer(). Fepository methods available for future use
     }
 }

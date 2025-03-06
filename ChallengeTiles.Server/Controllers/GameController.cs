@@ -31,112 +31,97 @@ namespace ChallengeTiles.Server.Controllers
         [HttpPost("start-game")]
         public IActionResult StartNewGame([FromBody] StartGameRequest request)
         {
-             try
+            //validate numberOfColors - added for testing. swagger not seeing valid values
+            if (request.NumberOfColors <= 0 || request.NumberOfColors > Constants.availableColors.Count)
             {
-                //validate numberOfColors - added for testing. swagger not seeing valid values
-                if (request.NumberOfColors <= 0 || request.NumberOfColors > Constants.availableColors.Count)
-                {
-                    return BadRequest(new { message = "Invalid number of colors selected." });
-                }
-
-                Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
-
-                //return response with game data (GameId, relevent Player data)
-                return Ok(new
-                {
-                    gameId = game.GameId,
-                    players = game.GetPlayers().Select(p => new
-                    {
-                        playerId = p.PlayerId,
-                        nameof = p.Name,
-                    }),
-                    message = "Please select a starting player" //send message to ask user to select starting player.
-                });
+                return BadRequest(new { message = "Invalid number of colors selected." });
             }
-            catch (Exception ex)
+
+            Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
+
+            //return response with game data (GameId, relevent Player data)
+            return Ok(new
             {
-                return BadRequest(new { message = ex.Message });
-            }
+                gameId = game.GameId,
+                players = game.GetPlayers().Select(p => new
+                {
+                    playerId = p.PlayerId,
+                    nameof = p.Name,
+                }),
+                message = "Please select a starting player" //send message to ask user to select starting player.
+            });
         }
 
         //POST set the starting player: Client sends gameId selected playerId to Sever
         [HttpPost("{gameId}/set-starting-player/{playerId}")]
         public IActionResult SetStartingPlayer(int gameId, int playerId)
         {
-            try
-            {
-                _gameService.GameSetStartingPlayer(gameId, playerId);
-                return Ok(new { message = "Starting player set." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _gameService.GameSetStartingPlayer(gameId, playerId);
+            return Ok(new { message = "Starting player set." });
         }
 
-        //POST place a tile on the board - Clent sends tile the player wnts to place on board
+        //POST place a tile on the board - Client sends tile the player wnts to place on board
+        //Return's resulting message based on placement verification
         [HttpPost("{gameId}/player-place-tile/{playerId}")]
-        public IActionResult PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
+        public ActionResult<ServiceResponse<string>> PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
-            try
-            {
-                ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
-                
-                if (!response.Success)
-                {
-                    return BadRequest(new {message = response.Message});
-                }
+            ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
 
-                return Ok(response);
-            }
-            catch (Exception ex)
+            if (!response.Success)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new { message = response.Message });
             }
+
+            return Ok(response);
         }
 
         //POST pick up a tile from the TileDeck - Client sends request to pick up Tile from TileDeck
         [HttpPost("{gameId}/pick-up-tile")]
         public IActionResult PlayerPickUpTile(int gameId, [FromBody] PickUpTileRequest request)
         {
-            try
-            {
-                _gameService.PlayerPickUpTile(gameId, request.PlayerId);
+            _gameService.PlayerPickUpTile(gameId, request.PlayerId);
 
-                return Ok(new { message = "Tile picked up successfully." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            return Ok(new { message = "Tile picked up successfully." });
         }
 
         //GET - Server sends state of current game objects to client for rendering
         [HttpGet("{gameId}/game-state")]
-        public IActionResult GetGameState(int gameId)
+        public ActionResult<object> GetGameState(int gameId)
         {
-            try
-            {
-                Game game = _gameService.GetGameById(gameId);
+            Game game = _gameService.GetGameById(gameId);
 
-                if (game == null)
-                    return NotFound(new { message = $"Game not found" });
+            if (game == null)
+                return NotFound(new { message = $"Game not found" });
 
-                //sent game info to front end
-                return Ok(new
-                {
-                    gameId = game.GameId,
-                    players = game.GetPlayers(),
-                    hands = game.Hands,
-                    tileDeck = game.TileDeck,
-                    gameBoard = game.GameBoard,
-                    currentScore = game.Score
-                });
-            }
-            catch (Exception ex)
+            //sent game info to front end
+            return Ok(new
             {
-                return BadRequest(new { message = ex.Message });
+                gameId = game.GameId,
+                players = game.GetPlayers(),
+                hands = game.Hands,
+                tileDeck = game.TileDeck,
+                gameBoard = game.GameBoard,
+                currentScore = game.Score
+            });
+        }
+
+        //GET retrieve a single game(not currently needed)
+
+
+        //GET retrieve list of games (not needed at this time. available for future use)
+        //service returns IEnumerable, client specifies if it needs a list for indexing in query param
+        [HttpGet("games")]
+        public ActionResult<IEnumerable<Game>> GetGames([FromQuery] bool asList = false)
+        {
+            var games = _gameService.GetAllGames();
+
+            //convert to list if requested
+            if (asList)
+            {
+                return Ok(games.ToList());
             }
+
+            return Ok(games);
         }
     }
 }

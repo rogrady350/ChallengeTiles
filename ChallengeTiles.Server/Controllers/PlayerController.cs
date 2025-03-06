@@ -1,5 +1,6 @@
 ﻿using ChallengeTiles.Server.Data;
 using ChallengeTiles.Server.Models;
+using ChallengeTiles.Server.Models.DTO;
 using ChallengeTiles.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,48 @@ namespace ChallengeTiles.Server.Controllers
         //constructor
         public PlayerController(PlayerService playerService)
         {
-            
+            _playerService = playerService;
         }
 
-        
+        //POST registers a new player
+        [HttpPost("register-player")]
+        public IActionResult RegisterNewPlayer([FromBody] RegisterPlayerRequest request)
+        {
+            //validate requirements. return error message from Register player request if invalid input
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = _playerService.RegisterProfile(request.UserName, request.Password, request.Name, request.Email);
+
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        //GET single player (not needed at this time)
+
+
+        //GET retrieve list of players
+        //service returns IEnumerable, client specifies if it needs a list for indexing in query param
+        [HttpGet("players")]
+        public ActionResult<IEnumerable<Player>> GetPlayers([FromQuery] bool asList = false)
+        {
+            var players = _playerService.GetAllPlayers();
+
+            //convert to list if requested
+            if (asList)
+            {
+                return Ok(players.ToList());
+            }
+
+            return Ok(players);
+        }
+
+        //no services created to upldate(PUT) or delete (DELETE). Repository methods available for future use
     }
 }

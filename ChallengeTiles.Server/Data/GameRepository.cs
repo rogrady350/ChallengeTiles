@@ -15,6 +15,7 @@ namespace ChallengeTiles.Server.Data
             _dbContext = dbContext;
         }
 
+        //new record in game table
         public void CreateGame(Game game, int numberOfColors, int numberOfTiles, List<Player> players)
         {
             //get values for number of tiles and colors set in game
@@ -43,7 +44,7 @@ namespace ChallengeTiles.Server.Data
         //retrieve a game by id
         public Game GetGameById(int gameId)
         {
-            Game? game = _dbContext.Game
+            var game = _dbContext.Game
                 .AsNoTracking() //not modifying fetched entity, improve performance since no tracking needed for read operations.
                 .Include(g => g.Hands)  //include the related hands
                 .ThenInclude(h => h.Player)  //include the related players
@@ -52,8 +53,11 @@ namespace ChallengeTiles.Server.Data
             return game;
         }
 
-        //retrieve all games
-
+        //retrieve all games (no current situations need all games but will have for possible future needs)
+        public IEnumerable<Game> GetAllGames()
+        {
+            return _dbContext.Game.ToList();
+        }
 
         //save game updates (no current situations need updating but will have for possible future needs)
         public void UpdateGame(Game game)

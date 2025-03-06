@@ -1,6 +1,7 @@
 ﻿using ChallengeTiles.Server.Data;
 using ChallengeTiles.Server.Helpers;
 using ChallengeTiles.Server.Models;
+using ChallengeTiles.Server.Models.DTO;
 using ChallengeTiles.Server.Models.GameLogic;
 
 namespace ChallengeTiles.Server.Services
@@ -131,10 +132,53 @@ namespace ChallengeTiles.Server.Services
         //method to get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly
         public Game GetGameById(int gameId)
         {
-            Game game = _gameRepository.GetGameById(gameId);
+            Game game = _gameRepository.GetGameById(gameId); //retrieve game by id
             return game;
         }
 
-        //get all games
+        //get all games in db (not needed at this time, available for future use)
+        public IEnumerable<Game> GetAllGames()
+        {
+            IEnumerable<Game> gameList = _gameRepository.GetAllGames();
+            return gameList;
+        }
+
+        //method to retrieve relevent game info for viewing
+        public GameInfo GetGameDetails(int gameId)
+        {
+            //get game info from db (includes associated players and hands)
+            var game = _gameRepository.GetGameById(gameId);
+       
+            //game not found
+            if (game == null)
+            {
+                return null;
+            }
+
+            //map game data
+            GameInfo gameInfo = new GameInfo
+            {
+                GameId = game.GameId,
+                //map players associated with game
+                Players = game.Hands.Select(h => new PlayerGameInfo
+                {
+                    PlayerId = h.PlayerId,
+                    Name = h.Player.Name,
+                    //map hands associated with players
+                    Hands = new List<HandGameInfo>
+                    {
+                        //map hand info
+                        new HandGameInfo
+                        {
+                            HandId = h.HandId,
+                            Tiles = h.Tiles
+                        }
+
+                    }
+                }).ToList()
+            };
+
+            return gameInfo;
+        }
     }
 }

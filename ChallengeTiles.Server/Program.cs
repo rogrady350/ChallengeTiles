@@ -76,6 +76,7 @@ namespace ChallengeTiles.Server
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers(); //maps routes
+            app.UseMiddleware<ExceptionMiddleware>(); //global exception handling
 
             //6.2. enable swagger in dev
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment

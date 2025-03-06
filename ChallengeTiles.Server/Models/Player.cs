@@ -22,8 +22,8 @@ namespace ChallengeTiles.Server.Models
 
             Username = username;
             Password = password;
-            Email = email;
             Name = name;
+            Email = email;
             Hands = new List<Hand>();  //initialize collection
         }
 
@@ -39,11 +39,11 @@ namespace ChallengeTiles.Server.Models
         public string Password { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         //1:n relationship. Each player gets 1 Hand per game
         public List<Hand> Hands { get; private set; }

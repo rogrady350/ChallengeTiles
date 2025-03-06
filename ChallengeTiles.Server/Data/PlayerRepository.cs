@@ -14,7 +14,7 @@ namespace ChallengeTiles.Server.Data
             _dbContext = dbContext;
         }
 
-        //create a new profile
+        //create a new profile (new record in Player table)
         public void CreateProfile(Player player)
         {
             _dbContext.Player.Add(player);
