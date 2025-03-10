@@ -48,7 +48,7 @@ namespace ChallengeTiles.Server.Controllers
         //GET single player (not needed at this time)
 
 
-        //GET retrieve list of players
+        //GET retrieve list of players (Server side for GameSetupService.js getPlayers)
         //service returns IEnumerable, client specifies if it needs a list for indexing in query param
         [HttpGet("players")]
         public ActionResult<IEnumerable<Player>> GetPlayers([FromQuery] bool asList = false)
@@ -64,6 +64,6 @@ namespace ChallengeTiles.Server.Controllers
             return Ok(players);
         }
 
-        //no services created to upldate(PUT) or delete (DELETE). Repository methods available for future use
+        //no services created to update(PUT) or delete (DELETE). Repository methods available for future use
     }
 }

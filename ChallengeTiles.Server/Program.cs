@@ -33,7 +33,7 @@ namespace ChallengeTiles.Server
 
             //3. configure CORS policy
             /*read allowed origins from env variable
-             ALLOWED_ORIGINS set in AWS Lambda or EC2 to switch allowed frontend URLs*/
+             ALLOWED_ORIGINS set in AWS Lambda to switch allowed frontend URLs*/
             var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
                                ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                                ?? new[] { "http://localhost:63304" };
@@ -47,7 +47,6 @@ namespace ChallengeTiles.Server
                         policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader();
                     });
             });
-
 
             //4. add services to the container
             //4.1 add repositories

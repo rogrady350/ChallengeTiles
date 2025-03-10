@@ -1,1 +1,0 @@
-//handles authentication (login/logout)

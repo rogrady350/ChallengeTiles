@@ -27,29 +27,64 @@ namespace ChallengeTiles.Server.Controllers
             _gameService = gameService;
         }
 
-        //POST start a new game
+        //POST start a new game (Server side for GameSetupService.js startNewGame)
         [HttpPost("start-game")]
         public IActionResult StartNewGame([FromBody] StartGameRequest request)
         {
-            //validate numberOfColors - added for testing. swagger not seeing valid values
-            if (request.NumberOfColors <= 0 || request.NumberOfColors > Constants.availableColors.Count)
-            {
-                return BadRequest(new { message = "Invalid number of colors selected." });
-            }
-
             Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
 
-            //return response with game data (GameId, relevent Player data)
+            /*return response with game data (GameId, relevent Player data)
+             CreatedAtAction returns to client
+                a 201 Create HTTP response,
+                a Location header with URL to newly created games*/
+            return CreatedAtAction(nameof(GetGameById), new { id = game.GameId }, new
+            {
+                gameId = game.GameId,
+                players = game.GetPlayers().Select(p => new
+                {
+                    playerId = p.PlayerId,
+                    name = p.Name,
+                }),
+                message = "Please select a starting player" //send message to ask user to select starting player.
+            });
+        }
+
+        //GET retrieve a Game by its id (called in StartNewGame to send newly created Game databack to client)
+        [HttpGet("{id}")]
+        public IActionResult GetGameById(int id)
+        {
+            var game = _gameService.GetGameById(id);
+            if (game == null)
+            {
+                return NotFound();
+            }
+
             return Ok(new
             {
                 gameId = game.GameId,
                 players = game.GetPlayers().Select(p => new
                 {
                     playerId = p.PlayerId,
-                    nameof = p.Name,
+                    name = p.Name,
                 }),
-                message = "Please select a starting player" //send message to ask user to select starting player.
+                tileDeck = game.TileDeck
             });
+        }
+
+        //GET retrieve list of games (not needed at this time. available for future use)
+        //service returns IEnumerable, client specifies if it needs a list for indexing in query param
+        [HttpGet("games")]
+        public ActionResult<IEnumerable<Game>> GetGames([FromQuery] bool asList = false)
+        {
+            var games = _gameService.GetAllGames();
+
+            //convert to list if requested
+            if (asList)
+            {
+                return Ok(games.ToList());
+            }
+
+            return Ok(games);
         }
 
         //POST set the starting player: Client sends gameId selected playerId to Sever
@@ -103,25 +138,6 @@ namespace ChallengeTiles.Server.Controllers
                 gameBoard = game.GameBoard,
                 currentScore = game.Score
             });
-        }
-
-        //GET retrieve a single game(not currently needed)
-
-
-        //GET retrieve list of games (not needed at this time. available for future use)
-        //service returns IEnumerable, client specifies if it needs a list for indexing in query param
-        [HttpGet("games")]
-        public ActionResult<IEnumerable<Game>> GetGames([FromQuery] bool asList = false)
-        {
-            var games = _gameService.GetAllGames();
-
-            //convert to list if requested
-            if (asList)
-            {
-                return Ok(games.ToList());
-            }
-
-            return Ok(games);
         }
     }
 }

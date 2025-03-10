@@ -1,6 +1,7 @@
 //game specific api calls
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; //set in .env file
-console.log("Backend URL:", API_BASE_URL); //show which url is currently being used in console
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; //url based on env
+
+
 
 export const fetchTiles = async () => {
     try {
