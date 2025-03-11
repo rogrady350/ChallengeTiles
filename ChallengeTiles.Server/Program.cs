@@ -36,15 +36,17 @@ namespace ChallengeTiles.Server
              ALLOWED_ORIGINS set in AWS Lambda to switch allowed frontend URLs*/
             var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
                                ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                               ?? new[] { "http://localhost:63304" };
+                               ?? new[] { "https://localhost:63304" };
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend",
                     policy =>
                     {
-                        // Load allowed origins from config
-                        policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader();
+                        policy.WithOrigins(allowedOrigins)
+                              .AllowAnyMethod()
+                              .AllowAnyHeader()
+                              .AllowCredentials(); //cookies, authentication
                     });
             });
 

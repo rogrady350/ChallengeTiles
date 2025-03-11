@@ -7,7 +7,7 @@ console.log("Backend URL:", API_URL); //show which url is currently being used i
 //GET retrieve list of players (Client side for PlayerController.cs GetPlayers)
 export const getPlayers = async () => {
     try {
-        const response = await fetch(`${API_URL}/players?asList=false`);
+        const response = await fetch(`${API_URL}/Player/players?asList=false`);
         if (!response.ok) {
             throw new Error("Failed to fetch players");
         }
@@ -21,7 +21,7 @@ export const getPlayers = async () => {
 //POST start a new game (Client side for GameController StartNewGame)
 export const startNewGame = async (gameData) => {
     try {
-        const response = await fetch(`${API_URL}/games/start-game`, {
+        const response = await fetch(`${API_URL}/Game/start-game`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

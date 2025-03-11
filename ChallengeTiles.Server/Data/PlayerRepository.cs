@@ -17,40 +17,40 @@ namespace ChallengeTiles.Server.Data
         //create a new profile (new record in Player table)
         public void CreateProfile(Player player)
         {
-            _dbContext.Player.Add(player);
+            _dbContext.Players.Add(player);
             _dbContext.SaveChanges();
         }
 
         //retrieve player by id
         public Player GetPlayerById(int playerId)
         {
-            return _dbContext.Player.FirstOrDefault(p => p.PlayerId == playerId);
+            return _dbContext.Players.FirstOrDefault(p => p.PlayerId == playerId);
         }
 
         //retrieve player by name
         public Player GetPlayerByUsername(string username)
         {
-            return _dbContext.Player.FirstOrDefault(p => p.Username == username);
+            return _dbContext.Players.FirstOrDefault(p => p.Username == username);
         }
 
         //retrieve player by Name
         public Player GetPlayerByName(string name)
         {
-            return _dbContext.Player.FirstOrDefault(p => p.Name == name);
+            return _dbContext.Players.FirstOrDefault(p => p.Name == name);
         }
 
         //retrieve all players.EF gathers all players from db
         //must convert from IEnumerable to a List in Controller if front end needs indexing
         public IEnumerable<Player> GetAllPlayers()
         {
-            return _dbContext.Player.ToList();
+            return _dbContext.Players.ToList();
         }
 
         //update player profile (only updates modified fields)
         //(future use - no option to edit and update profile in initial release)
         public void UpdatePlayer(Player updatedPlayer, int playerId)
         {
-            Player player = _dbContext.Player.Find(playerId);
+            Player player = _dbContext.Players.Find(playerId);
             //make sure player exists before trying update
             if (player == null)
             {
@@ -70,7 +70,7 @@ namespace ChallengeTiles.Server.Data
         //(future use - no option to delete profile in initial release)
         public void DeletePlayer(int playerId)
         {
-            Player player = _dbContext.Player.Find(playerId);
+            Player player = _dbContext.Players.Find(playerId);
 
             if (player != null)
             {
