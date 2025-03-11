@@ -19,8 +19,13 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //default no args constructor for EF
         public Game() 
         {
-           //initialize collection - ensure EF core handles the Game - Hand relationship
+           //initialize objects
             Hands = new List<Hand>();
+            GameBoard = new GameBoard();
+            TileDeck = new TileDeck(2);
+            Deal = new Deal(TileDeck);
+            _playerHands = new Dictionary<int, Hand>();
+            Score = 0;
         }
 
         //main constructor with all game settings
