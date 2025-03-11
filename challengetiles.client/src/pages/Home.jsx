@@ -29,7 +29,7 @@ const Home = () => {
     //function to start a new game when Play Game button clicked
     const startGame = async () => {
         //validate all selections are made. numColors and numTiles have default recommended values used if not changed by user
-        if (!player1 || player2) {
+        if (!player1 || !player2) {
             setMessage("Please select two players.");
             return;
         }
