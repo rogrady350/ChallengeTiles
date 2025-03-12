@@ -1,6 +1,6 @@
 ﻿namespace ChallengeTiles.Server.Models.DTO
 {
-    public class HandGameInfo
+    public class HandDTO
     {
         //data needed for displying Hands, organized by game
         public int HandId { get; set; }

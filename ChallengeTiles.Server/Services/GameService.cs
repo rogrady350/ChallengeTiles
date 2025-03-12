@@ -144,7 +144,7 @@ namespace ChallengeTiles.Server.Services
         }
 
         //method to retrieve relevent game info for viewing
-        public GameInfo GetGameDetails(int gameId)
+        public GameDTO GetGameDetails(int gameId)
         {
             //get game info from db (includes associated players and hands)
             var game = _gameRepository.GetGameById(gameId);
@@ -156,19 +156,19 @@ namespace ChallengeTiles.Server.Services
             }
 
             //map game data
-            GameInfo gameInfo = new GameInfo
+            GameDTO gameInfo = new GameDTO
             {
                 GameId = game.GameId,
                 //map players associated with game
-                Players = game.Hands.Select(h => new PlayerGameInfo
+                Players = game.Hands.Select(h => new PlayerDTO
                 {
                     PlayerId = h.PlayerId,
                     Name = h.Player.Name,
                     //map hands associated with players
-                    Hands = new List<HandGameInfo>
+                    Hands = new List<HandDTO>
                     {
                         //map hand info
-                        new HandGameInfo
+                        new HandDTO
                         {
                             HandId = h.HandId,
                             Tiles = h.Tiles
