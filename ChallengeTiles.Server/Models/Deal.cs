@@ -20,7 +20,7 @@
         }
 
         //deal tile to player
-        public void DealTile(Player player, int gameId)
+        public void DealTile(Player player, int gameId, Dictionary<int, Hand> playerHands)
         {
             //avoid dealing from empty deck.
             if (TileDeck.GetTileCount() == 0)
@@ -28,16 +28,14 @@
                 throw new InvalidOperationException("No more tiles available to deal.");
             }
 
-            //find the player's hand for the given game
-            Hand? playerHand = player.Hands.FirstOrDefault(h => h.GameId == gameId);
-            if (playerHand == null)
+            //retrieve hand from dictionary (dictionary modified during game play, database only holds initial Hand data)
+            if (!playerHands.TryGetValue(player.PlayerId, out Hand? playerHand) || playerHand == null)
             {
-                throw new InvalidOperationException($"Player does not have a hand for Game {gameId}.");
+                throw new InvalidOperationException($"Player {player.PlayerId} does not have a hand for Game {gameId}.");
             }
 
-            //remove tile from deck and add to player's hand
-            Tile tile = TileDeck.RemoveTile(0);
-            playerHand.AddTile(tile);
+            Tile tile = TileDeck.RemoveTile(0); //remove Tile from deck
+            playerHand.AddTile(tile);           //add to dictionary used for Hand during game play
         }
 
         //player draws a tile from the deck when they have no playable tiles

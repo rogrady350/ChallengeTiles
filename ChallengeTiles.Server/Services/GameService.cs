@@ -45,7 +45,7 @@ namespace ChallengeTiles.Server.Services
             //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
             game.DealTiles(numberOfTiles * playerIds.Count);
 
-            //6.update database with populated Hands
+            //6.update database with initial populated Hands
             _gameRepository.UpdateGameHands(game);
 
             return game;

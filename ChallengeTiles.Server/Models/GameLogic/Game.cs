@@ -92,6 +92,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //add players to the game through hand: takes list of players, number of tiles chosen for the hand, and the Deck of tiles being played with
         public void AddPlayers(List<Player> players, int tilesPerPlayer, TileDeck tileDeck)
         {
+            Console.WriteLine($"Adding {players.Count} players..."); //debug
+
             foreach (Player player in players)
             {
                 var initialHand = new List<Tile>(); //create an initially empty Hand
@@ -104,6 +106,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
                 Hands.Add(hand); //add Hand to the Game's list of Hands
                 _playerHands[player.PlayerId] = hand; //add Hand to dictionary
+
+                Console.WriteLine($"Added Player {player.PlayerId} to _playerHands."); //debug
             }
         }
 
@@ -111,13 +115,16 @@ namespace ChallengeTiles.Server.Models.GameLogic
         public void DealTiles(int totalTilesToDeal)
         {
             int currentPlayerIndex = 0; //set index to first player initially
+            List<int> playerIds = _playerHands.Keys.ToList(); //extract playerId values from _playerHands dictionary
+
             for (int i = 0; i < totalTilesToDeal; i++)
             {
                 //get the current player (alternating through the players in the Hands list)
-                Player currentPlayerDeal = Hands[currentPlayerIndex].Player;
+                int currentPlayerId = playerIds[currentPlayerIndex];         //index of current player
+                Player currentPlayer = _playerHands[currentPlayerId].Player; //player with that index
 
                 //call DealTile from the Deal class to deal one tile to the current player's hand
-                Deal.DealTile(currentPlayerDeal, this.GameId);
+                Deal.DealTile(currentPlayer, this.GameId, _playerHands);
 
                 //alternate to the next player
                 currentPlayerIndex = (currentPlayerIndex + 1) % Hands.Count;
