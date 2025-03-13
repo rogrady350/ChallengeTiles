@@ -1,4 +1,4 @@
-//Service to make GET requests to backend
+//Service to make requests to backend when starting a new game
 
 const API_URL = import.meta.env.VITE_API_URL; //gets url based on dev or production environment
 //manage API calls for starting a new game (done from Home page)

@@ -1,11 +1,19 @@
+//Game landing page
+
+//css
 import "../styles/Home.css";
+
+//Hooks: React functions that allow you to use state and other React features inside components
+/*useEffect: handles side effects (things that happen outside React)
+  useState: watches for change and re-renders page. format: const [value, setValue] = useState(initialValue);*/
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; //allows page navigation
+
+//services
 import gameSetupService from '../services/gameSetupService';
 
 const Home = () => {
     //values to be set for game
-    //useState watches for change and re-renders page. format: const [value, setValue] = useState(initialValue);
     const [players, setPlayers] = useState([]);
     const [player1, setPlayer1] = useState('');
     const [player2, setPlayer2] = useState('');
@@ -15,16 +23,15 @@ const Home = () => {
     const navigate = useNavigate();                //initialize React Router navigation feature
 
     //fetch players from backend on page load
-    //useEffect handles side effects (things that happen outside React)
     useEffect(() => {
-        gameSetupService.getPlayers() //call API function to get list of players
+        gameSetupService.getPlayers() //call API function from to get list of players for drop downs
             .then(response => {
-                setPlayers(response || []); //render drop downs with Player's
+                setPlayers(response || []); //up state with Player's userId's from response if true, empty array if false
             })
             .catch(error => {
                 console.error("Error fetching players", error);
             });
-    }, []);
+    }, []); //run component once
 
     //function to start a new game when Play Game button clicked
     const startGame = async () => {
@@ -42,10 +49,10 @@ const Home = () => {
         };
 
         try {
-            //call API function to start a new game
+            //call API function to start a new game when
             const response = await gameSetupService.startNewGame(requestBody);
 
-            //redirect to newly created game, display returned messages on new page load
+            //redirect to newly created game, display returned messages passed in state on new page load
             navigate(`/game/${response.gameId}`, { state: { message: response.message } });
         } catch (error) {
             console.error("Error starting game:", error); //debug message if game does not start
