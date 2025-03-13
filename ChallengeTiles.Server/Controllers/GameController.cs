@@ -119,25 +119,16 @@ namespace ChallengeTiles.Server.Controllers
             return Ok(new { message = "Tile picked up successfully." });
         }
 
-        //GET - Server sends state of current game objects to client for rendering
+        //GET - Server sends state of current game objects to client
         [HttpGet("{gameId}/game-state")]
         public ActionResult<object> GetGameState(int gameId)
         {
-            Game game = _gameService.GetGameById(gameId);
+            GameStateDTO gameState = _gameService.GetGameState(gameId);
 
-            if (game == null)
-                return NotFound(new { message = $"Game not found" });
+            if (gameState == null)
+                return NotFound(new { message = "Game not found" });
 
-            //sent game info to front end
-            return Ok(new
-            {
-                gameId = game.GameId,
-                players = game.GetPlayers(),
-                hands = game.Hands,
-                tileDeck = game.TileDeck,
-                gameBoard = game.GameBoard,
-                currentScore = game.Score
-            });
+            return Ok(gameState);
         }
     }
 }

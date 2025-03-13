@@ -143,7 +143,7 @@ namespace ChallengeTiles.Server.Services
             return gameList;
         }
 
-        //method to retrieve relevent game info for viewing
+        //method to retrieve relevent game info for viewing on stats page
         public GameDTO GetGameDetails(int gameId)
         {
             //get game info from db (includes associated players and hands)
@@ -173,12 +173,62 @@ namespace ChallengeTiles.Server.Services
                             HandId = h.HandId,
                             Tiles = h.Tiles
                         }
-
                     }
                 }).ToList()
             };
 
             return gameInfo;
+        }
+
+        //retrieve current states of Game object for frontend
+        public GameStateDTO GetGameState(int gameId)
+        {
+            Game game = GetGameById(gameId);
+            if (game == null)
+            {
+                return null;
+            }
+
+            GameStateDTO gameState = new GameStateDTO
+            {
+                GameId = game.GameId,
+                Players = game.Hands.Select(h => new PlayerDTO
+                {
+                    PlayerId = h.PlayerId,
+                    Name = h.Player.Name
+                }).ToList(),
+                Hands = game.Hands.Select(h => new GameHandDTO
+                {
+                    HandId = h.HandId,
+                    HandTiles = h.HandTiles?.Select(t => new TileDTO
+                    {
+                        TileId = t.Id,
+                        Number = t.Number,
+                        Color = t.Color,
+                        ImageUrl = t.TileImageUrl
+                    }).ToList() ?? new List<TileDTO>() //handle empty list before deal
+                }).ToList(),
+                TileDeck = game.TileDeck.Tiles.Select(t => new TileDTO
+                {
+                    TileId = t.Id,
+                    Number = t.Number,
+                    Color = t.Color,
+                    ImageUrl = t.TileImageUrl
+                }).ToList(),
+                GameBoard = game.GameBoard.PlacedTiles.Select(p => new TilePlacementDTO
+                {
+                    Tile = new TileDTO
+                    {
+                        TileId = p.Tile.Id,
+                        Number = p.Tile.Number,
+                        Color = p.Tile.Color,
+                        ImageUrl = p.Tile.TileImageUrl
+                    }
+                }).ToList(),
+                CurrentScore = game.Score
+            };
+
+            return gameState;
         }
     }
 }

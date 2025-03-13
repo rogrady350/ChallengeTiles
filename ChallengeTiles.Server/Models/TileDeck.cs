@@ -3,11 +3,9 @@
     public class TileDeck
     {
         //attributes
-        private readonly List<Tile> _tiles;   //List of tiles that will be available for play
+        public List<Tile> Tiles { get; private set; }   //List of tiles that will be available for play
         private readonly int _playedColorsCount; //number of colors being played (will be set by user when playing)
-
-        //list of all colors that can be played
-        private readonly List<string> availableColors = Constants.availableColors;
+        private readonly List<string> availableColors = Constants.availableColors; //list of all colors that can be played
 
         //constants for min and max values of tiles
         private const int TileMin = Constants.TileMin;
@@ -16,7 +14,7 @@
         //Deck constructor
         public TileDeck(int playedColorsCount)
         {
-            _tiles = new List<Tile>(); //create list of tiles being played
+            Tiles = new List<Tile>(); //create list of tiles being played
             _playedColorsCount = playedColorsCount;
         }
 
@@ -34,7 +32,7 @@
             {
                 for (int number = TileMin; number <= TileMax; number++)
                 {
-                    _tiles.Add(new Tile(id, number, color));
+                    Tiles.Add(new Tile(id, number, color));
                     id++;
                 }
             }
@@ -46,58 +44,53 @@
             Tile tempTile;
             int randomIndex;
 
-            for (int i = 0; i < _tiles.Count; i++)
+            for (int i = 0; i < Tiles.Count; i++)
             {
-                randomIndex = Random.Shared.Next(_tiles.Count);
+                randomIndex = Random.Shared.Next(Tiles.Count);
 
-                tempTile = _tiles[randomIndex];
-                _tiles[randomIndex] = _tiles[i];
-                _tiles[i] = tempTile;
+                tempTile = Tiles[randomIndex];
+                Tiles[randomIndex] = Tiles[i];
+                Tiles[i] = tempTile;
             }
         }
 
         //return a single Tile object
         public Tile GetTile(int index)
         {
-            if (index < 0 || index >= _tiles.Count)
+            if (index < 0 || index >= Tiles.Count)
                 throw new ArgumentOutOfRangeException($"{index} out of bounds");
 
-            return _tiles[index];
+            return Tiles[index];
         }
 
-        //return List all tiles available for play
-        public List<Tile> GetTiles()
-        {
-            return _tiles;
-        }
 
         //return total number of tiles being used
         public int GetTileCount()
         {
-            return _tiles.Count;
+            return Tiles.Count;
         }
 
         //Return all tiles of a specified color
         public List<Tile> FindTilesByColor(string color)
         {
-            return _tiles.Where(t => t.Color == color).ToList();
+            return Tiles.Where(t => t.Color == color).ToList();
         }
 
         //return all tiles of a specified number
         public List<Tile> FindTilesByNumber(int number)
         {
-            return _tiles.Where(t => t.Number == number).ToList();
+            return Tiles.Where(t => t.Number == number).ToList();
         }
 
         //remove a tile
         public Tile RemoveTile(int index)
         {
-            if (index < 0 || index >= _tiles.Count)
+            if (index < 0 || index >= Tiles.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
             }
-            Tile tile = _tiles[index];
-            _tiles.RemoveAt(index);
+            Tile tile = Tiles[index];
+            Tiles.RemoveAt(index);
 
             return tile;
         }
@@ -105,7 +98,7 @@
         //reset deck
         public void ResetTileDeck()
         {
-            _tiles.Clear();
+            Tiles.Clear();
             CreateTileDeck();
             ShuffleTiles();
         }
@@ -113,14 +106,14 @@
         //ToString
         public override string ToString()
         {
-            var colorSummary = _tiles
+            var colorSummary = Tiles
                 .GroupBy(t => t.Color)
                 .Select(g => $"{g.Key}: {g.Count()} tiles")
                 .ToList();
 
-            string tileList = string.Join(", ", _tiles.Select(t => t.ToString()));
-
-            return $"TileDeck with {_tiles.Count} tiles\nTiles: {tileList}";
+            string tileList = string.Join(", ", Tiles.Select(t => t.ToString()));
+                
+            return $"TileDeck with {Tiles.Count} tiles\nTiles: {tileList}";
         }
     }
 }

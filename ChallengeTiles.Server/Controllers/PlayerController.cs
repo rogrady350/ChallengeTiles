@@ -45,7 +45,7 @@ namespace ChallengeTiles.Server.Controllers
             return Ok(response);
         }
 
-        //GET single player (not needed at this time)
+        //GET single player by id (not needed at this time)
 
 
         //GET retrieve list of players (Server side for GameSetupService.js getPlayers)

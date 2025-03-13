@@ -2,7 +2,8 @@
 {
     public class TilePlacementRequest
     {
-        //GameId sent in URL in RESTful API's, have for added flexibility
+        /*used to recieve request for placing a Tile on the board from frontend (POST)
+          GameId sent in URL in RESTful API's, have for added flexibility*/
         public int GameId { get; set; }
         public int PlayerId { get; set; }
         public Tile Tile { get; set; }
