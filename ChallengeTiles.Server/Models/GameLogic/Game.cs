@@ -113,21 +113,44 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
         //alternate dealing tiles to players
         public void DealTiles(int totalTilesToDeal)
-        {
-            int currentPlayerIndex = 0; //set index to first player initially
+        {            
             List<int> playerIds = _playerHands.Keys.ToList(); //extract playerId values from _playerHands dictionary
+
+            //prevent starting game with out player
+            if (playerIds.Count == 0)
+            {
+                throw new InvalidOperationException("No players found in _playerHands.");
+            }
+
+            int currentPlayerIndex = 0; //set index to first player initially
+
+            Console.WriteLine($"_playerHands contains {playerIds.Count} players: {string.Join(", ", playerIds)}"); //debug
 
             for (int i = 0; i < totalTilesToDeal; i++)
             {
+                //alternate players to deal
+                currentPlayerIndex = currentPlayerIndex % playerIds.Count;
+
+                Console.WriteLine($"Iteration {i}: currentPlayerIndex = {currentPlayerIndex}, playerIds.Count = {playerIds.Count}");
+
                 //get the current player (alternating through the players in the Hands list)
-                int currentPlayerId = playerIds[currentPlayerIndex];         //index of current player
+                int currentPlayerId = playerIds[currentPlayerIndex]; //index of current player
+
+                //prevent dealing to a player that is not in _playerHands
+                if (!_playerHands.ContainsKey(currentPlayerId))
+                {
+                    throw new KeyNotFoundException($"Player {currentPlayerId} is missing from _playerHands.");
+                }
+
                 Player currentPlayer = _playerHands[currentPlayerId].Player; //player with that index
+
+                Console.WriteLine($"_playerHands contains {playerIds.Count} players: {string.Join(", ", playerIds)}"); //debug
 
                 //call DealTile from the Deal class to deal one tile to the current player's hand
                 Deal.DealTile(currentPlayer, this.GameId, _playerHands);
 
-                //alternate to the next player
-                currentPlayerIndex = (currentPlayerIndex + 1) % Hands.Count;
+                //increment index
+                currentPlayerIndex++;
             }
 
             //add next tile in TileDeck to center of board
