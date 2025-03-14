@@ -72,7 +72,9 @@ namespace ChallengeTiles.Server.Data
             _dbContext.Games.Update(game);
             foreach (Hand hand in game.Hands)
             {
-                _dbContext.Hands.Update(hand); //update each player's hand
+                //get hand created at start of game
+                Hand existingHand = _dbContext.Hands.FirstOrDefault(h => h.GameId == hand.GameId && h.PlayerId == hand.PlayerId);
+                _dbContext.Hands.Update(existingHand); //update each player's hand
             }
             _dbContext.SaveChanges();
         }
