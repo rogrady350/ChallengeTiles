@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Reflection.Metadata;
+using System.Text.Json;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
@@ -156,8 +157,25 @@ namespace ChallengeTiles.Server.Models.GameLogic
                 //call DealTile from the Deal class to deal one tile to the current player's hand
                 Deal.DealTile(currentPlayer, this.GameId, _playerHands);
 
+                // pass _playerHands so DealTile can modify dictionary hands
+                Deal.DealTile(currentPlayer, this.GameId, _playerHands);
+
                 //increment index
                 currentPlayerIndex++;
+            }
+
+            //make sure game.Hands and _playerHands are synced
+            foreach (var playerId in playerIds)
+            {
+                if (_playerHands.TryGetValue(playerId, out Hand dictHand))
+                {
+                    Hand dbHand = Hands.FirstOrDefault(h => h.PlayerId == playerId && h.GameId == this.GameId);
+
+                    if (dbHand != null)
+                    {
+                        dbHand.Tiles = JsonSerializer.Serialize(dictHand.HandTiles); // Store initial Tiles in DB
+                    }
+                }
             }
 
             //add next tile in TileDeck to center of board

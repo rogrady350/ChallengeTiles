@@ -54,7 +54,6 @@ namespace ChallengeTiles.Server.Data
         public Game GetGameById(int gameId)
         {
             var game = _dbContext.Games
-                .AsNoTracking() //not modifying fetched entity, improve performance since no tracking needed for read operations.
                 .Include(g => g.Hands)  //include the related hands
                 .ThenInclude(h => h.Player)  //include the related players
                 .FirstOrDefault(g => g.GameId == gameId);
@@ -78,7 +77,6 @@ namespace ChallengeTiles.Server.Data
         //save hand to db once populated
         public void UpdateGameHands(Game game)
         {
-            _dbContext.Games.Update(game);
             foreach (Hand hand in game.Hands)
             {
                 //get hand created at start of game
@@ -88,7 +86,10 @@ namespace ChallengeTiles.Server.Data
                 if (existingHand != null)
                 {
                     Console.WriteLine($"Updating hand for Player {hand.PlayerId} in Game {hand.GameId}. ExistingHand found: {existingHand != null}");
+                    Console.WriteLine($"Before update: Player {existingHand.PlayerId} in Game {existingHand.GameId}, Tiles: {existingHand.Tiles}");
                     existingHand.Tiles = hand.Tiles; //store updated Tiles
+
+                    Console.WriteLine($"After update: Player {existingHand.PlayerId} in Game {existingHand.GameId}, Tiles: {existingHand.Tiles}");
                     _dbContext.Entry(existingHand).Property(h => h.Tiles).IsModified = true; //mark as modified so EF tracks update
                     _dbContext.Hands.Update(existingHand);
                 }
@@ -100,7 +101,9 @@ namespace ChallengeTiles.Server.Data
 
             }
 
-            _dbContext.SaveChanges();
+            _dbContext.SaveChanges(); //Save all updates before updating game
+            _dbContext.Games.Update(game); //Now update the game after hands are saved
+            _dbContext.SaveChanges(); //Commit the game update;
         }
 
         public void FinalizeGame(Game game, int finalScore)
