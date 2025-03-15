@@ -23,6 +23,8 @@ namespace ChallengeTiles.Server.Services
             //1. fetch Players from DB by playerId
             var players = new List<Player>(); //list of Player Ojbects
 
+            Console.WriteLine("Fetching players");
+
             foreach (var playerId in playerIds)
             {
                 //fetch Players by Id from db to instantiate a list of Player Objects
@@ -37,15 +39,19 @@ namespace ChallengeTiles.Server.Services
             Game game = new Game(numberOfColors, numberOfTiles);
 
             //3. create both Game and Hand records in db (method handles both)
+            Console.WriteLine("Creating game");
             _gameRepository.CreateGame(game, numberOfColors, numberOfTiles, players);
 
             //4. add Players and Hands to Game object
+            Console.WriteLine("Adding players and hands to game");
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
             //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
+            Console.WriteLine("Dealing tiles");
             game.DealTiles(numberOfTiles * playerIds.Count);
 
             //6.update database with initial populated Hands
+            Console.WriteLine("Updating hands with dealt tiles");
             _gameRepository.UpdateGameHands(game);
 
             return game;

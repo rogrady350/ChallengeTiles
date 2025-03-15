@@ -25,17 +25,26 @@ namespace ChallengeTiles.Server.Data
             _dbContext.Games.Add(game); //INSERT game record in db
             _dbContext.SaveChanges(); //save record to generate a GameId
 
-            //Handle creating Hand record in here
+            //Handle creating Hand record
             foreach (Player player in players)
             {
-                //create hand for each Player and associate it with current Game
-                Hand playerHand = new Hand
-                {
-                    GameId = game.GameId,
-                    PlayerId = player.PlayerId
-                };
+                //check if the hand already exists before inserting
+                var existingHand = _dbContext.Hands
+                    .FirstOrDefault(h => h.GameId == game.GameId && h.PlayerId == player.PlayerId);
 
-                _dbContext.Hands.Add(playerHand); //INSERT hand record into db
+                Console.WriteLine("checking for existing hand");
+                if (existingHand == null)
+                {
+                    //create hand for each Player and associate it with current Game
+                    Hand playerHand = new Hand
+                    {
+                        GameId = game.GameId,
+                        PlayerId = player.PlayerId
+                    };
+
+                    Console.WriteLine("creating new hand");
+                    _dbContext.Hands.Add(playerHand);
+                }
             }
 
             _dbContext.SaveChanges(); //save changes with updated hands
@@ -74,8 +83,23 @@ namespace ChallengeTiles.Server.Data
             {
                 //get hand created at start of game
                 Hand existingHand = _dbContext.Hands.FirstOrDefault(h => h.GameId == hand.GameId && h.PlayerId == hand.PlayerId);
-                _dbContext.Hands.Update(existingHand); //update each player's hand
+
+                //update hand
+                if (existingHand != null)
+                {
+                    Console.WriteLine($"Updating hand for Player {hand.PlayerId} in Game {hand.GameId}. ExistingHand found: {existingHand != null}");
+                    existingHand.Tiles = hand.Tiles; //store updated Tiles
+                    _dbContext.Entry(existingHand).Property(h => h.Tiles).IsModified = true; //mark as modified so EF tracks update
+                    _dbContext.Hands.Update(existingHand);
+                }
+                else
+                {
+                    //this should NOT happen. logging for debugging. Confirmed not hitting else block
+                    Console.WriteLine($"WARNING: Attempted to insert a new hand for Player {hand.PlayerId} in Game {hand.GameId}");
+                }
+
             }
+
             _dbContext.SaveChanges();
         }
 
