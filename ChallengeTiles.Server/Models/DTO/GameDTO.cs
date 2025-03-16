@@ -2,8 +2,8 @@
 {
     public class GameDTO
     {
-        //used to send Game attributes to frontend
+        //used to send Game data stored in db to frontend
         public int GameId { get; set; }
-        public List<PlayerDTO> Players { get; set; } //list of Hands associated with Game
+        public List<PlayerDTO> Players { get; set; } //list of Players and their respective intial Hands associated with Game
     }
 }

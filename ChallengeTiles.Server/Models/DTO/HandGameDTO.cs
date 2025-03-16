@@ -1,8 +1,8 @@
 ﻿namespace ChallengeTiles.Server.Models.DTO
 {
-    public class GameHandDTO
+    public class HandGameDTO
     {
-        //data needed for rendering hand with using list that is updated during game play
+        //data needed for displaying Initial hands stored in db
         public int HandId { get; set; }
         public List<TileDTO> HandTiles { get; set; }
     }

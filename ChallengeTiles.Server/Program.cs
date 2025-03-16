@@ -51,22 +51,25 @@ namespace ChallengeTiles.Server
             });
 
             //4. add services to the container
-            //4.1 add repositories
+            //4.1 store active games in memopry
+            builder.Services.AddSingleton<GameStateManager>();
+            
+            //4.2 add repositories
             builder.Services.AddScoped<GameRepository>();
             builder.Services.AddScoped<PlayerRepository>();
 
-            //4.2 add services
+            //4.3 add services
             builder.Services.AddScoped<GameService>();
             builder.Services.AddScoped<PlayerService>();
 
-            //4.3 add controllers
+            //4.4 add controllers
             builder.Services.AddControllers(); //enable MVC controllers. Registers ALL controllers, dont need to individually add
             
-            //4.4 Swagger services (added from asp.net core project for testing)
+            //4.5 Swagger services (added from asp.net core project for testing)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
-            //4.5 AWS Lambda service
+            //4.6 AWS Lambda service
             builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
 
             //5. Build application

@@ -32,7 +32,7 @@ namespace ChallengeTiles.Server.Data
                 var existingHand = _dbContext.Hands
                     .FirstOrDefault(h => h.GameId == game.GameId && h.PlayerId == player.PlayerId);
 
-                Console.WriteLine("checking for existing hand");
+                Console.WriteLine($"Repository CreateGame debug - checking for existing hand for {player.PlayerId}");
                 if (existingHand == null)
                 {
                     //create hand for each Player and associate it with current Game
@@ -42,7 +42,7 @@ namespace ChallengeTiles.Server.Data
                         PlayerId = player.PlayerId
                     };
 
-                    Console.WriteLine("creating new hand");
+                    Console.WriteLine("Repository CreateGame debug - creating new hand");
                     _dbContext.Hands.Add(playerHand);
                 }
             }
@@ -77,32 +77,18 @@ namespace ChallengeTiles.Server.Data
         //save hand to db once populated
         public void UpdateGameHands(Game game)
         {
-            foreach (Hand hand in game.Hands)
+            foreach (var playerHand in game.PlayerHands.Values)
             {
                 //get hand created at start of game
-                Hand existingHand = _dbContext.Hands.FirstOrDefault(h => h.GameId == hand.GameId && h.PlayerId == hand.PlayerId);
+                Hand existingHand = _dbContext.Hands.FirstOrDefault(h => h.GameId == playerHand.GameId && h.PlayerId == playerHand.PlayerId);
 
-                //update hand
-                if (existingHand != null)
-                {
-                    Console.WriteLine($"Updating hand for Player {hand.PlayerId} in Game {hand.GameId}. ExistingHand found: {existingHand != null}");
-                    Console.WriteLine($"Before update: Player {existingHand.PlayerId} in Game {existingHand.GameId}, Tiles: {existingHand.Tiles}");
-                    existingHand.Tiles = hand.Tiles; //store updated Tiles
-
-                    Console.WriteLine($"After update: Player {existingHand.PlayerId} in Game {existingHand.GameId}, Tiles: {existingHand.Tiles}");
-                    _dbContext.Entry(existingHand).Property(h => h.Tiles).IsModified = true; //mark as modified so EF tracks update
-                    _dbContext.Hands.Update(existingHand);
-                }
-                else
-                {
-                    //this should NOT happen. logging for debugging. Confirmed not hitting else block
-                    Console.WriteLine($"WARNING: Attempted to insert a new hand for Player {hand.PlayerId} in Game {hand.GameId}");
-                }
-
+                Console.WriteLine($"GameRepository UpdateGameHands debug: +" +
+                    $" Updating hand {playerHand.HandId} for Player {playerHand.PlayerId} in Game {playerHand.GameId}. ExistingHand found: {existingHand != null}");
+                existingHand.Tiles = System.Text.Json.JsonSerializer.Serialize(playerHand.HandTiles); //store updated Tiles
+                _dbContext.Entry(existingHand).Property(h => h.Tiles).IsModified = true; //mark as modified so EF tracks update
+                _dbContext.Hands.Update(existingHand);
             }
 
-            _dbContext.SaveChanges(); //Save all updates before updating game
-            _dbContext.Games.Update(game); //Now update the game after hands are saved
             _dbContext.SaveChanges(); //Commit the game update;
         }
 

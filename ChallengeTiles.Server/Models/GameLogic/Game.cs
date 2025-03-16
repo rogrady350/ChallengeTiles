@@ -25,7 +25,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
             GameBoard = new GameBoard();
             TileDeck = new TileDeck(2);
             Deal = new Deal(TileDeck);
-            _playerHands = new Dictionary<int, Hand>();
+            PlayerHands = new Dictionary<int, Hand>();
             Score = 0;
         }
 
@@ -41,6 +41,9 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
             //initialize collection
             Hands = new List<Hand>();
+
+            //initialize dictionary for hands to be updated during game play
+            PlayerHands = new Dictionary<int, Hand>();
 
             //Deal constructor builds and shuffles TileDeck (prepares deck to be dealt)
             Deal = new Deal(TileDeck);
@@ -81,7 +84,8 @@ namespace ChallengeTiles.Server.Models.GameLogic
         public bool GameOver { get; private set; } = false; //flag for game status
 
         //dictionary for holding player hands. Allows O(1) looup time
-        private readonly Dictionary<int, Hand> _playerHands = new Dictionary<int, Hand>();  
+        [NotMapped]
+        public Dictionary<int, Hand> PlayerHands { get; private set; } = new();
 
         //game play functions
         //get players playing this game: extracts player from respective hand and adds to list of players playing
@@ -91,18 +95,17 @@ namespace ChallengeTiles.Server.Models.GameLogic
         }
 
         //add players to the game through hand: takes list of players, number of tiles chosen for the hand, and the Deck of tiles being played with
+        //make sure it is only modifying in-memory data.
         public void AddPlayers(List<Player> players, int tilesPerPlayer, TileDeck tileDeck)
         {
-            Console.WriteLine($"Adding {players.Count} players");
+            Console.WriteLine($"Game AddPlayers debug - Adding {players.Count} players");
 
             foreach (Player player in players)
             {
-                //check if the hand already exists before adding a new one
-                Hand existingHand = Hands.FirstOrDefault(h => h.PlayerId == player.PlayerId && h.GameId == this.GameId);
-
-                if (existingHand == null)
+                //remove database lookup - only modify in memory data
+                if (!PlayerHands.ContainsKey(player.PlayerId))
                 {
-                    Console.WriteLine($"Creating new hand for Player {player.PlayerId} in Game {this.GameId}");
+                    Console.WriteLine($"Creating new hand object for Player {player.PlayerId} in Game {this.GameId}");
                     var initialHand = new List<Tile>(); //create an initially empty Hand
 
                     //assign Player and Game FK's and with empty hand
@@ -111,32 +114,27 @@ namespace ChallengeTiles.Server.Models.GameLogic
                         Player = player //assign the Player object
                     };
 
-                    Hands.Add(hand); //add Hand to the Game's list of Hands
-                    _playerHands[player.PlayerId] = hand; //add Hand to dictionary
+                    PlayerHands[player.PlayerId] = hand; //add Hand to dictionary only
 
-                    Console.WriteLine($"Added Player {player.PlayerId} to _playerHands.");
-                }
-                else
-                {
-                    //if the hand already exists, just add it to the dictionary for gameplay
-                    Console.WriteLine($"Hand already exists for Player {player.PlayerId} in Game {this.GameId}, skipping creation");
-                    _playerHands[player.PlayerId] = existingHand; //ensure dictionary reference is correct
+                    Console.WriteLine($"Hand created for Player {player.PlayerId} in Game {this.GameId}");
                 }
             }
         }
 
         //alternate dealing tiles to players
-        public void DealTiles(int totalTilesToDeal)
-        {            
-            List<int> playerIds = _playerHands.Keys.ToList(); //extract playerId values from _playerHands dictionary
+        public void DealTiles(int tilesPerPlayer)
+        {
+            Console.WriteLine("Game DealTiles debug - dealing tiles");
 
-            //prevent starting game with out player
-            if (playerIds.Count == 0)
+            //prevent starting game with out players - check dictionary not db
+            if (!PlayerHands.Any())
             {
-                throw new InvalidOperationException("No players found in _playerHands.");
+                throw new InvalidOperationException("No players found in PlayerHands.");
             }
 
+            List<int> playerIds = PlayerHands.Keys.ToList(); //extract playerId values from _playerHands dictionary
             int currentPlayerIndex = 0; //set index to first player initially
+            int totalTilesToDeal = tilesPerPlayer * playerIds.Count;
 
             for (int i = 0; i < totalTilesToDeal; i++)
             {
@@ -146,36 +144,15 @@ namespace ChallengeTiles.Server.Models.GameLogic
                 //get the current player (alternating through the players in the Hands list)
                 int currentPlayerId = playerIds[currentPlayerIndex]; //index of current player
 
-                //prevent dealing to a player that is not in _playerHands
-                if (!_playerHands.ContainsKey(currentPlayerId))
+                //make sure Player associated with dictionary playerhand
+                if (PlayerHands.TryGetValue(currentPlayerId, out Hand playerHand))
                 {
-                    throw new KeyNotFoundException($"Player {currentPlayerId} is missing from _playerHands.");
+                    //pass players hand to deal method
+                    Deal.DealTile(playerHand.Player, this.GameId, PlayerHands);
                 }
-
-                Player currentPlayer = _playerHands[currentPlayerId].Player; //player with that index
-
-                //call DealTile from the Deal class to deal one tile to the current player's hand
-                Deal.DealTile(currentPlayer, this.GameId, _playerHands);
-
-                // pass _playerHands so DealTile can modify dictionary hands
-                Deal.DealTile(currentPlayer, this.GameId, _playerHands);
 
                 //increment index
                 currentPlayerIndex++;
-            }
-
-            //make sure game.Hands and _playerHands are synced
-            foreach (var playerId in playerIds)
-            {
-                if (_playerHands.TryGetValue(playerId, out Hand dictHand))
-                {
-                    Hand dbHand = Hands.FirstOrDefault(h => h.PlayerId == playerId && h.GameId == this.GameId);
-
-                    if (dbHand != null)
-                    {
-                        dbHand.Tiles = JsonSerializer.Serialize(dictHand.HandTiles); // Store initial Tiles in DB
-                    }
-                }
             }
 
             //add next tile in TileDeck to center of board
@@ -198,7 +175,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
         public void PickUpTile(int playerId)
         {
             //find hand object associated with player
-            if (!_playerHands.TryGetValue(playerId, out Hand? playerHand))
+            if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
                 if (playerHand == null)
             {
                 throw new InvalidOperationException($"Player {playerId} does not have a hand in this game.");
@@ -212,7 +189,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
         public PlacementStatus PlaceTile(int playerId, Tile tile, int x, int y)
         {
             //find hand object associated with player
-            if (!_playerHands.TryGetValue(playerId, out Hand? playerHand))
+            if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
                 throw new InvalidOperationException($"No hand found for Player {playerId}.");
 
             int tileIndex = playerHand.HandTiles.FindIndex(t => t == tile);
@@ -236,8 +213,9 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //Turn Handling
         public void NextTurn()
         {
-            //find index of current player from Hands list
-            int currentIndex = Hands.FindIndex(h => h.PlayerId == CurrentPlayerId);
+            //find index of current player from dictionary
+            List<int> playerIds = PlayerHands.Keys.ToList();
+            int currentIndex = playerIds.IndexOf(CurrentPlayerId);
 
             //safety check for invalid CurrentPlayerId
             if (currentIndex == -1)
@@ -246,19 +224,19 @@ namespace ChallengeTiles.Server.Models.GameLogic
             }
 
             //get next player index
-            int nextIndex = (currentIndex + 1) % Hands.Count;
+            int nextIndex = (currentIndex + 1) % playerIds.Count;
 
             //set iterations to 0 at start of while loop. used to prevent infinite loop
             int iterations = 0;
             //find next player with tiles (while loop chosen in anticipation of being able to play with more than 2 players in future)
-            while (Hands[nextIndex].HandTiles.Count == 0 && iterations < Hands.Count)
+            while (PlayerHands[playerIds[nextIndex]].HandTiles.Count == 0 && iterations < playerIds.Count)
             {
-                nextIndex = (nextIndex + 1) % Hands.Count; //move index to next player (moves back to current player if no other player has tiles)
+                nextIndex = (nextIndex + 1) % playerIds.Count; //move index to next player (moves back to current player if no other player has tiles)
                 iterations++; //increment iterations to only loop the amount of times as there are players
             }
 
             //if all players hands have been checked and all found to have no tiles left, end game
-            if (Hands[nextIndex].HandTiles.Count == 0)
+            if (PlayerHands[playerIds[nextIndex]].HandTiles.Count == 0)
             {
                 Console.WriteLine("Game has ended");
                 GameOver = true; //switch flag to true to signify end of game

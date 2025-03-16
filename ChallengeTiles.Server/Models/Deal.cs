@@ -19,7 +19,7 @@
             TileDeck.ShuffleTiles();
         }
 
-        //deal tile to player
+        //deal tile to player - should be adding to both db and dictionary
         public void DealTile(Player player, int gameId, Dictionary<int, Hand> playerHands)
         {
             //avoid dealing from empty deck.

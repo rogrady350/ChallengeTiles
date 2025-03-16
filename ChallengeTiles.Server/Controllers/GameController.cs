@@ -126,8 +126,12 @@ namespace ChallengeTiles.Server.Controllers
             GameStateDTO gameState = _gameService.GetGameState(gameId);
 
             if (gameState == null)
+            {
+                Console.WriteLine($"GameController debug -Game state not found for Game ID: {gameId}");
                 return NotFound(new { message = "Game not found" });
+            }
 
+            Console.WriteLine($"Game state retrieved for Game ID: {gameId}");
             return Ok(gameState);
         }
     }

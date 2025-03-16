@@ -6,6 +6,6 @@
         public int TileId { get; set; }
         public int Number { get; set; }
         public string Color { get; set; }
-        public string ImageUrl { get; set; }
+        public string TileImageUrl { get; set; }
     }
 }

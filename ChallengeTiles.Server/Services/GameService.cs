@@ -11,19 +11,20 @@ namespace ChallengeTiles.Server.Services
     {
         private readonly GameRepository _gameRepository;
         private readonly PlayerRepository _playerRepository;
-
-        public GameService(GameRepository gameRepository, PlayerRepository playerRepository)
+        private readonly GameStateManager _gameStateManager; //singleton for active games
+        public GameService(GameRepository gameRepository, PlayerRepository playerRepository, GameStateManager gameStateManager)
         {
             _gameRepository = gameRepository;
             _playerRepository = playerRepository;
+            _gameStateManager = gameStateManager;
         }
 
         public Game StartNewGame(List<int> playerIds, int numberOfColors, int numberOfTiles)
         {
-            //1. fetch Players from DB by playerId
+            //1. fetch Players from DB by playerId (selected on front end)
             var players = new List<Player>(); //list of Player Ojbects
 
-            Console.WriteLine("Fetching players");
+            Console.WriteLine("GameService StartNewGame debug 1 - Fetching players");
 
             foreach (var playerId in playerIds)
             {
@@ -36,23 +37,29 @@ namespace ChallengeTiles.Server.Services
             }
 
             //2. create a new Game instance
+            Console.WriteLine("GameService StartNewGame debug 2- Creating game object");
             Game game = new Game(numberOfColors, numberOfTiles);
 
-            //3. create both Game and Hand records in db (method handles both)
-            Console.WriteLine("Creating game");
+            //3. create both Game and Hand records in db (CreateGame method in GameRepository handles both)
+            Console.WriteLine("GameService StartNewGame debug 3- Creating game db records");
             _gameRepository.CreateGame(game, numberOfColors, numberOfTiles, players);
 
-            //4. add Players and Hands to Game object
-            Console.WriteLine("Adding players and hands to game");
+            //4. add Players and Hands to Game objects
+            Console.WriteLine("GameService StartNewGame debug 4 - Adding players and hands to game");
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
-            //5. deal the tiles (numberOfTiles is Tiles per hand. multiply by number of players playing)
-            Console.WriteLine("Dealing tiles");
-            game.DealTiles(numberOfTiles * playerIds.Count);
+            //5. deal the tiles
+            //numberOfTiles is Tiles per hand. moved multiplication calculation inside Game.cs. only send numberOfTiles now)
+            Console.WriteLine("GameService StartNewGame debug 5 - Dealing tiles");
+            game.DealTiles(numberOfTiles);
 
-            //6.update database with initial populated Hands
-            Console.WriteLine("Updating hands with dealt tiles");
+            //6. update database with initial populated Hands
+            Console.WriteLine("GameService StartNewGame debug 6 - Updating db hands with dealt tiles");
             _gameRepository.UpdateGameHands(game);
+
+            //7. store active game in memory
+            Console.WriteLine($"GameService StartNewGame debug 7 - Storing game ID {game.GameId} in active games.");
+            _gameStateManager.StoreGame(game.GameId, game);
 
             return game;
         }
@@ -189,46 +196,49 @@ namespace ChallengeTiles.Server.Services
         //retrieve current states of Game object for frontend
         public GameStateDTO GetGameState(int gameId)
         {
-            Game game = GetGameById(gameId);
+            var game = _gameStateManager.GetGame(gameId);
             if (game == null)
             {
-                return null;
+                Console.WriteLine($"GameService GameState debug - Game ID {gameId} not found in active games.");
+                return null; //return null if the game isn't in memory (gameplay should only be tracking active games)
             }
+            Console.WriteLine($"GameService GameState debug - total hands: {game.PlayerHands.Count}");
 
             GameStateDTO gameState = new GameStateDTO
             {
                 GameId = game.GameId,
-                Players = game.Hands.Select(h => new PlayerDTO
+                //store Players as a list of objects (only get id and name)
+                Players = game.PlayerHands.Values.Select(ph => new PlayerInfoDTO
                 {
-                    PlayerId = h.PlayerId,
-                    Name = h.Player.Name
+                    PlayerId = ph.PlayerId,
+                    Name = ph.Player.Name
                 }).ToList(),
-                Hands = game.Hands.Select(h => new GameHandDTO
+                Hands = game.PlayerHands.Select(ph => new HandGameDTO
                 {
-                    HandId = h.HandId,
-                    HandTiles = h.HandTiles?.Select(t => new TileDTO
+                    HandId = ph.Value.HandId, //get HandId from dictionary, not db
+                    HandTiles = ph.Value.HandTiles.Select(t => new TileDTO //convert each Tile to JSON
                     {
                         TileId = t.Id,
                         Number = t.Number,
                         Color = t.Color,
-                        ImageUrl = t.TileImageUrl
-                    }).ToList() ?? new List<TileDTO>() //handle empty list before deal
+                        TileImageUrl = t.TileImageUrl
+                    }).ToList()
                 }).ToList(),
                 TileDeck = game.TileDeck.Tiles.Select(t => new TileDTO
                 {
                     TileId = t.Id,
                     Number = t.Number,
                     Color = t.Color,
-                    ImageUrl = t.TileImageUrl
+                    TileImageUrl = t.TileImageUrl
                 }).ToList(),
-                GameBoard = game.GameBoard.PlacedTiles.Select(p => new TilePlacementDTO
+                GameBoard = game.GameBoard.PlacedTiles.Select(pt => new TilePlacementDTO
                 {
                     Tile = new TileDTO
                     {
-                        TileId = p.Tile.Id,
-                        Number = p.Tile.Number,
-                        Color = p.Tile.Color,
-                        ImageUrl = p.Tile.TileImageUrl
+                        TileId = pt.Tile.Id,
+                        Number = pt.Tile.Number,
+                        Color = pt.Tile.Color,
+                        TileImageUrl = pt.Tile.TileImageUrl
                     }
                 }).ToList(),
                 CurrentScore = game.Score

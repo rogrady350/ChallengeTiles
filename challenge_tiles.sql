@@ -48,7 +48,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Hands` (
   `HandId` INT NOT NULL AUTO_INCREMENT,
-  `Tiles` VARCHAR(45) NULL,
+  `Tiles` JSON NULL,
   `PlayerId` INT NOT NULL,
   `GameId` INT NOT NULL,
   PRIMARY KEY (`HandId`, `PlayerId`, `GameId`),
