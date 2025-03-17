@@ -67,7 +67,7 @@ namespace ChallengeTiles.Server.Services
         //set starting player to instantiate current player
         public void GameSetStartingPlayer(int gameId, int playerId)
         {
-            Game game = GetGameById(gameId);
+            Game? game = _gameStateManager.GetGame(gameId); //in memory gameId
             if (game == null)
             {
                 throw new InvalidOperationException("Game not found");
@@ -79,7 +79,7 @@ namespace ChallengeTiles.Server.Services
         //Player picks up a Tile from the TileDeck
         public void PlayerPickUpTile(int gameId, int playerId)
         {
-            Game? game = GetGameById(gameId);
+            Game? game = _gameStateManager.GetGame(gameId); //in memory gameId
             if (game == null)
             {
                 throw new InvalidOperationException($"Game {gameId} not found");
@@ -93,11 +93,12 @@ namespace ChallengeTiles.Server.Services
         {
             var response = new ServiceResponse<string>();
 
-            Game? game = GetGameById(gameId);
+            Game? game = _gameStateManager.GetGame(gameId); //in memory gameId
             if (game == null)
             {
                 response.Success = false;
                 response.Message = "Game not found";
+                Console.WriteLine($"Game {gameId} not found in memory.");
                 return response;
             }
 
@@ -145,7 +146,7 @@ namespace ChallengeTiles.Server.Services
         //method to get the game Id from repository to send to GameController. also can be used in functions rather than calling repository directly
         public Game GetGameById(int gameId)
         {
-            Game game = _gameRepository.GetGameById(gameId); //retrieve game by id
+            Game game = _gameRepository.GetGameById(gameId); //retrieve game by id from database
             return game;
         }
 
@@ -160,7 +161,7 @@ namespace ChallengeTiles.Server.Services
         public GameDTO GetGameDetails(int gameId)
         {
             //get game info from db (includes associated players and hands)
-            var game = _gameRepository.GetGameById(gameId);
+            Game game = GetGameById(gameId); //db game id
        
             //game not found
             if (game == null)
@@ -196,7 +197,7 @@ namespace ChallengeTiles.Server.Services
         //retrieve current states of Game object for frontend
         public GameStateDTO GetGameState(int gameId)
         {
-            var game = _gameStateManager.GetGame(gameId);
+            var game = _gameStateManager.GetGame(gameId); //in memory game Id
             if (game == null)
             {
                 Console.WriteLine($"GameService GameState debug - Game ID {gameId} not found in active games.");
@@ -241,7 +242,8 @@ namespace ChallengeTiles.Server.Services
                         TileImageUrl = pt.Tile.TileImageUrl
                     }
                 }).ToList(),
-                CurrentScore = game.Score
+                CurrentScore = game.Score,
+                CurrentPlayerId = game.CurrentPlayerId
             };
 
             return gameState;

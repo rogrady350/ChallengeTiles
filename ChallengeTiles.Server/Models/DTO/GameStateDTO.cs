@@ -9,5 +9,6 @@
         public List<TileDTO> TileDeck { get; set; }
         public List<TilePlacementDTO> GameBoard { get; set; }
         public int CurrentScore { get; set; }
+        public int? CurrentPlayerId { get; set; }
     }
 }

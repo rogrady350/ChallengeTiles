@@ -30,6 +30,16 @@ const GamePage = () => {
             });
     }, [gameId]); //gameId does not change, will onlly render once
 
+    //handle starting player selection
+    const handleSetStartingPlayer = async (playerId) => {
+        const response = await gameService.setStartingPlayer(gameId, playerId)
+
+        if (response) {
+            console.log("Starting player set successfully!");
+            gameService.fetchGameState(gameId).then(data => setGameState(data)); //call API function to send selected player}
+        }
+    };
+
     //loading message while building game
     if (!gameState) {
         return <div>Loading game</div>;
@@ -37,14 +47,34 @@ const GamePage = () => {
 
     return (
         <div>
-            <h2>Game #{gameId}</h2>
-            {message && <p>{message}</p>} {/*render message if back end sends one*/}
+            <h1>{message && <p>{message}</p>}</h1> {/*render welcome message*/}
 
             <h3>Score: {gameState.currentScore}</h3>
 
+            {/*display message to set starting player on game load, hide once selected*/}
+            {!gameState.currentPlayerId && (
+                <div className="starting-player-selection">
+                    <h3>Please select a starting player:</h3>
+
+                    {/*buttons to select player*/}
+                    {gameState.players.map(player => (
+                        <button key={player.playerId} onClick={() => handleSetStartingPlayer(player.playerId)}>
+                            {player.name}
+                        </button>
+                    ))}
+                </div>
+            )}
+
             <div className="players-section">
                 {gameState.players.map((player, index) => (
-                    <Hand key={player.playerId} player={player} tiles={gameState.hands[index].handTiles} />
+                    <div key={player.playerId} className="player-info">
+                        <Hand player={player} tiles={gameState.hands[index].handTiles} />
+                        {/*Show who has the current turn*/}
+                        {
+                            gameState.currentPlayerId === player.playerId &&
+                            <p className="turn-indicator">Current Turn</p>
+                        }
+                    </div>
                 ))}
             </div>
         </div>

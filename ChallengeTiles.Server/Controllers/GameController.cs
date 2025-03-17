@@ -45,7 +45,7 @@ namespace ChallengeTiles.Server.Controllers
                     playerId = p.PlayerId,
                     name = p.Name,
                 }),
-                message = "Please select a starting player" //send message to ask user to select starting player.
+                message = $"Welcome to game {game.GameId}"
             });
         }
 
@@ -87,11 +87,15 @@ namespace ChallengeTiles.Server.Controllers
             return Ok(games);
         }
 
-        //POST set the starting player: Client sends gameId selected playerId to Sever
+        //POST set the starting player: Client sends gameId, selected playerId to Sever
         [HttpPost("{gameId}/set-starting-player/{playerId}")]
         public IActionResult SetStartingPlayer(int gameId, int playerId)
         {
+            Console.WriteLine($"GameController SetStartingPlayer API called - Game ID: {gameId}, Player ID: {playerId}");
+
             _gameService.GameSetStartingPlayer(gameId, playerId);
+
+            Console.WriteLine("Starting player set successfully in backend.");
             return Ok(new { message = "Starting player set." });
         }
 
