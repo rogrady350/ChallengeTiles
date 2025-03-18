@@ -4,6 +4,7 @@ namespace ChallengeTiles.Server.Helpers
 {
     public class GameStateManager
     {
+        //dictionary for in game management
         private readonly Dictionary<int, Game> _activeGames = new Dictionary<int, Game>();
 
         public Game? GetGame(int gameId)

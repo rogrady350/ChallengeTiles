@@ -2,13 +2,17 @@
 import PropTypes from "prop-types";
 import Tile from "./Tile";
 
-const Hand = ({ player, tiles }) => {
+const Hand = ({ player, tiles, onTileClick }) => {
     return (
         <div className="player-hand">
             <h3>{player.name}</h3>
             <div className="tiles-container">
                 {tiles.map(tile => (
-                    <Tile key={tile.tileId} tile={tile} onClick={() => console.log(`Tile clicked: ${tile.number} ${tile.color}`)} />
+                    <Tile
+                        key={tile.tileId}
+                        tile={tile}
+                        onClick={() => onTileClick(tile)} //call handleTileClick when clicked
+                    />
                 ))}
             </div>
         </div>
@@ -28,6 +32,7 @@ Hand.propTypes = {
             tileImageUrl: PropTypes.string.isRequired,
         })
     ).isRequired,
+    onTileClick: PropTypes.func.isRequired,
 };
 
 export default Hand;

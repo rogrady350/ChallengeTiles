@@ -10,5 +10,6 @@
         public List<TilePlacementDTO> GameBoard { get; set; }
         public int CurrentScore { get; set; }
         public int? CurrentPlayerId { get; set; }
+        public string TileDeckImageUrl { get; set; }
     }
 }

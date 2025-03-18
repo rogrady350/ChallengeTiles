@@ -1,24 +1,32 @@
 .tiles-container {
     display: flex;
-    gap: 10px; /* Spacing between tiles */
+    gap: 10px; /*spacing between tiles*/
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .tile {
-    width: 80px; /* Adjust size as needed */
-    height: 80px; /* Ensure a square shape */
+    width: 80px;
+    height: 80px; /*square shape*/
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid black; /* Optional border */
+    border: 2px solid black; /*border*/
     background-color: white;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add some depth */
+    border-radius: 10px; /*rounded corners*/
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /*add depth*/
 }
 
-    .tile img {
-        width: 100%; /* Make sure the image fits within the tile */
-        height: 100%;
-        object-fit: contain; /* Prevents distortion */
-    }
+.tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /*prevents distortion*/
+}
+
+
+
+.deck-image {
+     width: 20px;
+     height: 80px;
+     transform: rotate(90deg);
+}

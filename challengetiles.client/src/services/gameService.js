@@ -14,7 +14,7 @@ export const fetchGameState = async (gameId) => {
     }
 };
 
-//Post - send selected starting player to server
+//POST - send selected starting player to server
 export const setStartingPlayer = async (gameId, playerId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/Game/${gameId}/set-starting-player/${playerId}`, {
@@ -31,7 +31,43 @@ export const setStartingPlayer = async (gameId, playerId) => {
     }
 }
 
+//POST - request tile from deck
+export const pickUpTile = async (gameId, playerId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Game/${gameId}/pick-up-tile`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ playerId })
+        });
+
+        if (!response.ok) throw new Error("Failed to set pick up tile")
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error picking up tile: ", error);
+        return null;
+    }
+};
+
+//POST - request tile placement in selecte position
+export const placeTile = async (gameId, playerId, tile, x, y) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Game/${gameId}/player-place-tile/${playerId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ playerId, tile, x, y }),
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error placing tile:", error);
+        return { success: false, message: "An error occurred. Please try again." };
+    }
+}
+
 export default {
     fetchGameState,
-    setStartingPlayer
+    setStartingPlayer,
+    pickUpTile,
+    placeTile
 }

@@ -243,7 +243,8 @@ namespace ChallengeTiles.Server.Services
                     }
                 }).ToList(),
                 CurrentScore = game.Score,
-                CurrentPlayerId = game.CurrentPlayerId
+                CurrentPlayerId = game.CurrentPlayerId,
+                TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png"
             };
 
             return gameState;
