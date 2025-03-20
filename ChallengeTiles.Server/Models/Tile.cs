@@ -1,14 +1,13 @@
-﻿namespace ChallengeTiles.Server.Models
+﻿using ChallengeTiles.Server.Models.DTO;
+
+namespace ChallengeTiles.Server.Models
 {
     public class Tile
     {
         //constant for bucket url
         private const string BucketUrl = Constants.BucketUrl;
 
-        //parameterless constructor if needed for EF
-        public Tile() { }
-
-        //constructor with paramaters
+        //constructor for creating new Tile for game play
         public Tile(int id, int number, string color)
         {
             //set attributes
@@ -18,6 +17,15 @@
 
             //set tile values
             SetTileImage();
+        }
+
+        //overloaded constructor for mapping from TileDTO
+        public Tile(TileDTO tileDto)
+        {
+            Id = tileDto.TileId;
+            Number = tileDto.Number;
+            Color = tileDto.Color;
+            TileImageUrl = tileDto.TileImageUrl;
         }
 
         //attributes, getters, setters (no setters for tiles, tiles immutible)
@@ -44,6 +52,7 @@
         {
             if (obj is not Tile otherTile) return false;
 
+            //should be able to compare by Id, Number, and Color, but Number and Color may be causing problems
             return Id == otherTile.Id
                 && Number == otherTile.Number
                 && Color.Equals(otherTile.Color);

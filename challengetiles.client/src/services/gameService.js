@@ -52,13 +52,24 @@ export const pickUpTile = async (gameId, playerId) => {
 //POST - request tile placement in selecte position
 export const placeTile = async (gameId, playerId, tile, x, y) => {
     try {
+        console.log("Tile being sent to backend:", tile);
+
         const response = await fetch(`${API_BASE_URL}/Game/${gameId}/player-place-tile/${playerId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ playerId, tile, x, y }),
         });
 
-        return await response.json();
+        const result = await response.json();
+
+        //update state after placement
+        if (result.success) {
+            console.log("Tile placed successfully.");
+            return await fetchGameState(gameId);  
+        }
+        //error if unsuccessful placement
+        console.error("Tile placement failed:", result.message);
+        return result;
     } catch (error) {
         console.error("Error placing tile:", error);
         return { success: false, message: "An error occurred. Please try again." };

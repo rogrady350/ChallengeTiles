@@ -189,16 +189,25 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //place Tile on GameBoard
         public PlacementStatus PlaceTile(int playerId, Tile tile, int x, int y)
         {
-            //find hand object associated with player
+            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {x}, Y: {y}");
+            
+            //check if player has a hand
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
-                throw new InvalidOperationException($"No hand found for Player {playerId}.");
+            {
+                Console.WriteLine($"Error: Player {playerId} does not have a hand.");
+                return PlacementStatus.NoHand;
+            }
 
-            int tileIndex = playerHand.HandTiles.FindIndex(t => t == tile);
+            //Compare by Tile Id. Converting DTO creates new Tile instance. Comparing by object reference will never match Tile object in players hand
+            int tileIndex = playerHand.HandTiles.FindIndex(t => t.Id == tile.Id);
             if (tileIndex < 0)
-                throw new InvalidOperationException($"{tileIndex} invalid");
+            {
+                Console.WriteLine($"Error: Tile {tile.Id} not found in player {playerId}'s hand.");
+                return PlacementStatus.TileNotFound;
+            }
 
-            //validate chosen position
-            PlacementStatus validationResult = GameBoard.ValidatePlacement(tile, x, y);
+            //validate chosen placement on Game Board
+            PlacementStatus validationResult = GameBoard.ValidatePlacement(this, playerId, tile, x, y);
             if (validationResult != PlacementStatus.Success)
             {
                 return validationResult; // Return the failure reason
@@ -208,6 +217,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
             playerHand.HandTiles.RemoveAt(tileIndex);
             GameBoard.PlaceTile(tile, x, y);
 
+            Console.WriteLine($"Tile placed successfully.");
             return PlacementStatus.Success;
         }
 

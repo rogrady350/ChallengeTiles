@@ -66,6 +66,7 @@ const GamePage = () => {
 
     //select tile to place by clicking
     const handleTileClick = (tile) => {
+        console.log("Tile selected:", tile);
         setSelectedTile(tile);
         setErrorMessage(""); //clear error on tile selection
     };
@@ -87,6 +88,7 @@ const GamePage = () => {
                 setGameState(updatedState) //refresh board with new Tile Placement
                 setSelectedTile(null) //clear selection after placement
                 setErrorMessage("") //clear errors after placement
+                console.log("Tile placed successfully. Game state updated:", updatedState);
             } else {
                 //backend sends message based on response set in GameService.PlayerPlaceTile
                 setErrorMessage(result.message)

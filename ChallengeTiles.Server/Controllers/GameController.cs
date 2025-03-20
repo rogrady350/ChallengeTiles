@@ -6,6 +6,7 @@ using ChallengeTiles.Server.Models.GameLogic;
 using ChallengeTiles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ChallengeTiles.Server.Controllers
 {
@@ -104,13 +105,41 @@ namespace ChallengeTiles.Server.Controllers
         [HttpPost("{gameId}/player-place-tile/{playerId}")]
         public ActionResult<ServiceResponse<string>> PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
-            ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, request.Tile, request.X, request.Y);
+            //debug:
+            Console.WriteLine($"GameController PlayerPlaceTile debug - Received request: gameId={gameId}, playerId={request?.PlayerId}, TileId={request?.Tile?.TileId}, X={request?.X}, Y={request?.Y}");
+            if (request == null)
+            {
+                Console.WriteLine("Error: Request body is null");
+                return BadRequest(new { message = "Request body is missing." });
+            }
+            if (request.Tile == null)
+            {
+                Console.WriteLine("Error: Tile object is missing");
+                return BadRequest(new { message = "Tile object is missing from request." });
+            }
+            //debug missing color attribute
+            if (string.IsNullOrEmpty(request.Tile.Color))
+            {
+                Console.WriteLine("Error: Tile color is missing");
+                return BadRequest(new { message = "Tile color is required." });
+            }
+
+            /*Model validation failing. ASP.NET not deserializing Tile.Color.
+              Using DTO rather than Tile object - TileDTO used in TilePlacement request to transfer Tile data from client
+              Method is both recieving and sending data
+              Convert TileDTO to Tile before passing to GameService
+              Tile object used for game logic and backend storage*/
+            Tile tile = new Tile(request.Tile);
+
+            //place tile function
+            ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, tile, request.X, request.Y);
 
             if (!response.Success)
             {
                 return BadRequest(new { message = response.Message });
             }
 
+            Console.WriteLine("Tile placed successfully.");
             return Ok(response);
         }
 
