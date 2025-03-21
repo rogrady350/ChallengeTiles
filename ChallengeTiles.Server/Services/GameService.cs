@@ -104,23 +104,7 @@ namespace ChallengeTiles.Server.Services
                 Console.WriteLine($"Game {gameId} not found in memory.");
                 return response;
             }
-
-            //1. Turn Validation
-            if (game.CurrentPlayerId == 0)
-            {
-                response.Success = false;
-                response.Message = "Please select a starting player before making a move.";
-                return response;
-            }
-
-            if (playerId != game.CurrentPlayerId)
-            {
-                response.Success = false;
-                response.Message = "It's not your turn.";
-                return response;
-            }
-
-            //2. get result of placemet attempt
+            //get result of placemet attempt
             PlacementStatus result = game.PlaceTile(playerId, tile, x, y);
 
             switch (result)

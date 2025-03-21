@@ -5,7 +5,7 @@ import Tile from "./Tile";
 import PropTypes from "prop-types";
 
 //component to display game board and placed tiles
-const GameBoard = ({ board, onTilePlacement }) => {
+const GameBoard = ({ board, onTilePlacement, currentPlayer }) => {
     const gridSize = 10; //define board size
 
     return (
@@ -18,8 +18,8 @@ const GameBoard = ({ board, onTilePlacement }) => {
                         return (
                             <div
                                 key={`${row}-${col}`}
-                                className="board-cell"
-                                onClick={() => onTilePlacement(col, row)}
+                                className={`board-cell ${currentPlayer ? "" : "disabled"}`} // Disable clicks if no current player
+                                onClick={() => currentPlayer && onTilePlacement(col, row)}
                             >
                                 {placedTile ? <Tile tile={placedTile.tile} onClick={() => onTilePlacement(col, row)} /> : null}
                             </div>
@@ -45,6 +45,7 @@ GameBoard.propTypes = {
         })
     ).isRequired,
     onTilePlacement: PropTypes.func.isRequired,
+    currentPlayer: PropTypes.number
 };
 
 export default GameBoard;

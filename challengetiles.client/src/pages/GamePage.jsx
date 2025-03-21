@@ -80,14 +80,28 @@ const GamePage = () => {
             return;
         }
 
+        //check if starting player selected
+        if (!gameState.currentPlayerId) {
+            setErrorMessage("Please select a starting player");
+            return;
+        }
+
+        //handle tile placement attempt out of turn
+        const currentPlayer = gameState.currentPlayerId;
+        if (currentPlayer !== selectedTile.playerId) {
+            setErrorMessage("Its not your turn");
+            return;
+        }
+
         try {
             const result = await gameService.placeTile(gameId, gameState.currentPlayerId, selectedTile, x, y);
 
             if (result.success) {
                 const updatedState = await gameService.fetchGameState(gameId)
+
                 setGameState(updatedState) //refresh board with new Tile Placement
-                setSelectedTile(null) //clear selection after placement
-                setErrorMessage("") //clear errors after placement
+                setSelectedTile(null)      //clear selection after placement
+                setErrorMessage("")        //clear errors after placement
                 console.log("Tile placed successfully. Game state updated:", updatedState);
             } else {
                 //backend sends message based on response set in GameService.PlayerPlaceTile
@@ -130,7 +144,11 @@ const GamePage = () => {
             )}
 
             {/*Game Board - manage tile placement*/}
-            <GameBoard board={gameState.gameBoard || []} onTilePlacement={handleTilePlacement} />
+            <GameBoard
+                board={gameState.gameBoard || []}
+                onTilePlacement={handleTilePlacement}
+                currentPlayer={gameState.currentPlayerId}
+            />
 
             {/*Player area - shows name, hand, turn*/}
             <div className="players-section">
