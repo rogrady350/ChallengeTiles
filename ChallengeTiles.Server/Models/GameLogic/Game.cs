@@ -246,7 +246,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
                 iterations++; //increment iterations to only loop the amount of times as there are players
             }
 
-            //if all players hands have been checked and all found to have no tiles left, end game
+            //end game if all players hands have been checked and all found to have no tiles left
             if (PlayerHands[playerIds[nextIndex]].HandTiles.Count == 0)
             {
                 Console.WriteLine("Game has ended");
@@ -254,7 +254,10 @@ namespace ChallengeTiles.Server.Models.GameLogic
                 return; //game over. stop further execution.
             }
 
-            CurrentPlayerId = Hands[nextIndex].PlayerId;
+            //debug - check to make sure CurrentPlayerId is updating
+            Console.WriteLine($"Game NextTurn debug - CurrentPlayerId before: {CurrentPlayerId}");
+            CurrentPlayerId = playerIds[nextIndex];
+            Console.WriteLine($"Game NextTurn debug - CurrentPlayerId after: {CurrentPlayerId}");
         }
 
         //ToString

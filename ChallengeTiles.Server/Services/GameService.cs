@@ -92,7 +92,8 @@ namespace ChallengeTiles.Server.Services
         //result of place Tile on board
         public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
         {
-            Console.WriteLine($"GameService PlayerPlace tile debug - Processing tile placement - Game ID: {gameId}, Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {x}, Y: {y}");
+            Console.WriteLine($"GameService PlayerPlace tile debug - Processing tile placement: " +
+                $"Game ID: {gameId}, Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {x}, Y: {y}");
 
             var response = new ServiceResponse<string>();
 
@@ -104,6 +105,12 @@ namespace ChallengeTiles.Server.Services
                 Console.WriteLine($"Game {gameId} not found in memory.");
                 return response;
             }
+            else
+            {
+                //debug: show what backend is sending to see if any data is missing
+                Console.WriteLine($"GameService debug - Game State - Returning state: " +
+                    $"{game.GameId}, Players: {game.PlayerHands.Count}, Hands: {game.Hands.Count}, GameOver: {game.GameOver}");
+            }
             //get result of placemet attempt
             PlacementStatus result = game.PlaceTile(playerId, tile, x, y);
 
@@ -112,7 +119,7 @@ namespace ChallengeTiles.Server.Services
                 case PlacementStatus.Success:
                     //call turn handling method to switch turns or end game
                     game.NextTurn();
-                    Console.WriteLine($"Game debug - Next turn. New current player: {game.CurrentPlayerId}");
+                    Console.WriteLine($"GameService debug - Next turn. New current player: {game.CurrentPlayerId}");
 
                     //check for end of game
                     if (game.GameOver == true)
@@ -245,6 +252,8 @@ namespace ChallengeTiles.Server.Services
                 }).ToList(),
                 GameBoard = game.GameBoard.PlacedTiles.Select(pt => new TilePlacementDTO
                 {
+                    X = pt.X,
+                    Y = pt.Y,
                     Tile = new TileDTO
                     {
                         TileId = pt.Tile.Id,
@@ -255,7 +264,8 @@ namespace ChallengeTiles.Server.Services
                 }).ToList(),
                 CurrentScore = game.Score,
                 CurrentPlayerId = game.CurrentPlayerId,
-                TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png"
+                TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png",
+                GameOver = game.GameOver
             };
 
             Console.WriteLine($"GameService GameState debug - Returning {gameState.GameBoard.Count} tiles on the board.");

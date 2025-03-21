@@ -11,7 +11,7 @@ const Hand = ({ player, tiles, onTileClick }) => {
                     <Tile
                         key={tile.tileId}
                         tile={tile}
-                        onClick={() => onTileClick(tile)} //call handleTileClick when clicked
+                        onClick={() => onTileClick(tile, player.playerId)} //call handleTileClick when clicked
                     />
                 ))}
             </div>
@@ -23,6 +23,7 @@ const Hand = ({ player, tiles, onTileClick }) => {
 Hand.propTypes = {
     player: PropTypes.shape({
         name: PropTypes.string.isRequired,
+        playerId: PropTypes.number.isRequired
     }).isRequired,
     tiles: PropTypes.arrayOf(
         PropTypes.shape({

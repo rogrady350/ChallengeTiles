@@ -65,48 +65,63 @@ const GamePage = () => {
     };
 
     //select tile to place by clicking
-    const handleTileClick = (tile) => {
-        console.log("Tile selected:", tile);
-        setSelectedTile(tile);
+    const handleTileClick = (tile, playerId) => {
+        console.log("Tile selected:", tile, "PlayerId:", playerId);
+        setSelectedTile(tile, playerId);
         setErrorMessage(""); //clear error on tile selection
     };
 
     //manage process of placing a Tile on the Game Board
     const handleTilePlacement = async (x, y) => {
         console.log(`Tile placement attempted at (${x}, ${y})`);
+        //Frontend logic checks
         //handle selecting a board position before selecting a tile
         if (!selectedTile) {
             setErrorMessage("Please select a tile to place");
             return;
         }
 
-        //check if starting player selected
+        //not showing message but no moves allowed to be made with out selecting player. theres way too many places to check whats happening. my head hurts. blargh
+        //check if starting player selected not showing message
         if (!gameState.currentPlayerId) {
             setErrorMessage("Please select a starting player");
             return;
         }
 
-        //handle tile placement attempt out of turn
+        /*handle tile placement attempt out of turn
         const currentPlayer = gameState.currentPlayerId;
         if (currentPlayer !== selectedTile.playerId) {
             setErrorMessage("Its not your turn");
             return;
-        }
+        }*/
 
+        //Backend verification of move
         try {
-            const result = await gameService.placeTile(gameId, gameState.currentPlayerId, selectedTile, x, y);
+            const placementResult = await gameService.placeTile(gameId, gameState.currentPlayerId, selectedTile, x, y);
 
-            if (result.success) {
-                const updatedState = await gameService.fetchGameState(gameId)
-
-                setGameState(updatedState) //refresh board with new Tile Placement
-                setSelectedTile(null)      //clear selection after placement
-                setErrorMessage("")        //clear errors after placement
-                console.log("Tile placed successfully. Game state updated:", updatedState);
-            } else {
-                //backend sends message based on response set in GameService.PlayerPlaceTile
-                setErrorMessage(result.message)
+            //if placementResult contains false success key, this means player made an illegal move
+            if (placementResult.success === false) {
+                setErrorMessage(placementResult.message);
+                return;
             }
+
+            //safety check: prevents crash and points to reason for error
+            if (!placementResult || !placementResult.players || !placementResult.hands) {
+                console.error("Invalid game state returned:", {
+                    placementResult,
+                    hasPlayers: !!placementResult?.players,
+                    hasHands: !!placementResult?.hands,
+                });
+                setErrorMessage("Failed to update game state.");
+                return;
+            }
+
+            //otherwise, result is raw GameDTO, 
+            //(after the frontend recieves the updated gamestate the success message from tile placement is no longer in memory)
+            setGameState(placementResult);
+            setSelectedTile(null);
+            setErrorMessage("");
+            console.log("Game state updated:", placementResult);
         } catch (error) {
             console.error("Error placing tile:", error);
             setErrorMessage("An error occurred. Please try again.");

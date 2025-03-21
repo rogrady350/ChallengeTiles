@@ -62,13 +62,17 @@ export const placeTile = async (gameId, playerId, tile, x, y) => {
 
         const result = await response.json();
 
+        //display backend error message if illegal move attempted (or unknown error if no message)
+        if (!response.ok) {
+            return { success: false, message: result.message || "Unknown error" };
+        }
+
         //update state after placement
         if (result.success) {
-            console.log("Tile placed successfully.");
+            console.log("Tile placed successfully.", result.message);
             return await fetchGameState(gameId);  
         }
-        //error if unsuccessful placement
-        console.error("Tile placement failed:", result.message);
+
         return result;
     } catch (error) {
         console.error("Error placing tile:", error);

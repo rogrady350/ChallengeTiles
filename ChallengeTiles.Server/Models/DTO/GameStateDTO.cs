@@ -11,5 +11,6 @@
         public int CurrentScore { get; set; }
         public int? CurrentPlayerId { get; set; }
         public string TileDeckImageUrl { get; set; }
+        public bool GameOver { get; set; }
     }
 }
