@@ -157,7 +157,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
             //add next tile in TileDeck to center of board
             Tile tile = TileDeck.RemoveTile(0);
-            GameBoard.PlaceTile(tile, 0, 0);
+            GameBoard.PlaceTile(tile, 0);
         }
 
         //stores the player selected to make first move. Instantiate CurrentPlayerId
@@ -186,10 +186,10 @@ namespace ChallengeTiles.Server.Models.GameLogic
             Score++;
         }
 
-        //place Tile on GameBoard
-        public PlacementStatus PlaceTile(int playerId, Tile tile, int x, int y)
+        //place Tile on GameBoard (simplified to horizontal exansion only)
+        public PlacementStatus PlaceTile(int playerId, Tile tile, int position)
         {
-            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {x}, Y: {y}");
+            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {position}");
             
             //check if player has a hand
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
@@ -207,7 +207,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
             }
 
             //validate chosen placement on Game Board
-            PlacementStatus validationResult = GameBoard.ValidatePlacement(this, playerId, tile, x, y);
+            PlacementStatus validationResult = GameBoard.ValidatePlacement(this, playerId, tile, position);
             if (validationResult != PlacementStatus.Success)
             {
                 return validationResult; // Return the failure reason
@@ -215,7 +215,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
 
             //remove tile from players hand and place on board
             playerHand.HandTiles.RemoveAt(tileIndex);
-            GameBoard.PlaceTile(tile, x, y);
+            GameBoard.PlaceTile(tile, position);
 
             Console.WriteLine($"Tile placed successfully.");
             return PlacementStatus.Success;

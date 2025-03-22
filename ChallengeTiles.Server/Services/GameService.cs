@@ -90,10 +90,10 @@ namespace ChallengeTiles.Server.Services
         }
 
         //result of place Tile on board
-        public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int x, int y)
+        public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int position)
         {
             Console.WriteLine($"GameService PlayerPlace tile debug - Processing tile placement: " +
-                $"Game ID: {gameId}, Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {x}, Y: {y}");
+                $"Game ID: {gameId}, Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, Position: {position}");
 
             var response = new ServiceResponse<string>();
 
@@ -112,7 +112,7 @@ namespace ChallengeTiles.Server.Services
                     $"{game.GameId}, Players: {game.PlayerHands.Count}, Hands: {game.Hands.Count}, GameOver: {game.GameOver}");
             }
             //get result of placemet attempt
-            PlacementStatus result = game.PlaceTile(playerId, tile, x, y);
+            PlacementStatus result = game.PlaceTile(playerId, tile, position);
 
             switch (result)
             {
@@ -252,8 +252,7 @@ namespace ChallengeTiles.Server.Services
                 }).ToList(),
                 GameBoard = game.GameBoard.PlacedTiles.Select(pt => new TilePlacementDTO
                 {
-                    X = pt.X,
-                    Y = pt.Y,
+                    Position = pt.Position,
                     Tile = new TileDTO
                     {
                         TileId = pt.Tile.Id,

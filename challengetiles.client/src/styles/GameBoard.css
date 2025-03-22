@@ -1,11 +1,10 @@
 /*game board layout*/
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
-    gap: 2px;
-    background-color: #ddd;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 16px auto;
+    align-items: center;
 }
 
 .board-row {
@@ -13,16 +12,20 @@
 }
 
 .board-cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid black;
+    width: 60px;
+    height: 60px;
+    border: 1px solid gray;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    background-color: white; /*default empty cell color*/
 }
 
-.board-cell:hover {
-    background-color: lightblue; /*highlight when hovering*/
+/*disable board when no player selected
+    works for now to prevent player from making a move before selecting starting player
+    still need to fix currentPlayer turn validation
+*/
+.board-cell.disabled {
+     pointer-events: none;
+     opacity: 0.5;
 }

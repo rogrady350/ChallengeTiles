@@ -106,7 +106,8 @@ namespace ChallengeTiles.Server.Controllers
         public ActionResult<ServiceResponse<string>> PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
             //debug:
-            Console.WriteLine($"GameController PlayerPlaceTile debug - Received request: gameId={gameId}, playerId={request?.PlayerId}, TileId={request?.Tile?.TileId}, X={request?.X}, Y={request?.Y}");
+            Console.WriteLine($"GameController PlayerPlaceTile debug - Received request: " +
+                $"gameId={gameId}, playerId={request?.PlayerId}, TileId={request?.Tile?.TileId}, Position={request?.Position}");
             if (request == null)
             {
                 Console.WriteLine("Error: Request body is null");
@@ -132,7 +133,7 @@ namespace ChallengeTiles.Server.Controllers
             Tile tile = new Tile(request.Tile);
 
             //place tile function
-            ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, tile, request.X, request.Y);
+            ServiceResponse<string> response = _gameService.PlayerPlaceTile(gameId, request.PlayerId, tile, request.Position);
 
             if (!response.Success)
             {

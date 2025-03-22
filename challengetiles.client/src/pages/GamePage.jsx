@@ -19,7 +19,7 @@ const GamePage = () => {
     const location = useLocation(); //initialize use location
     const message = location.state?.message || ""; //extract message if passed
     const [gameState, setGameState] = useState(null); //store game data
-    const [selectedTile, setSelectedTile] = useState(null) //track tile that player selects to place on board
+    const [selectedTile, setSelectedTile] = useState({ tile:null, playerId: null }) //track tile that player selects to place on board
     const [errorMessage, setErrorMessage] = useState(""); //track error messages from backend
 
     //fetch gameState on page load
@@ -64,40 +64,44 @@ const GamePage = () => {
         }
     };
 
-    //select tile to place by clicking
+    //select tile to place by clicking. store the tile that was clicked + playerthat clicked it
     const handleTileClick = (tile, playerId) => {
         console.log("Tile selected:", tile, "PlayerId:", playerId);
-        setSelectedTile(tile, playerId);
+        setSelectedTile({ tile, playerId });
         setErrorMessage(""); //clear error on tile selection
     };
 
     //manage process of placing a Tile on the Game Board
-    const handleTilePlacement = async (x, y) => {
-        console.log(`Tile placement attempted at (${x}, ${y})`);
+    const handleTilePlacement = async (position) => {
+        console.log(`Tile placement attempted at (${position})`);
         //Frontend logic checks
         //handle selecting a board position before selecting a tile
-        if (!selectedTile) {
+        if (!selectedTile.tile) {
             setErrorMessage("Please select a tile to place");
             return;
         }
 
-        //not showing message but no moves allowed to be made with out selecting player. theres way too many places to check whats happening. my head hurts. blargh
-        //check if starting player selected not showing message
+        //handle attempt to place tile before selecting a starting player
         if (!gameState.currentPlayerId) {
             setErrorMessage("Please select a starting player");
             return;
         }
 
-        /*handle tile placement attempt out of turn
+        //handle tile placement attempt out of turn
         const currentPlayer = gameState.currentPlayerId;
         if (currentPlayer !== selectedTile.playerId) {
             setErrorMessage("Its not your turn");
             return;
-        }*/
+        }
 
         //Backend verification of move
         try {
-            const placementResult = await gameService.placeTile(gameId, gameState.currentPlayerId, selectedTile, x, y);
+            console.log("Placing tile: ", selectedTile);
+            const placementResult = await gameService.placeTile(
+                gameId,
+                gameState.currentPlayerId,
+                selectedTile.tile,
+                position);
 
             //if placementResult contains false success key, this means player made an illegal move
             if (placementResult.success === false) {
@@ -183,8 +187,8 @@ const GamePage = () => {
                 ))}
             </div>
 
-            {/*Deck image - click to draw tile*/}
-            <h3>Tile Deck - click to draw Tile</h3>
+            {/*Deck image*/}
+            <h3>Tile Deck - click to draw a Tile</h3>
             <div className="deck-section">
                 <img
                     src={gameState.tileDeckImageUrl}

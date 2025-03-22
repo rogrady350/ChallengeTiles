@@ -50,14 +50,14 @@ export const pickUpTile = async (gameId, playerId) => {
 };
 
 //POST - request tile placement in selecte position
-export const placeTile = async (gameId, playerId, tile, x, y) => {
+export const placeTile = async (gameId, playerId, tile, position) => {
     try {
         console.log("Tile being sent to backend:", tile);
 
         const response = await fetch(`${API_BASE_URL}/Game/${gameId}/player-place-tile/${playerId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ playerId, tile, x, y }),
+            body: JSON.stringify({ playerId, tile, position }),
         });
 
         const result = await response.json();

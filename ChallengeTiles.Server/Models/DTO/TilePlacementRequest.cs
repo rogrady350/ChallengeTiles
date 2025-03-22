@@ -7,7 +7,6 @@
         public int GameId { get; set; }
         public int PlayerId { get; set; }
         public TileDTO Tile { get; set; } //use TileDTO rather than Tile to recieve Tile data from frontend
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int Position { get; set; }
     }
 }

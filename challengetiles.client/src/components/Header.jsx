@@ -6,9 +6,9 @@ const Header = () => {
         <header>
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="/">About</Link>
-                <Link to="/">Instructions</Link>
-                <Link to="/">View Stats</Link>
+                <Link to="/About">About</Link>
+                <Link to="/Instructions">Instructions</Link>
+                <Link to="/ViewStats">View Stats</Link>
             </nav>
             <h1>Chalenge Tiles</h1>
         </header>
