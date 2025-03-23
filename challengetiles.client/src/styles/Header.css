@@ -24,6 +24,11 @@ nav a:hover {
 }
 
 h1 {
-    margin-top: 10px; /* Add spacing below nav */
+    margin-top: 10px; /*Add spacing below nav*/
     font-size: 2rem;
+}
+
+.logo {
+    width: 247px;
+    height: 100px;
 }

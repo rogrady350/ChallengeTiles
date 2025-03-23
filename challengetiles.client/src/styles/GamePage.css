@@ -6,8 +6,8 @@
 }
 
 .tile {
-    width: 80px;
-    height: 80px; /*square shape*/
+    width: 124px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,10 +23,8 @@
     object-fit: contain; /*prevents distortion*/
 }
 
-
-
+/*Challenge tile on back of tile. Represents face down deck.*/
 .deck-image {
-     width: 20px;
-     height: 80px;
-     transform: rotate(90deg);
+     width: 124px;
+     height: 50px;
 }

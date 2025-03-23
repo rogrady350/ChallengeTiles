@@ -139,7 +139,7 @@ const GamePage = () => {
 
     //render Game Page
     return (
-        <div>
+        <div className="game-page">
             <h1>{message && <p>{message}</p>}</h1> {/*render welcome message*/}
 
             <h3>Score: {gameState.currentScore}</h3>
@@ -191,7 +191,8 @@ const GamePage = () => {
             <h3>Tile Deck - click to draw a Tile</h3>
             <div className="deck-section">
                 <img
-                    src={gameState.tileDeckImageUrl}
+                    //src={gameState.tileDeckImageUrl}
+                    src={"../images/logo.png"}
                     alt="Tile Deck"
                     className="deck-image"
                     onClick={() => handlePickUpTile(gameState.currentPlayerId)}

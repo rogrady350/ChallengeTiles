@@ -1,5 +1,6 @@
 /*game board layout*/
 .game-board {
+    color:white;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -28,4 +29,9 @@
 .board-cell.disabled {
      pointer-events: none;
      opacity: 0.5;
+}
+
+/*highlight center position to make sure board is staying centered for debugging*/
+.board-cell.center {
+    outline: 2px dashed orange;
 }

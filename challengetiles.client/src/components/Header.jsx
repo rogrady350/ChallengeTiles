@@ -10,7 +10,11 @@ const Header = () => {
                 <Link to="/Instructions">Instructions</Link>
                 <Link to="/ViewStats">View Stats</Link>
             </nav>
-            <h1>Chalenge Tiles</h1>
+            <img
+                src={"../images/logo.png"}
+                alt="Challenge Tiles"
+                className="logo"
+            />
         </header>
     );
 };

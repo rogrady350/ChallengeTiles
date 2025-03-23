@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 const Tile = ({ tile, onClick }) => {
     return (
-        <div className="tile" onClick={() => onClick(tile)}>
+        <div className="tile" onClick={onClick}>
             <img src={tile.tileImageUrl} alt={`${tile.number} ${tile.color}`} />
         </div>
     );

@@ -19,6 +19,11 @@ namespace ChallengeTiles.Server
             Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
+            //1.1. surpress framework debug noise
+            builder.Logging.ClearProviders(); //clears all built-in providers
+            builder.Logging.AddConsole();     //adds only basic console logging
+            builder.Logging.SetMinimumLevel(LogLevel.Warning); //only show warnings/errors
+
             //2.1. configure db connection
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/

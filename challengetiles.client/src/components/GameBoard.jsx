@@ -6,73 +6,71 @@ import PropTypes from "prop-types";
 
 //component to display game board and placed tiles - expand horizontally only with wrap
 const GameBoard = ({ board, onTilePlacement, currentPlayer }) => {
-    const tilesPerRow = 15; //define width before wrap - 7 tiles left and right + center starting tile
-
-    //board details
-    /*array of position of tiles on board 
-      spead operator makes copy of board array of placed tiles 
-      avoids modifying original array*/
-    const sortedTiles = [...board].sort((a, b) => a.position - b.position); // sort array in ascending order by position
-    const positions = sortedTiles.map(p => p.position);
-
-    //min and max positions - range of tiles on board (renders both tiles and empty spaces)
-    const minPosition = Math.min(...positions);
-    const maxPosition = Math.max(...positions);
-
-    //number of cells on each side of center tile
-    const buffer = 7
-
+    const totalTiles = 52; //tiles in deck
+    const tilesPerRow = 15; //7 tiles left and right + center starting tile
+    const half = Math.floor(totalTiles / 2); //position values (-26 to 25)
+   
+      
     //create board
-    //1. create array of placement positions (including empty positions)
-    const fullBoardRange = [];
-    for (let i = minPosition - buffer; i <= maxPosition + buffer; i++) {
-        fullBoardRange.push(i);
-    }
+    //1. create range of positions
+    const fullBoardRange = Array.from({ length: totalTiles }, (_, i) => i - half);
 
-    //2. map board range to tile or null (empty space)
+    //2. build visual representation - map tile data to board position if a tile is placed in it
     const fullBoardWithTiles = fullBoardRange.map(position => {
-        const found = sortedTiles.find(p => p.position === position);
+        const found = board.find(p => p.position === position);
         return {
             position,
             tile: found?.tile || null,
         }
     })
 
-    //3. wrap tiles into rows to prevent extending too far
+    //3. split into rows of 15
     const wrappedRows = [];
     for (let i = 0; i < fullBoardWithTiles.length; i += tilesPerRow) {
-        wrappedRows.push(fullBoardWithTiles.slice(i, i + tilesPerRow)); //slice rows and add to new row for wrap
+        const row = fullBoardWithTiles.slice(i, i + tilesPerRow); //slice board array into smaller row arrays
+        const shouldReverse = Math.floor(i / tilesPerRow) % 2 === 1; //reverse every other row
+
+        //create forward row if shouldReverse is even and reverse row if odd
+        wrappedRows.push(shouldReverse ? row.reverse() : row);
     }
 
     return (
         <div className="game-board">
             {/*array of rows (2D - tiles expand horizontaly only*/}
-            {wrappedRows.map((row, rowIndex) => (
-                <div key={rowIndex} className="board-row">
-                    {/*loop thru tiles in row and render tiles on board
-                       if no tile placed, tile will be null for that position (renders empty space)
-                       dims board positions before starting player selected (disables clicks)
-                       GamePage.handleTilePlacement will also display message if placement attempt made before starting player selected*/}
-                    {row.map(({ position, tile }) => (
-                        <div
-                            key={position}
-                            className={`board-cell ${tile ? "occupied" : "empty"} ${currentPlayer ? "" : "disabled"}`}
-                            onClick={() => {
-                                if (!tile && onTilePlacement) {
-                                    onTilePlacement(position);
-                                }
-                            }}
-                        >
-                            {tile && (
-                                <Tile
-                                    tile={tile}
-                                    onClick={() => onTilePlacement(position)}
-                                />
-                            )}
-                        </div>
-                    ))}
-                </div>
-            ))}
+            {wrappedRows.map((row, rowIndex) => {
+                const oddRow = rowIndex % 2 === 1;
+                //If row is odd, make copy of row (spread opperator) and reverse it. If even use as-is
+                const displayRow = oddRow ? [...row].reverse() : row;
+
+                return (
+                    <div key={rowIndex} className="board-row">
+                        {/*Loop thru tiles in row and render tiles on board.
+                           If no tile placed, tile will be null for that position (renders empty space).
+                           Dims board positions before starting player selected (disables clicks).
+                           GamePage.handleTilePlacement will also display message if placement attempt made before starting player selected.*/}
+                        {displayRow.map(({ position, tile }) => (
+                            <div
+                                key={position}
+                                //className={`board-cell ${tile ? "occupied" : "empty"} ${currentPlayer ? "" : "disabled"}`}
+                                //highlight center cell to make sure its staying centered for debugging
+                                className={`board-cell ${tile ? "occupied" : "empty"} ${position === 0 ? "center" : ""} ${currentPlayer ? "" : "disabled"}`}
+                                onClick={() => {
+                                    if (!tile && onTilePlacement) {
+                                        onTilePlacement(position);
+                                    }
+                                }}
+                            >
+                                {tile && (
+                                    <Tile
+                                        tile={tile}
+                                        onClick={() => onTilePlacement(position)}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                );
+            })}
         </div>
     );
 };

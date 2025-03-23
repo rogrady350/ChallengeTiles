@@ -189,7 +189,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //place Tile on GameBoard (simplified to horizontal exansion only)
         public PlacementStatus PlaceTile(int playerId, Tile tile, int position)
         {
-            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, X: {position}");
+            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, position: {position}");
             
             //check if player has a hand
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
@@ -217,7 +217,12 @@ namespace ChallengeTiles.Server.Models.GameLogic
             playerHand.HandTiles.RemoveAt(tileIndex);
             GameBoard.PlaceTile(tile, position);
 
-            Console.WriteLine($"Tile placed successfully.");
+            Console.WriteLine($"Game PlaceTile debug - Tile placed successfully at position {position}");
+            foreach (var placed in GameBoard.PlacedTiles)
+            {
+                Console.WriteLine($"Tile ID: {placed.Tile.Id}, Position: {placed.Position}");
+            }
+
             return PlacementStatus.Success;
         }
 

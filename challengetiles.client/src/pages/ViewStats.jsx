@@ -1,7 +1,7 @@
 //Page to display player profile and game stats
 
 //css
-import "../styles/About.css";
+import "../styles/viewStats.css";
 
 const ViewStats = () => {
     return (

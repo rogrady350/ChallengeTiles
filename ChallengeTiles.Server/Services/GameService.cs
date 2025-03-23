@@ -215,6 +215,7 @@ namespace ChallengeTiles.Server.Services
         public GameStateDTO GetGameState(int gameId)
         {
             var game = _gameStateManager.GetGame(gameId); //in memory game Id
+            
             if (game == null)
             {
                 Console.WriteLine($"GameService GameState debug - Game ID {gameId} not found in active games.");
@@ -263,7 +264,7 @@ namespace ChallengeTiles.Server.Services
                 }).ToList(),
                 CurrentScore = game.Score,
                 CurrentPlayerId = game.CurrentPlayerId,
-                TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png",
+                //TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png",
                 GameOver = game.GameOver
             };
 
