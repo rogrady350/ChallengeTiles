@@ -1,6 +1,5 @@
 /*game board layout*/
 .game-board {
-    color:white;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -13,19 +12,17 @@
 }
 
 .board-cell {
-    width: 60px;
-    height: 60px;
-    border: 1px solid gray;
+    width: 72px;
+    height: 29px;
+    background-color: white;
+    border: 3px solid gray;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }
 
-/*disable board when no player selected
-    works for now to prevent player from making a move before selecting starting player
-    still need to fix currentPlayer turn validation
-*/
+/*disable board when no player selected*/
 .board-cell.disabled {
      pointer-events: none;
      opacity: 0.5;

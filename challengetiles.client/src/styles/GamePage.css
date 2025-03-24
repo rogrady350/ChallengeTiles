@@ -1,3 +1,8 @@
+.game-page {
+    color: whitesmoke;
+    background-color: forestgreen;
+}
+
 .tiles-container {
     display: flex;
     gap: 10px; /*spacing between tiles*/
@@ -5,26 +10,22 @@
     justify-content: center;
 }
 
-.tile {
-    width: 124px;
-    height: 50px;
+.tile, .deck-image {
+    width: 72px;
+    height: 29px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid black; /*border*/
-    background-color: white;
     border-radius: 10px; /*rounded corners*/
+    background-color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /*add depth*/
 }
 
 .tile img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     object-fit: contain; /*prevents distortion*/
 }
 
 /*Challenge tile on back of tile. Represents face down deck.*/
-.deck-image {
-     width: 124px;
-     height: 50px;
-}

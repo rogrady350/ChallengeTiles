@@ -198,6 +198,19 @@ const GamePage = () => {
                     onClick={() => handlePickUpTile(gameState.currentPlayerId)}
                 />
             </div>
+
+            {/*Game Over popup message
+               Check status of gameOver flag. Display when game has ended*/}
+            {gameState?.gameOver && (
+                <div className="game-over-overlay">
+                    <div className="game-over-box">
+                        <h2>Game Over!</h2>
+                        <p>Congratulations! The game has ended.</p>
+                        <button onClick={() => window.location.href = "/"}>Return to Home</button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
