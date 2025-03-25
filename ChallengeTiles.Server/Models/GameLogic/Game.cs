@@ -1,7 +1,6 @@
 ﻿using ChallengeTiles.Server.Helpers;
 using ChallengeTiles.Server.Services;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;

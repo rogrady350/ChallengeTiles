@@ -27,6 +27,18 @@ namespace ChallengeTiles.Server
             //2.1. configure db connection
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
+            var useIAMAuth = Environment.GetEnvironmentVariable("USE_IAM_AUTH") == "true";
+
+            //debug - shows where running
+            if (useIAMAuth)
+            {
+                Console.WriteLine("Running in AWS Lambda - Using IAM Authentication for RDS.");
+            }
+            else
+            {
+                Console.WriteLine("Running Locally - Using username/password authentication.");
+            }
+
             builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
                 options.UseMySql(
                     /*used to get connection string from ConnectionHelper
