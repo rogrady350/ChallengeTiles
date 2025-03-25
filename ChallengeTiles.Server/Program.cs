@@ -24,9 +24,10 @@ namespace ChallengeTiles.Server
             builder.Logging.AddConsole();     //adds only basic console logging
             builder.Logging.SetMinimumLevel(LogLevel.Warning); //only show warnings/errors
 
-            //2.1. configure db connection
+            //2. configure db connection
             /*adds DbContext to dependency injection container.
              tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
+            //2.1 checks if using IAM
             var useIAMAuth = Environment.GetEnvironmentVariable("USE_IAM_AUTH") == "true";
 
             //debug - shows where running
@@ -107,6 +108,7 @@ namespace ChallengeTiles.Server
             }
 
             //7. start app
+
             app.Run();
         }
     }
