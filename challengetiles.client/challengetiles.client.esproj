@@ -11,4 +11,7 @@
   <ItemGroup>
     <Folder Include="public\images\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\workflows\deploy.yml" />
+  </ItemGroup>
 </Project>
