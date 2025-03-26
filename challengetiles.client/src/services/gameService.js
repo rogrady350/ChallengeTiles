@@ -1,5 +1,6 @@
 //game specific api calls
-const API_BASE_URL = import.meta.env.VITE_API_URL; //url based on env
+//determine API Base URL dynamically
+const API_BASE_URL = window._env_?.VITE_API_URL || import.meta.env.VITE_API_URL;
 
 //GET - recieves current state of game objecs from server
 export const fetchGameState = async (gameId) => {

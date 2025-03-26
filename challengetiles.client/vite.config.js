@@ -34,10 +34,11 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     }
 }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7055';
+//determine the API base URL
+const API_BASE_URL = env.NODE_ENV === "production"
+    ? "https://your-api-id.execute-api.us-east-2.amazonaws.com"
+    : "https://localhost:7055/api"; //use local server in dev
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [plugin()],
     resolve: {
@@ -45,10 +46,13 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
+    define: {
+        'import.meta.env.VITE_API_URL': JSON.stringify(API_BASE_URL) //inject API URL
+    },
     server: {
         proxy: {
             '^/weatherforecast': {
-                target,
+                target: API_BASE_URL,
                 secure: false
             }
         },
