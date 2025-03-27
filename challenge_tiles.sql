@@ -17,7 +17,7 @@ USE `challenge_tiles` ;
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Games`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Games` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`games` (
   `GameId` INT NOT NULL AUTO_INCREMENT,
   `NumberOfColors` INT NULL,
   `NumberOfTiles` INT NULL,
@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Players`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Players` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`players` (
   `PlayerId` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(45) NOT NULL,
   `Password` VARCHAR(45) NOT NULL,
@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Hands`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Hands` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`hands` (
   `HandId` INT NOT NULL AUTO_INCREMENT,
   `Tiles` JSON NULL,
   `PlayerId` INT NOT NULL,
