@@ -36,7 +36,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 
 //determine the API base URL
 const API_BASE_URL = env.NODE_ENV === "production"
-    ? "https://40zmzwzcr9.execute-api.us-east-2.amazonaws.com/dev"
+    ? "https://r93ormq7xf.execute-api.us-east-2.amazonaws.com/dev"
     : "https://localhost:7055/api"; //use local server in dev
 
 export default defineConfig({
