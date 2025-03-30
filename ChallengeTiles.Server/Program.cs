@@ -88,13 +88,14 @@ namespace ChallengeTiles.Server
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 
             //4.6 AWS Lambda service
-            builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
+            //builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
 
             //5. Build application
             var app = builder.Build();
 
             //6.1. middleware
             app.UseCors("AllowFrontend");
+            //app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers(); //maps routes

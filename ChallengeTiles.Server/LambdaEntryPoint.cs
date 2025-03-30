@@ -3,7 +3,6 @@ using Amazon.Lambda.AspNetCoreServer;
 using Amazon.Lambda.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace ChallengeTiles.Server
@@ -12,27 +11,45 @@ namespace ChallengeTiles.Server
     {
         protected override void Init(IWebHostBuilder builder)
         {
-            builder.Configure(app => { })
-                   .ConfigureServices((context, services) => { });
+            Console.WriteLine("Initializing LambdaEntryPoint...");
+
+            builder.ConfigureServices((context, services) =>
+            {
+                // Ensure Lambda integration
+                services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+                services.AddControllers();
+            });
+
+            builder.Configure(app =>
+            {
+                Console.WriteLine("Configuring Middleware for Lambda API Gateway requests...");
+
+                app.UseRouting();
+                app.UseCors("AllowFrontend");
+                app.UseAuthorization();
+                app.UseHttpsRedirection();
+                app.UseMiddleware<ExceptionMiddleware>();
+                app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+                Console.WriteLine("All API routes mapped.");
+            });
         }
 
         public override async Task<APIGatewayHttpApiV2ProxyResponse> FunctionHandlerAsync(
             APIGatewayHttpApiV2ProxyRequest request, ILambdaContext lambdaContext)
         {
-            lambdaContext.Logger.LogLine("Lambda invoked by API Gateway.");
+            lambdaContext.Logger.LogLine("Received request from API Gateway");
 
             if (request == null)
             {
-                lambdaContext.Logger.LogLine("Error: Received NULL request from API Gateway.");
+                lambdaContext.Logger.LogLine("Received NULL request from API Gateway.");
                 return new APIGatewayHttpApiV2ProxyResponse
                 {
                     StatusCode = 400,
-                    Body = "Bad Request: Null request received from API Gateway"
+                    Body = JsonSerializer.Serialize(new { error = "Bad Request: Null request received from API Gateway" }),
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
                 };
             }
-
-            lambdaContext.Logger.LogLine($"Received request path: {request.RawPath ?? "NULL"}");
-            lambdaContext.Logger.LogLine($"Request Details: {JsonConvert.SerializeObject(request)}");
 
             return await base.FunctionHandlerAsync(request, lambdaContext);
         }
