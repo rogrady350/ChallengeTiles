@@ -95,22 +95,28 @@ namespace ChallengeTiles.Server
 
             //6.1. middleware
             app.UseCors("AllowFrontend");
-            //app.UseRouting();
-            app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers(); //maps routes
             app.UseMiddleware<ExceptionMiddleware>(); //global exception handling
 
-            //6.2. enable swagger in dev
+            //6.2 determine port for ebs
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+
+            //6.3. enable swagger in dev and run app with dynamically assigned port
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment
             {
                 app.UseSwagger();   //generate Swagger JSON file that describes API
                 app.UseSwaggerUI(); //alows testing of API directly in browser
+                app.UseHttpsRedirection(); //use https redirect locally only
+
+                //start app
+                app.Run();
             }
-
-            //7. start app
-
-            app.Run();
+            //assign port for ebs
+            else
+            {
+                app.Run($"http://0.0.0.0:{port}");
+            }
         }
     }
 }
