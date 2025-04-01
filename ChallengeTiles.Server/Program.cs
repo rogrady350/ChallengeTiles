@@ -97,7 +97,7 @@ namespace ChallengeTiles.Server
             app.UseMiddleware<ExceptionMiddleware>(); //global exception handling
 
             //6.2 determine port for ebs
-            var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
 
             //6.3. enable swagger in dev and run app with dynamically assigned port
             if (app.Environment.IsDevelopment()) //Swagger only enabled in Development envoronment
