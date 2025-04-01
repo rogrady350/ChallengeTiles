@@ -33,7 +33,7 @@ namespace ChallengeTiles.Server
             //debug - shows where running
             if (useIAMAuth)
             {
-                Console.WriteLine("Running in AWS Lambda - Using IAM Authentication for RDS.");
+                Console.WriteLine("Running in AWS - Using IAM Authentication for RDS.");
             }
             else
             {
@@ -86,9 +86,6 @@ namespace ChallengeTiles.Server
             //4.5 Swagger services (added from asp.net core project for testing)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
-
-            //4.6 AWS Lambda service
-            //builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi); //deploy to lambda
 
             //5. Build application
             var app = builder.Build();
