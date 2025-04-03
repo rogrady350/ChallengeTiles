@@ -14,7 +14,7 @@ public class ConnectionHelper
         if (useIAMAuth)
         {
             //generate IAM Token for RDS authentication
-            string region = Environment.GetEnvironmentVariable("AWS_REGION") ?? "us-east-1";
+            string region = Environment.GetEnvironmentVariable("AWS_REGION") ?? "us-east-2";
             return $"Server={server};Database={database};User={user};Password={GenerateRDSAuthToken(server, user, region)};SSL Mode=Required;";
         }
         //otherwise use password
