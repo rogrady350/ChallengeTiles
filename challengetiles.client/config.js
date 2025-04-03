@@ -5,5 +5,5 @@ window._env_ = {
 
 //EBS domain url
 window._env_ = {
-    VITE_API_URL: "http://challengetilesbackend-env-2.eba-9e2vzyts.us-east-2.elasticbeanstalk.com/"
+    VITE_API_URL: "http://challengetilesbackend-env.eba-9e2vzyts.us-east-2.elasticbeanstalk.com/api"
 };
