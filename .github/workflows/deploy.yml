@@ -9,6 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: challengetiles.client
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
