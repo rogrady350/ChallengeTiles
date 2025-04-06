@@ -23,9 +23,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Debug Region Format
+      - name: Debug Secrets
         run: |
-          echo "::notice::Region is '${{ secrets.AWS_REGION }}'"
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then echo "Missing AWS_ACCESS_KEY_ID"; fi
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then echo "Missing AWS_SECRET_ACCESS_KEY"; fi
 
       - name: Print environment variables
         run: |
@@ -46,4 +47,3 @@ jobs:
           AWS_DEFAULT_REGION: us-east-2
           AWS_S3_BUCKET: challenge-tiles-react-lambda
           SOURCE_DIR: "challengetiles.client/dist"
-          AWS_SHARED_CREDENTIALS_FILE: /dev/null
