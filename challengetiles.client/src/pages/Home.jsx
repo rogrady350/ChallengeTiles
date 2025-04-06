@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; //allows page navigation
 
 //services
-import gameSetupService from '../services/gameSetupService';
+import gameSetupService from '../services/gameSetupService.js';
 
 const Home = () => {
     //values to be set for game
