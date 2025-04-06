@@ -38,3 +38,4 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}
           SOURCE_DIR: "dist"
+          AWS_SHARED_CREDENTIALS_FILE: /dev/null
