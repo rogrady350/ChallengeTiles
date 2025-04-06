@@ -45,5 +45,5 @@ jobs:
           AWS_REGION: us-east-2
           AWS_DEFAULT_REGION: us-east-2
           AWS_S3_BUCKET: challenge-tiles-react-lambda
-          SOURCE_DIR: "dist"
+          SOURCE_DIR: "challengetiles.client/dist"
           AWS_SHARED_CREDENTIALS_FILE: /dev/null
