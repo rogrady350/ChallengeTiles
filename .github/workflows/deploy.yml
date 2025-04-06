@@ -23,15 +23,17 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Debug env
-        run: |
-          echo "AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
-          echo "AWS_SECRET_ACCESS_KEY is set: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' }}"
-          echo "AWS_REGION=${{ secrets.AWS_REGION }}"
-
       - name: Debug Region Format
         run: |
           echo "::notice::Region is '${{ secrets.AWS_REGION }}'"
+
+      - name: Print environment variables
+        run: |
+          echo "AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
+          echo "AWS_SECRET_ACCESS_KEY is set: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' }}"
+          echo "AWS_REGION: us-east-2"
+          echo "AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}"
+          echo "SOURCE_DIR: dist"
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
@@ -40,7 +42,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-2
+          AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}
           SOURCE_DIR: "dist"
           AWS_SHARED_CREDENTIALS_FILE: /dev/null
