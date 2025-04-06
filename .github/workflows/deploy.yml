@@ -35,6 +35,7 @@ jobs:
           echo "AWS_REGION: us-east-2"
           echo "AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}"
           echo "SOURCE_DIR: dist"
+          echo "confirm  added shared credentials"
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
@@ -47,3 +48,4 @@ jobs:
           AWS_DEFAULT_REGION: us-east-2
           AWS_S3_BUCKET: challenge-tiles-react-lambda
           SOURCE_DIR: "challengetiles.client/dist"
+          AWS_SHARED_CREDENTIALS_FILE: /dev/null
