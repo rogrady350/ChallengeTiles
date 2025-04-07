@@ -24,13 +24,9 @@ namespace ChallengeTiles.Server
             builder.Logging.AddConsole();     //adds only basic console logging
             builder.Logging.SetMinimumLevel(LogLevel.Warning); //only show warnings/errors
 
-            //2. configure db connection
-            /*adds DbContext to dependency injection container.
-             tells app how to configure MysqlDbContext and provides necessary connection string for MySQL*/
-            //2.1 checks if using IAM
+            //debug: checks if using IAM
             var useIAMAuth = Environment.GetEnvironmentVariable("USE_IAM_AUTH") == "true";
-
-            //debug - shows where running
+            //shows where running
             if (useIAMAuth)
             {
                 Console.WriteLine("Running in AWS - Using IAM Authentication for RDS.");
@@ -40,49 +36,10 @@ namespace ChallengeTiles.Server
                 Console.WriteLine("Running Locally - Using username/password authentication.");
             }
 
-            builder.Services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
-                options.UseMySql(
-                    /*used to get connection string from ConnectionHelper
-                     ensures correct configuration used based on environment*/
-                    ConnectionHelper.GetMySqlConnectionString(),
-                    new MySqlServerVersion(new Version(8, 0, 25))
-                )
-            );
+            //2. configure CORS policy, 3. configure db connection, 4, 4.1-4.4. add services to the container
+            //Centalize builder services config in ServicConfigurator.cs to use in both lambda and local/ebs. Avoid same code in 2 places
+            ServiceConfigurator.ConfigureAppServices(builder.Services);
 
-            //3. configure CORS policy
-            /*read allowed origins from env variable
-             ALLOWED_ORIGINS set in AWS Lambda to switch allowed frontend URLs*/
-            var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
-                               ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                               ?? new[] { "https://localhost:63304" };
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowFrontend",
-                    policy =>
-                    {
-                        policy.WithOrigins(allowedOrigins)
-                              .AllowAnyMethod()
-                              .AllowAnyHeader()
-                              .AllowCredentials(); //cookies, authentication
-                    });
-            });
-
-            //4. add services to the container
-            //4.1 store active games in memopry
-            builder.Services.AddSingleton<GameStateManager>();
-            
-            //4.2 add repositories
-            builder.Services.AddScoped<GameRepository>();
-            builder.Services.AddScoped<PlayerRepository>();
-
-            //4.3 add services
-            builder.Services.AddScoped<GameService>();
-            builder.Services.AddScoped<PlayerService>();
-
-            //4.4 add controllers
-            builder.Services.AddControllers(); //enable MVC controllers. Registers ALL controllers, dont need to individually add
-            
             //4.5 Swagger services (added from asp.net core project for testing)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container

@@ -13,11 +13,15 @@ namespace ChallengeTiles.Server
         {
             Console.WriteLine("Initializing LambdaEntryPoint...");
 
+            //Register services for Lambda's ASP.NET host
             builder.ConfigureServices((context, services) =>
             {
-                // Ensure Lambda integration
+                //Register AWS Hosting integrtion
                 services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
-                services.AddControllers();
+                Console.WriteLine("AWS Lambda Hosting configured.");
+
+                //Reuse ServiceConfig for rest of builder services
+                ServiceConfigurator.ConfigureAppServices(services);
             });
 
             builder.Configure(app =>
