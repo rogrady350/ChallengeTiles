@@ -1,4 +1,4 @@
-/*Global CSS*/
+/*Global layout CSS - Affects entire document*/
 
 html, body {
     height: 100%;
@@ -6,8 +6,48 @@ html, body {
     padding: 0;
 }
 
+/*global layour rules*/
 #root {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /*Ensure the app takes up the full screen*/
+}
+
+/*standard h2 headers*/
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #222;
+}
+
+/*standard buttons*/
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: black;
+    background-color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    max-width: 200px;
+    margin: 10px 0;
+    display: inblock;
+}
+
+    button:hover {
+        background-color: lightgray;
+    }
+
+/*standard dropdowns*/
+select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 200px;
+    margin: 10px 0;
+    display: block;
 }

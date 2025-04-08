@@ -1,10 +1,4 @@
-﻿/*Global Styles for app*/
-
-#root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+﻿/*Layout and structure for entire app shell*/
 
 main {
     flex: 1;

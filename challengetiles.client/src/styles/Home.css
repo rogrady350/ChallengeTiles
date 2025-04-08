@@ -1,5 +1,9 @@
-h2 {
-    text-align: center;
+.home-page {
     font-size: 2rem;
-    color: #222;
+    display: flex;
+    color: white;
+    background-color: forestgreen;
+    flex-direction: column;
+    gap: 20px;
+    padding: 2rem;
 }

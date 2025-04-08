@@ -61,7 +61,7 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div className="home-page">
             <h2>Welcome!</h2>
 
             {/* Player 1 dropdown */}
