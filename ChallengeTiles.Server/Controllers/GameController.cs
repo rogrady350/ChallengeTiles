@@ -51,7 +51,7 @@ namespace ChallengeTiles.Server.Controllers
         }
 
         //GET retrieve a Game by its id (called in StartNewGame to send newly created Game databack to client)
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetGameById(int id)
         {
             var game = _gameService.GetGameById(id);

@@ -30,8 +30,23 @@ namespace ChallengeTiles.Server
 
                 app.UseRouting();
                 app.UseCors("AllowFrontend");
-                app.UseAuthorization();
+
+                //Handle preflight OPTIONS requests
+                app.Use(async (context, next) =>
+                {
+                    if (context.Request.Method == "OPTIONS")
+                    {
+                        context.Response.StatusCode = 204;
+                        await context.Response.CompleteAsync();
+                    }
+                    else
+                    {
+                        await next();
+                    }
+                });
+
                 app.UseHttpsRedirection();
+                app.UseAuthorization();
                 app.UseMiddleware<ExceptionMiddleware>();
                 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
