@@ -7,3 +7,19 @@
     gap: 20px;
     padding: 2rem;
 }
+
+.dropdown-container {
+    display: flex;
+    justify-content: center; /*center columns*/
+    gap: 60px;
+}
+
+.left-column, .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.start-button{
+    margin: 10px auto;
+}

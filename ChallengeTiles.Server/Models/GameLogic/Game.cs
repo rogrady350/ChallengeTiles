@@ -177,7 +177,7 @@ namespace ChallengeTiles.Server.Models.GameLogic
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
                 if (playerHand == null)
             {
-                //change to display a message to select starting player before picking up a tile
+                //change to display a message to select starting player before picking up a tile - throws error handled on front end for now by not allowing selection
                 throw new InvalidOperationException($"Player {playerId} does not have a hand in this game.");
             }
 

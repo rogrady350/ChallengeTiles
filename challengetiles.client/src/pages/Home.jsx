@@ -62,68 +62,77 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            <h2>Welcome!</h2>
+            <h1>Welcome!</h1>
 
-            {/* Player 1 dropdown */}
-            <div>
-                <label>Player 1: </label>
-                {/*event handler: display selected value in dropdown, update component state with selection*/}
-                <select value={player1} onChange={(e) => setPlayer1(e.target.value)}>
-                    <option value="">Select Player 1</option>
-                    {/*loop thru each player sent from backend as JSON and create an option
-                        key: playerId, display: username*/}
-                    {players.map(player => (
-                        <option key={player.playerId} value={player.playerId}>
-                            {player.username} 
-                        </option>
-                    ))}
-                </select>
-            </div>
+            {/* dropdown-container to place buttons in columns*/}
+            <div className="dropdown-container">
+                {/* Player selection drop downs in first (left) column */}
+                <div className="left-column">
+                    {/* Player 1 dropdown */}
+                    <div>
+                        <label>Player 1: </label>
+                        {/*event handler: display selected value in dropdown, update component state with selection*/}
+                        <select value={player1} onChange={(e) => setPlayer1(e.target.value)}>
+                            <option value="">Select Player 1</option>
+                            {/*loop thru each player sent from backend as JSON and create an option
+                                key: playerId, display: username*/}
+                            {players.map(player => (
+                                <option key={player.playerId} value={player.playerId}>
+                                    {player.username} 
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-            {/* Player 2 dropdown */}
-            <div>
-                <label>Player 2: </label>
-                <select value={player2} onChange={(e) => setPlayer2(e.target.value)}>
-                    <option value="">Select Player 2</option>
-                    {/*exclude selection of player 1 from options for player 2*/}
-                    {players
-                        .filter((p) => p.playerId !== parseInt(player1))
-                        .map(player => (
-                        <option key={player.playerId} value={player.playerId}>
-                            {player.username}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    {/* Player 2 dropdown */}
+                    <div>
+                        <label>Player 2: </label>
+                        <select value={player2} onChange={(e) => setPlayer2(e.target.value)}>
+                            <option value="">Select Player 2</option>
+                            {/*exclude selection of player 1 from options for player 2*/}
+                            {players
+                                .filter((p) => p.playerId !== parseInt(player1))
+                                .map(player => (
+                                <option key={player.playerId} value={player.playerId}>
+                                    {player.username}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div> {/* End left column div */}
 
-            {/* Number of Colors dropdown */}
-            <div>
-                <label>Number of Colors: </label>
-                <select value={numColors} onChange={(e) => setNumColors(e.target.value)}>
-                    {/*can choose to play with 2-4 colors*/}
-                    {[2, 3, 4].map(num => (
-                        <option key={num} value={num}>
-                            {num}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                {/* Tile selection dropwdowns in second (right) column */}
+                <div className="right-column">
+                    {/* Number of Colors dropdown */}
+                    <div>
+                        <label>Number of Colors: </label>
+                        <select value={numColors} onChange={(e) => setNumColors(e.target.value)}>
+                            {/*can choose to play with 2-4 colors*/}
+                            {[2, 3, 4].map(num => (
+                                <option key={num} value={num}>
+                                    {num}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-            {/* Number of Tiles dropdown */}
-            <div>
-                <label>Number of Tiles: </label>
-                <select value={numTiles} onChange={(e) => setNumTiles(e.target.value)}>
-                    {/*can choose to deal 3-10 Tiles per hand*/}
-                    {[3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-                        <option key={num} value={num}>
-                            {num}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    {/* Number of Tiles dropdown */}
+                    <div>
+                        <label>Number of Tiles: </label>
+                        <select value={numTiles} onChange={(e) => setNumTiles(e.target.value)}>
+                            {/*can choose to deal 3-10 Tiles per hand*/}
+                            {[3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                                <option key={num} value={num}>
+                                    {num}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div> {/* End right column div */}
+            </div> {/* dropdown container div */}
 
             {/* Play Game button */}
-            <button onClick={startGame}>Start Game</button>
+            <button className="start-button" onClick={startGame}>Start Game</button>
             {message && <p>{message}</p>} {/*render message if back end sends one*/}
         </div>
     );

@@ -194,7 +194,7 @@ const GamePage = () => {
                     //src={gameState.tileDeckImageUrl}
                     src={"../images/logo.png"}
                     alt="Tile Deck"
-                    className="deck-image"
+                    className={`deck-image ${!gameState.currentPlayerId ? "disabled" : ""}`}
                     onClick={() => handlePickUpTile(gameState.currentPlayerId)}
                 />
             </div>

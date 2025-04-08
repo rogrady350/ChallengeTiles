@@ -13,11 +13,12 @@ html, body {
     min-height: 100vh; /*Ensure the app takes up the full screen*/
 }
 
-/*standard h2 headers*/
-h2 {
+/*standard h1 headers*/
+h1 {
+    font-size: 4rem;
+    color: yellow;
+    background-color: lightcoral;
     text-align: center;
-    font-size: 2rem;
-    color: #222;
 }
 
 /*standard buttons*/
@@ -25,20 +26,19 @@ button {
     padding: 10px 20px;
     font-size: 1rem;
     color: black;
-    background-color: white;
-    font-size: 1rem;
+    background-color: lightblue;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     max-width: 200px;
     margin: 10px 0;
-    display: inblock;
+    display: block;
 }
 
-    button:hover {
-        background-color: lightgray;
-    }
+button:hover {
+     background-color: lightgray;
+}
 
 /*standard dropdowns*/
 select {
@@ -48,6 +48,5 @@ select {
     border: 1px solid #ccc;
     border-radius: 8px;
     max-width: 200px;
-    margin: 10px 0;
     display: block;
 }

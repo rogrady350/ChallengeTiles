@@ -28,4 +28,9 @@
     object-fit: contain; /*prevents distortion*/
 }
 
-/*Challenge tile on back of tile. Represents face down deck.*/
+.deck-image.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/*ChallengeTile on back of tile. Represents face down deck.*/
