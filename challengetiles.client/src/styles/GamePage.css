@@ -1,8 +1,31 @@
+/*Main page container*/
 .game-page {
+    padding: 1.2rem;
     color: whitesmoke;
     background-color: forestgreen;
+    min-height: 80vh;
 }
 
+/*Section for Player info and respective and Hands*/
+.players-section {
+    display: flex;
+    justify-content: space-around;
+    gap: 1.2rem;
+    margin-top: 2rem;
+}
+
+/*In Game h3 lables (score, Player's names */
+.game-page h3 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: gold;
+    text-shadow: 1px 1px 2px #808080;
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+
+/*Area to display tiles in Player's Hand (Hand.jsx)*/
 .tiles-container {
     display: flex;
     gap: 10px; /*spacing between tiles*/
@@ -10,6 +33,15 @@
     justify-content: center;
 }
 
+/*Current turn indicator*/
+.turn-indicator {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    color: lightgoldenrodyellow;
+}
+
+/*ChallengeTile logo on back of tile. Represents face down deck.*/
 .tile, .deck-image {
     width: 72px;
     height: 29px;
@@ -22,15 +54,15 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /*add depth*/
 }
 
+/*Tile objects respective image (Tile.jsx)*/
 .tile img {
     width: 90%;
     height: 90%;
     object-fit: contain; /*prevents distortion*/
 }
 
-.deck-image.disabled {
+/*disable both selection of tiles and picking up tiles before initial player selection*/
+.deck-image.disabled, .player-info.disabled {
     pointer-events: none;
     opacity: 0.5;
 }
-
-/*ChallengeTile on back of tile. Represents face down deck.*/

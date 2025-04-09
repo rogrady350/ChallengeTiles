@@ -4,6 +4,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden /*no sideways scroll*/
 }
 
 /*global layour rules*/
@@ -11,6 +12,7 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /*Ensure the app takes up the full screen*/
+    overflow: hidden; /*make sure root container isnt oversized*/
 }
 
 /*standard h1 headers*/

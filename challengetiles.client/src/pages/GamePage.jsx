@@ -162,17 +162,17 @@ const GamePage = () => {
                 </div>
             )}
 
-            {/*Game Board - manage tile placement*/}
+            {/*Game Board - manage tile placement. Disable before initial player selected. Set initial player back to null at game end.*/}
             <GameBoard
                 board={gameState.gameBoard || []}
                 onTilePlacement={handleTilePlacement}
-                currentPlayer={gameState.currentPlayerId}
+                currentPlayer={gameState.gameOver ? null : gameState.currentPlayerId}
             />
 
-            {/*Player area - shows name, hand, turn*/}
+            {/*Player area - shows name, hand, turn. Disable selection before initial player selection and game over*/}
             <div className="players-section">
                 {gameState.players.map((player, index) => (
-                    <div key={player.playerId} className="player-info">
+                    <div key={player.playerId} className={`player-info ${!gameState.currentPlayerId || gameState.gameOver ? "disabled" : ""}`}>
                         <Hand
                             player={player}
                             tiles={gameState.hands[index].handTiles}
@@ -187,14 +187,14 @@ const GamePage = () => {
                 ))}
             </div>
 
-            {/*Deck image*/}
-            <h3>Tile Deck - click to draw a Tile</h3>
+            {/*Deck image - disable selection before initial player selection and game over*/}
+            <h4>Tile Deck - click to draw a Tile</h4>
             <div className="deck-section">
                 <img
                     //src={gameState.tileDeckImageUrl}
                     src={"../images/logo.png"}
                     alt="Tile Deck"
-                    className={`deck-image ${!gameState.currentPlayerId ? "disabled" : ""}`}
+                    className={`deck-image ${!gameState.currentPlayerId || gameState.gameOver ? "disabled" : ""}`}
                     onClick={() => handlePickUpTile(gameState.currentPlayerId)}
                 />
             </div>
