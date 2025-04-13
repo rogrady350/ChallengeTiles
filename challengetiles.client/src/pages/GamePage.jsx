@@ -205,7 +205,14 @@ const GamePage = () => {
                 <div className="game-over-overlay">
                     <div className="game-over-box">
                         <h2>Game Over!</h2>
-                        <p>Congratulations! The game has ended.</p>
+
+                        {/*Ternary operator to check if game over due to successful complete or ran out of tiles*/}
+                        {gameState.tileDeck?.length === 0 ? (
+                            <p>No more tiles available. Game Over.</p>
+                        ) : (
+                            <p>Congratulations! The game has ended.</p>
+                        )}
+
                         <p>Final Score: {gameState.currentScore}</p>
                         <button onClick={() => window.location.href = "/"}>Return to Home</button>
                     </div>

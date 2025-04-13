@@ -173,6 +173,13 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //DrawlTile and UpdateScore
         public void PickUpTile(int playerId)
         {
+            //check if deck is empty
+            if (TileDeck.Tiles.Count == 0)
+            {
+                GameOver = true;
+                return;
+            }
+
             //find hand object associated with player
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
                 if (playerHand == null)

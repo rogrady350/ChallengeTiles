@@ -64,7 +64,7 @@
 /*disable both selection of tiles and picking up tiles before initial player selection*/
 .deck-image.disabled, .player-info.disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 /*game over alert*/
