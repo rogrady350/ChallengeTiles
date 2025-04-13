@@ -206,6 +206,7 @@ const GamePage = () => {
                     <div className="game-over-box">
                         <h2>Game Over!</h2>
                         <p>Congratulations! The game has ended.</p>
+                        <p>Final Score: {gameState.currentScore}</p>
                         <button onClick={() => window.location.href = "/"}>Return to Home</button>
                     </div>
                 </div>

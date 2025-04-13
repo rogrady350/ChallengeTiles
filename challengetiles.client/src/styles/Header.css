@@ -16,11 +16,11 @@ nav {
 nav a {
     color: white;
     font-weight: bold;
-    transition: color 0.3s;
+    transition: color 0.2s;
 }
 
 nav a:hover {
-    color: lightgray;
+    color: yellow;
 }
 
 h1 {

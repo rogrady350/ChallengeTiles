@@ -23,6 +23,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: orange
+}
+
 /*standard buttons*/
 button {
     padding: 10px 20px;
@@ -32,14 +36,14 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
     max-width: 200px;
     margin: 10px 0;
     display: block;
 }
 
 button:hover {
-     background-color: lightgray;
+     background-color: lightyellow;
 }
 
 /*standard dropdowns*/
