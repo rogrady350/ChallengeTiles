@@ -28,17 +28,24 @@ namespace ChallengeTiles.Server.Controllers
             _gameService = gameService;
         }
 
+        //ADDING DIDN'T FIX LAMBDA CORS ERROR
+        //OPTIONS - tells API Gateway to forward OPTIONS requests to ASP.NET Core, ensures CORS headers are present in the response.
+        [HttpOptions("start-game")]
+        public IActionResult StartGameOptions()
+        {
+            return Ok();
+        }
+
         //POST start a new game (Server side for GameSetupService.js startNewGame)
         [HttpPost("start-game")]
         public IActionResult StartNewGame([FromBody] StartGameRequest request)
         {
             Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
 
-            /*return response with game data (GameId, relevent Player data)
-             CreatedAtAction returns to client
-                a 201 Create HTTP response,
-                a Location header with URL to newly created games*/
-            return CreatedAtAction(nameof(GetGameById), new { id = game.GameId }, new
+            //return response with game data (GameId, relevent Player data)
+            //ADDING DIDN'T FIX LAMBDA CORS ERROR
+            //Plain Ok works better with Lambda - Retruns 200 - simpler and safer for CORS without Location header
+            return Ok(new
             {
                 gameId = game.GameId,
                 players = game.GetPlayers().Select(p => new
@@ -48,6 +55,22 @@ namespace ChallengeTiles.Server.Controllers
                 }),
                 message = $"Welcome to game {game.GameId}"
             });
+
+            //REPLACING DIDN'T FIX LAMBDA CORS ERROR
+            /*CreatedAtAction - does not work well with Lambda when it sends a Location header or status 201
+                returns to client:
+                a 201 Create HTTP response,
+                a Location header with URL to newly created games
+            return CreatedAtAction(nameof(GetGameById), new { id = game.GameId }, new
+            {
+                gameId = game.GameId,
+                players = game.GetPlayers().Select(p => new
+                {
+                    playerId = p.PlayerId,
+                    name = p.Name,
+                }),
+                message = $"Welcome to game {game.GameId}"
+            });*/
         }
 
         //GET retrieve a Game by its id (called in StartNewGame to send newly created Game databack to client)

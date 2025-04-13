@@ -27,7 +27,8 @@ export const startNewGame = async (gameData) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(gameData)
+            body: JSON.stringify(gameData),
+            credentials: 'include'
         });
 
         if (!response.ok) {

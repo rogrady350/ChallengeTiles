@@ -59,18 +59,48 @@ namespace ChallengeTiles.Server
         {
             lambdaContext.Logger.LogLine("Received request from API Gateway");
 
-            if (request == null)
+            var response = await base.FunctionHandlerAsync(request, lambdaContext);
+
+            //header debug
+            lambdaContext.Logger.LogLine("Request headers received:");
+            if (request.Headers != null)
             {
-                lambdaContext.Logger.LogLine("Received NULL request from API Gateway.");
-                return new APIGatewayHttpApiV2ProxyResponse
+                foreach (var header in request.Headers)
                 {
-                    StatusCode = 400,
-                    Body = JsonSerializer.Serialize(new { error = "Bad Request: Null request received from API Gateway" }),
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
-                };
+                    lambdaContext.Logger.LogLine($"{header.Key}: {header.Value}");
+                }
             }
 
-            return await base.FunctionHandlerAsync(request, lambdaContext);
+            //Dynamic CORS logic
+            var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
+                ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                ?? Array.Empty<string>();
+
+            //debug
+            var requestOrigin = request.Headers
+                .FirstOrDefault(h => string.Equals(h.Key, "origin", StringComparison.OrdinalIgnoreCase)).Value;
+
+            lambdaContext.Logger.LogLine("ALLOWED_ORIGINS: " + string.Join(", ", allowedOrigins));
+            lambdaContext.Logger.LogLine($"Request origin: {requestOrigin}");
+            lambdaContext.Logger.LogLine($"Origin match: {allowedOrigins.Contains(requestOrigin)}");
+
+            response.Headers ??= new Dictionary<string, string>();
+
+            /* commented out for testing
+            if (!string.IsNullOrEmpty(requestOrigin) && allowedOrigins.Contains(requestOrigin))
+            {
+                response.Headers["Access-Control-Allow-Origin"] = requestOrigin;
+                response.Headers["Access-Control-Allow-Credentials"] = "true";
+                response.Headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS";
+                response.Headers["Access-Control-Allow-Headers"] = "Content-Type";
+            };*/
+
+            response.Headers["Access-Control-Allow-Origin"] = "https://d3hjdy7rno6k48.cloudfront.net";
+            response.Headers["Access-Control-Allow-Credentials"] = "true";
+            response.Headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS";
+            response.Headers["Access-Control-Allow-Headers"] = "Content-Type";
+
+            return response;
         }
     }
 }
