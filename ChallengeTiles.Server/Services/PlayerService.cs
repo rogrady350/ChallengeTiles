@@ -37,7 +37,7 @@ namespace ChallengeTiles.Server.Services
             }
 
             //taken username
-            if (_playerRepository.GetPlayerByName(username) != null)
+            if (_playerRepository.GetPlayerByUsername(username) != null)
             {
                 response.Success = false;
                 response.Message = "Username already taken";
@@ -69,7 +69,7 @@ namespace ChallengeTiles.Server.Services
             }
 
             //already used email
-            if(_playerRepository.GetPlayerByName(email) != null)
+            if(_playerRepository.GetPlayerByEmail(email) != null)
             {
                 response.Success = false;
                 response.Message = "Email is already in use";
@@ -77,7 +77,7 @@ namespace ChallengeTiles.Server.Services
             }
 
             //empty name
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 response.Success = false;
                 response.Message = "Name cannot be empty";
@@ -105,7 +105,7 @@ namespace ChallengeTiles.Server.Services
             //responses for succesful profile creation
             response.Success = true;
             response.Data = player;
-            response.Message = "Player registed sucessfully";
+            response.Message = "Player registered sucessfully";
 
             return response;
         }

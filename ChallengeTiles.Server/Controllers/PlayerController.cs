@@ -35,7 +35,7 @@ namespace ChallengeTiles.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var response = _playerService.RegisterProfile(request.UserName, request.Password, request.Name, request.Email);
+            var response = _playerService.RegisterProfile(request.UserName, request.Password, request.Email, request.Name);
 
             if(!response.Success)
             {

@@ -39,6 +39,12 @@ namespace ChallengeTiles.Server.Data
             return _dbContext.Players.FirstOrDefault(p => p.Name == name);
         }
 
+        //retrieve player by Email
+        public Player GetPlayerByEmail(string email)
+        {
+            return _dbContext.Players.FirstOrDefault(p => p.Email == email);
+        }
+
         //retrieve all players.EF gathers all players from db
         //must convert from IEnumerable to a List in Controller if front end needs indexing
         public IEnumerable<Player> GetAllPlayers()

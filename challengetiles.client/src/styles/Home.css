@@ -23,3 +23,18 @@
 .start-button{
     margin: 10px auto;
 }
+
+.create-profile-container {
+    text-align: center;
+}
+
+/*link*/
+.create-profile-container a {
+    display: inline-block;
+    color: lightblue;
+}
+
+h3 {
+    text-align: center;
+    color: orangered;
+}

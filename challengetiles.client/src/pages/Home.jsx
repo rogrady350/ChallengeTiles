@@ -5,9 +5,10 @@ import "../styles/Home.css";
 
 //Hooks: React functions that allow you to use state and other React features inside components
 /*useEffect: handles side effects (things that happen outside React)
-  useState: watches for change and re-renders page. format: const [value, setValue] = useState(initialValue);*/
+  useState: watches for change and re-renders page. format: const [value, setValue] = useState(initialValue);
+  useNavigate: allows page navigation*/
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'; //allows page navigation
+import { useNavigate, Link } from 'react-router-dom'; 
 
 //services
 import gameSetupService from '../services/gameSetupService';
@@ -62,7 +63,13 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            <h1>Welcome!</h1>
+            <div className="create-profile-container">
+                <h1>Welcome!</h1>
+
+                <Link to="/CreateProfile">Create New Profile</Link>
+            </div>
+
+            <h3>Allready have a profile? Select Options to start playing:</h3>
 
             {/* dropdown-container to place buttons in columns*/}
             <div className="dropdown-container">
