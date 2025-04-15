@@ -2,18 +2,21 @@
     font-size: 2rem;
     display: flex;
     color: white;
-    background-color: forestgreen;
+    background-color: darkgreen;
     flex-direction: column;
     gap: 20px;
     padding: 2rem;
+    border-radius: 10px;
 }
 
+/*contain to align drop downs in 2 columns*/
 .dropdown-container {
     display: flex;
     justify-content: center; /*center columns*/
     gap: 60px;
 }
 
+/*colums for dropdowns*/
 .left-column, .right-column {
     display: flex;
     flex-direction: column;

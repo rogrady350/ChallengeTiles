@@ -1,0 +1,39 @@
+.view-stats-page {
+    max-width: 80%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: black;
+    background-color: darkgreen;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* center the table horizontally */
+}
+
+thead {
+    background-color: lightcoral;
+    color: lightyellow;
+}
+
+/*alternate row colors for contrast*/
+tbody tr:nth-child(even) {
+    background-color: whitesmoke;
+}
+tbody tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+.table th, .table td {
+    padding: 10px 10px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #ccc; /*Add borders between rows*/
+}

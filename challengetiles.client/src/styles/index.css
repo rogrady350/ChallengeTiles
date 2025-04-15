@@ -18,8 +18,8 @@ html, body {
 /*standard h1 headers*/
 h1 {
     font-size: 4rem;
-    color: yellow;
-    background-color: blue;
+    color: lightyellow;
+    background-color: lightcoral;
     text-align: center;
 }
 
