@@ -81,9 +81,37 @@ export const placeTile = async (gameId, playerId, tile, position) => {
     }
 }
 
+//GET - receive game stats for single game (Not used currently)
+export const fetchGameStats = async (gameId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Game/${gameId}/game-details`);
+        if (!response.ok) throw new Error("Failed to fetch game details");
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching game stats: ", error);
+        return null;
+    }
+};
+
+//GET - receive game stats for all games (used for Viewing Stats)
+export const fetchAllGameStats = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Game/all-game-details`);
+        if (!response.ok) throw new Error("Failed to fetch all game details");
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching all game stats: ", error);
+        return null;
+    }
+};
+
 export default {
     fetchGameState,
     setStartingPlayer,
     pickUpTile,
-    placeTile
+    placeTile,
+    fetchGameStats,
+    fetchAllGameStats
 }

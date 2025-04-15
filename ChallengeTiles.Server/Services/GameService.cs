@@ -174,7 +174,7 @@ namespace ChallengeTiles.Server.Services
             return gameList;
         }
 
-        //method to retrieve relevent game info for viewing on stats page
+        //retrieve game info for a single game (Not used currently. May be needed for game replay. May need to update to store deck)
         public GameDTO GetGameDetails(int gameId)
         {
             //get game info from db (includes associated players and hands)
@@ -190,6 +190,9 @@ namespace ChallengeTiles.Server.Services
             GameDTO gameInfo = new GameDTO
             {
                 GameId = game.GameId,
+                Score = game.Score,
+                NumberOfColors = game.NumberOfColors,
+                NumberOfTiles = game.NumberOfTiles,
                 //map players associated with game
                 Players = game.Hands.Select(h => new PlayerDTO
                 {
@@ -209,6 +212,27 @@ namespace ChallengeTiles.Server.Services
             };
 
             return gameInfo;
+        }
+
+        //retrieve game info for all games (used for populating table on View-Stats page)
+        public IEnumerable<GameDTO> GetAllGameDetails()
+        {
+            var games = _gameRepository.GetAllGames();
+
+            var gameDetails = games.Select(g => new GameDTO
+            {
+                GameId = g.GameId,
+                Score = g.Score,
+                NumberOfColors = g.NumberOfColors,
+                NumberOfTiles = g.NumberOfTiles,
+                Players = g.Hands.Select(h => new PlayerDTO
+                {
+                    PlayerId = h.PlayerId,
+                    Name = h.Player.Name,
+                }).ToList()
+            });
+
+            return gameDetails;
         }
 
         //retrieve current states of Game object for frontend

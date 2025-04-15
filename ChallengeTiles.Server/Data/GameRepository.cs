@@ -61,7 +61,7 @@ namespace ChallengeTiles.Server.Data
             return game;
         }
 
-        //retrieve all games (no current situations need all games but will have for possible future needs)
+        //retrieve all games (used to gather all games for View Stats page)
         public IEnumerable<Game> GetAllGames()
         {
             return _dbContext.Games.ToList();

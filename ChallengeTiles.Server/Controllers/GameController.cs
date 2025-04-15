@@ -191,5 +191,33 @@ namespace ChallengeTiles.Server.Controllers
             Console.WriteLine($"Game state retrieved for Game ID: {gameId}");
             return Ok(gameState);
         }
+
+        //GET - fetch single game details (Not used currently. May be needed for game replay. May need to update to store deck)
+        [HttpGet("{gameId}/game-details")]
+        public ActionResult<GameDTO> GetGameDetails(int gameId)
+        {
+            GameDTO gameDetails = _gameService.GetGameDetails(gameId);
+
+            if (gameDetails == null)
+            {
+                return NotFound(new { message = "Game not found" });
+            }
+
+            return Ok(gameDetails);
+        }
+
+        //GET - fetch details for all games (used on View Stats page))
+        [HttpGet("all-game-details")]
+        public IActionResult GetAllGameDetails()
+        {
+            var gameDetails = _gameService.GetAllGameDetails();
+
+            if (gameDetails == null)
+            {
+                return NotFound(new { message = "No games found" });
+            }
+
+            return Ok(gameDetails);
+        }
     }
 }
