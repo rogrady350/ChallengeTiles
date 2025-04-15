@@ -2,8 +2,8 @@
 {
     public class HandGameDTO
     {
-        //data needed for displaying Initial hands stored in db
-        public int HandId { get; set; }
+        //data needed for displaying in-game hands
         public List<TileDTO> HandTiles { get; set; }
+        public int HandId { get; internal set; }
     }
 }

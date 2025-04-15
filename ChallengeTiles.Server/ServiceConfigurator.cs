@@ -10,7 +10,7 @@ namespace ChallengeTiles.Server
         //IServiceCollection - Part of ASP.NET Core's DI. Services need at runtime
         public static void ConfigureAppServices(IServiceCollection services)
         {
-            //1. configure CORS policy
+            //2. configure CORS policy
             /*read allowed origins from env variable
              ALLOWED_ORIGINS set in AWS Lambda to switch allowed frontend URLs*/
             var allowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS")
@@ -29,7 +29,7 @@ namespace ChallengeTiles.Server
                     });
             });
 
-            //2.Configure DB connection
+            //3.Configure DB connection
             services.AddDbContext<ITilesDbContext, MysqlDbContext>(options =>
                 options.UseMySql(
                     /*used to get connection string from ConnectionHelper

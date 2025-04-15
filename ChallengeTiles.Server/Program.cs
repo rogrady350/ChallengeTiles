@@ -40,7 +40,7 @@ namespace ChallengeTiles.Server
             //Centalize builder services config in ServicConfigurator.cs to use in both lambda and local/ebs. Avoid same code in 2 places
             ServiceConfigurator.ConfigureAppServices(builder.Services);
 
-            //4.5 Swagger services (added from asp.net core project for testing)
+            //3.5 Swagger services (added from asp.net core project for testing)
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(); //register swagger into apps dependency injection container
 

@@ -252,7 +252,7 @@ namespace ChallengeTiles.Server.Services
             {
                 GameId = game.GameId,
                 //store Players as a list of objects (only get id and name)
-                Players = game.PlayerHands.Values.Select(ph => new PlayerInfoDTO
+                Players = game.PlayerHands.Values.Select(ph => new PlayerGameDTO
                 {
                     PlayerId = ph.PlayerId,
                     Name = ph.Player.Name
