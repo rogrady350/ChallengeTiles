@@ -85,7 +85,7 @@ const Home = () => {
                                 key: playerId, display: username*/}
                             {players.map(player => (
                                 <option key={player.playerId} value={player.playerId}>
-                                    {player.username} 
+                                    {player.name} 
                                 </option>
                             ))}
                         </select>
@@ -101,7 +101,7 @@ const Home = () => {
                                 .filter((p) => p.playerId !== parseInt(player1))
                                 .map(player => (
                                 <option key={player.playerId} value={player.playerId}>
-                                    {player.username}
+                                    {player.name}
                                 </option>
                             ))}
                         </select>
