@@ -23,29 +23,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Debug Secrets
-        run: |
-          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then echo "Missing AWS_ACCESS_KEY_ID"; fi
-          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then echo "Missing AWS_SECRET_ACCESS_KEY"; fi
-
-      - name: Print environment variables
-        run: |
-          echo "AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
-          echo "AWS_SECRET_ACCESS_KEY is set: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' }}"
-          echo "AWS_REGION: us-east-2"
-          echo "AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}"
-          echo "SOURCE_DIR: dist"
-          echo "confirm  added shared credentials"
-
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@v0.5.1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          args: --delete
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-2
-          AWS_DEFAULT_REGION: us-east-2
-          AWS_S3_BUCKET: challenge-tiles-react-lambda
-          SOURCE_DIR: "challengetiles.client/dist"
-          AWS_SHARED_CREDENTIALS_FILE: /dev/null
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Sync files to S3
+        run: aws s3 sync dist s3://challenge-tiles-react-lambda --delete

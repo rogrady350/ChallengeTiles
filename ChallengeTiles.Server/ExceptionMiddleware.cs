@@ -11,7 +11,7 @@ namespace ChallengeTiles.Server
         //constructor
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
-            _next = next;     //next middleware in ASP.NET pipelin
+            _next = next;     //next middleware (next delegate to be invoked) in ASP.NET pipeline
             _logger = logger; //ASP.NET logging service
         }
 
