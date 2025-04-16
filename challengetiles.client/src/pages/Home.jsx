@@ -69,7 +69,7 @@ const Home = () => {
                 <Link to="/CreateProfile">Create New Profile</Link>
             </div>
 
-            <h3>Allready have a profile? Select Options to start playing:</h3>
+            <h3>Play as a character or select your personal profile</h3>
 
             {/* dropdown-container to place buttons in columns*/}
             <div className="dropdown-container">
