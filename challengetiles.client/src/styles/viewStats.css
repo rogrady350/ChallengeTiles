@@ -31,9 +31,13 @@ tbody tr:nth-child(odd) {
     background-color: lightgray;
 }
 
-.table th, .table td {
+th, td {
     padding: 10px 10px;
     text-align: center;
-    border: none;
-    border-bottom: 1px solid #ccc; /*Add borders between rows*/
+    border-left: 1px solid gray; /*Add borders between rows*/
+}
+
+/*remove left border from first column*/
+th:first-child, td:first-child {
+    border-left: none;
 }

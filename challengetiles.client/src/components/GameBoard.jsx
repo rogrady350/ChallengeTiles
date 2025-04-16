@@ -5,7 +5,7 @@ import Tile from "./Tile";
 import PropTypes from "prop-types";
 
 //component to display game board and placed tiles - expand horizontally only with wrap
-const GameBoard = ({ board, onTilePlacement, currentPlayer }) => {
+const GameBoard = ({ board, onTilePlacement, currentPlayer, allowedPositions }) => {
     const totalPositions = 75; //tiles in deck
     const tilesPerRow = 15; //7 tiles left and right + center starting tile
     const half = Math.floor(totalPositions / 2); //position values (-26 to 25)
@@ -43,23 +43,33 @@ const GameBoard = ({ board, onTilePlacement, currentPlayer }) => {
         wrappedRows.push(row); //push to final board layout
     }
 
-    return (
-        <div className="game-board">
-            {/*array of rows (2D - tiles expand horizontaly only*/}
-            {wrappedRows.map((row, rowIndex) => (
-                <div key={rowIndex} className="board-row">
-                    {/*Loop thru tiles in row and render tiles on board.
+    //4. Render board
+    const renderBoardRows = () => {
+        {/*array of rows (2D - tiles expand horizontaly only*/ }
+        return wrappedRows.map((row, rowIndex) => (
+            <div key={rowIndex} className="board-row">
+                {/*Loop thru tiles in row and render tiles on board.
                            If no tile placed, tile will be null for that position (renders empty space).
                            Dims board positions before starting player selected (disables clicks).
                            GamePage.handleTilePlacement will also display message if placement attempt made before starting player selected.*/}
-                    {row.map(({ position, tile }) => (
+                {row.map(({ position, tile }) => {
+                    const isEmpty = !tile; //cell empty if it doesnt contain a tile
+                    const isAllowed = allowedPositions.includes(position); //backend logic determines allowed placement
+
+                    return (
                         <div
                             key={position}
-                            //className={`board-cell ${tile ? "occupied" : "empty"} ${currentPlayer ? "" : "disabled"}`}
-                            //highlight center cell to make sure its staying centered for debugging
-                            className={`board-cell ${tile ? "occupied" : "empty"} ${position === 0 ? "center" : ""} ${currentPlayer ? "" : "disabled"}`}
+                            /*ternary (if/else) expressions for rendering/styling board:
+                              if tile is in cell its occupied, if not its empty
+                              board disabled before starting player selected
+                              hightlight valid placements
+                              dim all empty spots besides allowed spots*/
+                            className={`board-cell ${tile ? "occupied" : "empty"} 
+                                       ${currentPlayer ? "" : "disabled"}
+                                       ${isAllowed ? "allowed" : ""}
+                                       ${isEmpty && !isAllowed ? "disallowed": ""}`}
                             onClick={() => {
-                                if (!tile && onTilePlacement) {
+                                if (isAllowed && onTilePlacement) {
                                     onTilePlacement(position);
                                 }
                             }}
@@ -71,9 +81,15 @@ const GameBoard = ({ board, onTilePlacement, currentPlayer }) => {
                                 />
                             )}
                         </div>
-                    ))}
-                </div>
-            ))}
+                    );
+                })}
+            </div>
+        ))
+    };
+
+    return (
+        <div className="game-board">
+            {renderBoardRows()}
         </div>
     );
 };
@@ -91,7 +107,8 @@ GameBoard.propTypes = {
         })
     ).isRequired,
     onTilePlacement: PropTypes.func.isRequired,
-    currentPlayer: PropTypes.number
+    currentPlayer: PropTypes.number,
+    allowedPositions: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 export default GameBoard;

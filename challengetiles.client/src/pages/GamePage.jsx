@@ -167,6 +167,7 @@ const GamePage = () => {
                 board={gameState.gameBoard || []}
                 onTilePlacement={handleTilePlacement}
                 currentPlayer={gameState.gameOver ? null : gameState.currentPlayerId}
+                allowedPositions={gameState.allowedPositions || []}
             />
 
             {/*Player area - shows name, hand, turn. Disable selection before initial player selection and game over*/}

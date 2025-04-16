@@ -64,5 +64,18 @@ namespace ChallengeTiles.Server.Models.GameLogic
             Console.WriteLine("Placement successful.");
             return PlacementStatus.Success;
         }
+
+        //Track allowed positions to highlight on front end
+        public List<int> GetAllowedPositions()
+        {
+            if (PlacedTiles.Count == 0)
+                return new List<int> { 0 }; //only center position allowed if no tiles on board
+
+            //outward most occupied positions
+            int min = PlacedTiles.Min(p => p.Position);
+            int max = PlacedTiles.Max(p => p.Position);
+
+            return new List<int> { min-1, max+1 };
+        }
     }
 }

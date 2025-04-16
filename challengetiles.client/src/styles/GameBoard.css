@@ -28,7 +28,13 @@
      opacity: 0.5;
 }
 
-/*highlight center position to make sure board is staying centered for debugging*/
-.board-cell.center {
-    outline: 2px dashed orange;
+/*highlight allowed positions*/
+.board-cell.allowed {
+    background-color: lightgoldenrodyellow;
+}
+
+/*dim cells where placement disallowed*/
+.board-cell.disallowed {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

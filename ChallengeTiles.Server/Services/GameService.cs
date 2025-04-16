@@ -288,8 +288,8 @@ namespace ChallengeTiles.Server.Services
                 }).ToList(),
                 CurrentScore = game.Score,
                 CurrentPlayerId = game.CurrentPlayerId,
-                //TileDeckImageUrl = $"{Constants.BucketUrl}/logo.png",
-                GameOver = game.GameOver
+                GameOver = game.GameOver,
+                AllowedPositions = game.GameBoard.GetAllowedPositions()
             };
 
             Console.WriteLine($"GameService GameState debug - Returning {gameState.GameBoard.Count} tiles on the board.");
