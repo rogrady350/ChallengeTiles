@@ -2,7 +2,7 @@
 .game-page {
     padding: 1.2rem;
     color: whitesmoke;
-    background-color: darkgreen;
+    background-image: url("../images/table.jpg");
     min-height: 70vh;
 }
 
