@@ -3,6 +3,8 @@
     padding: 1.2rem;
     color: whitesmoke;
     background-image: url("../images/table.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
     min-height: 70vh;
 }
 
