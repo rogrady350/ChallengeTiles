@@ -17,4 +17,4 @@ INSERT INTO Players (Username, Password, Name, Email)
 VALUES ('gecko', 'hashedpassword', 'Gary the Gecko', 'gecko@example.com');
 
 INSERT INTO Players (Username, Password, Name, Email) 
-VALUES ('seal', 'hashedpassword', 'Sally the Seal', 'seal@example.com');
+VALUES ('seal', 'hashedpassword', 'Susie the Seal', 'seal@example.com');

@@ -28,7 +28,8 @@ namespace ChallengeTiles.Server.Controllers
             _gameService = gameService;
         }
 
-        //ADDING DIDN'T FIX LAMBDA CORS ERROR
+        //Not sure if this fixed preflight CORS error
+        [HttpOptions("start-game-options")] //tells API Gateway to forward OPTIONS requests to ASP.NET Core, ensures CORS headers are present in the response.
         //OPTIONS - tells API Gateway to forward OPTIONS requests to ASP.NET Core, ensures CORS headers are present in the response.
         [HttpOptions("start-game")]
         public IActionResult StartGameOptions()
@@ -43,7 +44,7 @@ namespace ChallengeTiles.Server.Controllers
             Game game = _gameService.StartNewGame(request.PlayerIds, request.NumberOfColors, request.NumberOfTiles);
 
             //return response with game data (GameId, relevent Player data)
-            //ADDING DIDN'T FIX LAMBDA CORS ERROR
+            //Not sure if this fixed preflight CORS error
             //Plain Ok works better with Lambda - Retruns 200 - simpler and safer for CORS without Location header
             return Ok(new
             {
