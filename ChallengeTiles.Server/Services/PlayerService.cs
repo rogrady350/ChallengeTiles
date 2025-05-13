@@ -84,6 +84,8 @@ namespace ChallengeTiles.Server.Services
                 return response;
             }
 
+            //all validations passed
+            response.Success = true;
             return response;
         }
 

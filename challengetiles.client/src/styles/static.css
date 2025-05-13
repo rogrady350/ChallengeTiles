@@ -1,7 +1,6 @@
 /*Styling for static text pages (About, Instructions)*/
 .text {
     max-width: 80%;
-    max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     border: 1px solid #ccc;

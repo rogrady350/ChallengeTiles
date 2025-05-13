@@ -1,2 +1,42 @@
-body {
+.create-profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 2rem;
+    background-color: darkgreen;
+    color: white;
+    border-radius: 10px;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.create-profile-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.create-profile-container button {
+    padding: 0.5rem;
+}
+
+/*container for each field*/
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/*label styling*/
+.input-group label {
+    width: 100px; /*fixed width aligns inputs neatly*/
+    text-align: right;
+}
+
+/*input styling*/
+.input-group input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
 }

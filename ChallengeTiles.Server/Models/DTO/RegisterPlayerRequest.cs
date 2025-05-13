@@ -12,12 +12,10 @@ namespace ChallengeTiles.Server.Models.DTO
         public string Password { get; set; }
 
         [Required]
-        [MaxLength]
         public string Name { get; set; }
 
         [Required]
         [EmailAddress]
-        [MaxLength]
         public string Email { get; set; }
     }
 }

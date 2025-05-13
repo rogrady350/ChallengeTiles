@@ -49,17 +49,25 @@ const CreateProfile = () => {
             <h1>Create Your Profile</h1>
 
             <form onSubmit={handleCreateProfile}>
-                <label>Username:</label>
-                <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+                <div className="input-group">
+                    <label>Username:</label>
+                    <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+                </div>
 
-                <label>Password:</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                <div className="input-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                </div>
 
-                <label>Name:</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                <div className="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
 
-                <label>Email:</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                <div className="input-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
 
                 <button type="submit">Create Profile</button>
             </form>
