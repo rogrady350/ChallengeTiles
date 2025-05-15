@@ -28,6 +28,7 @@ namespace ChallengeTiles.Server.Services
         {
             var response = new ServiceResponse<Player>();
 
+            //username checks
             //empty username
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -35,7 +36,6 @@ namespace ChallengeTiles.Server.Services
                 response.Message = "Username cannot be empty";
                 return response;
             }
-
             //taken username
             if (_playerRepository.GetPlayerByUsername(username) != null)
             {
@@ -52,6 +52,7 @@ namespace ChallengeTiles.Server.Services
                 return response;
             }
 
+            //email checks
             //empty email
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -59,7 +60,6 @@ namespace ChallengeTiles.Server.Services
                 response.Message = "Email cannot be empty";
                 return response;
             }
-
             //email format check
             if (!new EmailAddressAttribute().IsValid(email))
             {
@@ -67,9 +67,9 @@ namespace ChallengeTiles.Server.Services
                 response.Message = "Please enter a vaild email address";
                 return response;
             }
-
             //already used email
-            if(_playerRepository.GetPlayerByEmail(email) != null)
+            var existingPlayer = _playerRepository.GetPlayerByEmail(email);
+            if(existingPlayer != null && !existingPlayer.IsGuest)
             {
                 response.Success = false;
                 response.Message = "Email is already in use";
@@ -83,6 +83,9 @@ namespace ChallengeTiles.Server.Services
                 response.Message = "Name cannot be empty";
                 return response;
             }
+
+            //length validations
+
 
             //all validations passed
             response.Success = true;
@@ -101,7 +104,7 @@ namespace ChallengeTiles.Server.Services
             string hashedPassword = HashPassword(password);
 
             //add new player to database
-            Player player = new Player(username, password, email, name);
+            Player player = new Player(username, hashedPassword, email, name);
             _playerRepository.CreateProfile(player);
 
             //responses for succesful profile creation

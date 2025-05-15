@@ -17,7 +17,7 @@ USE `challenge_tiles` ;
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Games`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`games` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Games` (
   `GameId` INT NOT NULL AUTO_INCREMENT,
   `NumberOfColors` INT NULL,
   `NumberOfTiles` INT NULL,
@@ -30,23 +30,23 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Players`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`players` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Players` (
   `PlayerId` INT NOT NULL AUTO_INCREMENT,
-  `Username` VARCHAR(45) NOT NULL,
-  `Password` VARCHAR(45) NOT NULL,
+  `Username` VARCHAR(25) NOT NULL,
+  `Password` VARCHAR(75) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
-  `Name` VARCHAR(45) NOT NULL,
+  `Name` VARCHAR(25) NOT NULL,
+  `IsGuest` TINYINT NOT NULL,
   PRIMARY KEY (`PlayerId`),
   UNIQUE INDEX `UserId_UNIQUE` (`PlayerId` ASC) VISIBLE,
-  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE,
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE)
+  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `challenge_tiles`.`Hands`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `challenge_tiles`.`hands` (
+CREATE TABLE IF NOT EXISTS `challenge_tiles`.`Hands` (
   `HandId` INT NOT NULL AUTO_INCREMENT,
   `Tiles` JSON NULL,
   `PlayerId` INT NOT NULL,

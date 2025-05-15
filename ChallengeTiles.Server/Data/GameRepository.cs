@@ -87,14 +87,22 @@ namespace ChallengeTiles.Server.Data
                 //get hand created at start of game
                 Hand existingHand = _dbContext.Hands.FirstOrDefault(h => h.GameId == playerHand.GameId && h.PlayerId == playerHand.PlayerId);
 
-                Console.WriteLine($"GameRepository UpdateGameHands debug: +" +
-                    $" Updating hand {playerHand.HandId} for Player {playerHand.PlayerId} in Game {playerHand.GameId}. ExistingHand found: {existingHand != null}");
                 existingHand.Tiles = System.Text.Json.JsonSerializer.Serialize(playerHand.HandTiles); //store updated Tiles
                 _dbContext.Entry(existingHand).Property(h => h.Tiles).IsModified = true; //mark as modified so EF tracks update
                 _dbContext.Hands.Update(existingHand);
             }
 
-            _dbContext.SaveChanges(); //Commit the game update;
+            /*Console.WriteLine("EF ChangeTracker State:");
+            foreach (var entry in _dbContext.ChangeTracker.Entries())
+            {
+                Console.WriteLine($"Entity: {entry.Entity.GetType().Name}, State: {entry.State}");
+                if (entry.Entity is Player player)
+                {
+                    Console.WriteLine($"--> PlayerId: {player.PlayerId}, Email: {player.Email}, IsGuest: {player.IsGuest}");
+                }
+            }*/
+
+            _dbContext.SaveChanges(); //commit the game update;
         }
 
         public void FinalizeGame(Game game, int finalScore)

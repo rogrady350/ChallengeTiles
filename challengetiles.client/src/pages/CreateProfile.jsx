@@ -38,6 +38,9 @@ const CreateProfile = () => {
             } else {
                 setMessage('Failed to create profile.');
             }
+            //input length validations
+
+
         } catch (error) {
             console.error('Error creating profile:', error);
             setMessage('An error occurred. Please try again.');

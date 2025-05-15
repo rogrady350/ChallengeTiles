@@ -24,6 +24,7 @@ namespace ChallengeTiles.Server.Models
             Password = password;
             Name = name;
             Email = email;
+            IsGuest = false; //all personal profiles automatically set as not a guest
             Hands = new List<Hand>();  //initialize collection
         }
 
@@ -33,17 +34,23 @@ namespace ChallengeTiles.Server.Models
         public int PlayerId { get; private set; } //unique player id. auto incremented in db
 
         [Required]
+        [MaxLength(25)]
         public string Username { get; set; }
 
         [Required]
+        [MaxLength(75)]
         public string Password { get; set; }
 
         [Required]
-        public string Name { get; set; }
-
-        [Required]
+        [MaxLength(45)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [MaxLength(25)]
+        public string Name { get; set; }
+
+        public bool IsGuest { get; private set; } = false;
 
         //1:n relationship. Each player gets 1 Hand per game
         public List<Hand> Hands { get; private set; }
