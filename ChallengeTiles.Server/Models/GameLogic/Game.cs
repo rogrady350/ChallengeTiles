@@ -97,14 +97,11 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //make sure it is only modifying in-memory data.
         public void AddPlayers(List<Player> players, int tilesPerPlayer, TileDeck tileDeck)
         {
-            Console.WriteLine($"Game AddPlayers debug - Adding {players.Count} players");
-
             foreach (Player player in players)
             {
                 //remove database lookup - only modify in memory data
                 if (!PlayerHands.ContainsKey(player.PlayerId))
                 {
-                    Console.WriteLine($"Creating new hand object for Player {player.PlayerId} in Game {this.GameId}");
                     var initialHand = new List<Tile>(); //create an initially empty Hand
 
                     //assign Player and Game FK's and with empty hand
@@ -114,8 +111,6 @@ namespace ChallengeTiles.Server.Models.GameLogic
                     };
 
                     PlayerHands[player.PlayerId] = hand; //add Hand to dictionary only
-
-                    Console.WriteLine($"Hand created for Player {player.PlayerId} in Game {this.GameId}");
                 }
             }
         }
@@ -123,8 +118,6 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //alternate dealing tiles to players
         public void DealTiles(int tilesPerPlayer)
         {
-            Console.WriteLine("Game DealTiles debug - dealing tiles");
-
             //prevent starting game with out players - check dictionary not db
             if (!PlayerHands.Any())
             {
@@ -195,8 +188,6 @@ namespace ChallengeTiles.Server.Models.GameLogic
         //place Tile on GameBoard (simplified to horizontal exansion only)
         public PlacementStatus PlaceTile(int playerId, Tile tile, int position)
         {
-            Console.WriteLine($"Game PlaceTile debug - Placing tile - Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, position: {position}");
-            
             //check if player has a hand
             if (!PlayerHands.TryGetValue(playerId, out Hand? playerHand))
             {
@@ -222,12 +213,6 @@ namespace ChallengeTiles.Server.Models.GameLogic
             //remove tile from players hand and place on board
             playerHand.HandTiles.RemoveAt(tileIndex);
             GameBoard.PlaceTile(tile, position);
-
-            Console.WriteLine($"Game PlaceTile debug - Tile placed successfully at position {position}");
-            foreach (var placed in GameBoard.PlacedTiles)
-            {
-                Console.WriteLine($"Tile ID: {placed.Tile.Id}, Position: {placed.Position}");
-            }
 
             return PlacementStatus.Success;
         }

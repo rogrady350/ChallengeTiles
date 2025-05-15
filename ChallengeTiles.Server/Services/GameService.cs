@@ -25,7 +25,7 @@ namespace ChallengeTiles.Server.Services
             //1. fetch Players from DB by playerId (selected on front end)
             var players = new List<Player>(); //list of Player Ojbects
 
-            Console.WriteLine("GameService StartNewGame debug 1 - Fetching players");
+            Console.WriteLine("GS StartNewGame debug 1 - Fetching players");
 
             foreach (var playerId in playerIds)
             {
@@ -38,28 +38,28 @@ namespace ChallengeTiles.Server.Services
             }
 
             //2. create a new Game instance
-            Console.WriteLine("GameService StartNewGame debug 2- Creating game object");
+            Console.WriteLine("GS StartNewGame debug 2- Creating game object");
             Game game = new Game(numberOfColors, numberOfTiles);
 
             //3. create both Game and Hand records in db (CreateGame method in GameRepository handles both)
-            Console.WriteLine("GameService StartNewGame debug 3- Creating game db records");
+            Console.WriteLine("GS StartNewGame debug 3- Creating game db records");
             _gameRepository.CreateGame(game, numberOfColors, numberOfTiles, players);
 
             //4. add Players and Hands to Game objects
-            Console.WriteLine("GameService StartNewGame debug 4 - Adding players and hands to game");
+            Console.WriteLine("GS StartNewGame debug 4 - Adding players and hands to game");
             game.AddPlayers(players, numberOfTiles, game.TileDeck);
 
             //5. deal the tiles
             //numberOfTiles is Tiles per hand. moved multiplication calculation inside Game.cs. only send numberOfTiles now)
-            Console.WriteLine("GameService StartNewGame debug 5 - Dealing tiles");
+            Console.WriteLine("GS StartNewGame debug 5 - Dealing tiles");
             game.DealTiles(numberOfTiles);
 
             //6. update database with initial populated Hands
-            Console.WriteLine("GameService StartNewGame debug 6 - Updating db hands with dealt tiles");
+            Console.WriteLine("GS StartNewGame debug 6 - Updating db hands with dealt tiles");
             _gameRepository.UpdateGameHands(game);
 
             //7. store active game in memory
-            Console.WriteLine($"GameService StartNewGame debug 7 - Storing game ID {game.GameId} in active games.");
+            Console.WriteLine($"GS StartNewGame debug 7 - Storing game ID {game.GameId} in active games.");
             _gameStateManager.StoreGame(game.GameId, game);
 
             return game;
@@ -92,9 +92,6 @@ namespace ChallengeTiles.Server.Services
         //result of place Tile on board
         public ServiceResponse<string> PlayerPlaceTile(int gameId, int playerId, Tile tile, int position)
         {
-            Console.WriteLine($"GameService PlayerPlace tile debug - Processing tile placement: " +
-                $"Game ID: {gameId}, Player ID: {playerId}, Tile ID: {tile?.Id}, Color: {tile?.Color}, Position: {position}");
-
             var response = new ServiceResponse<string>();
 
             Game? game = _gameStateManager.GetGame(gameId); //in memory gameId
@@ -119,7 +116,6 @@ namespace ChallengeTiles.Server.Services
                 case PlacementStatus.Success:
                     //call turn handling method to switch turns or end game
                     game.NextTurn();
-                    Console.WriteLine($"GameService debug - Next turn. New current player: {game.CurrentPlayerId}");
 
                     //check for end of game
                     if (game.GameOver == true)
@@ -245,8 +241,6 @@ namespace ChallengeTiles.Server.Services
                 Console.WriteLine($"GameService GameState debug - Game ID {gameId} not found in active games.");
                 return null; //return null if the game isn't in memory (gameplay should only be tracking active games)
             }
-            Console.WriteLine($"GameService GameState debug - total hands: {game.PlayerHands.Count}");
-            Console.WriteLine($"GameService GameState debug - current player ID: {game.CurrentPlayerId}");
 
             GameStateDTO gameState = new GameStateDTO
             {
@@ -292,7 +286,6 @@ namespace ChallengeTiles.Server.Services
                 AllowedPositions = game.GameBoard.GetAllowedPositions()
             };
 
-            Console.WriteLine($"GameService GameState debug - Returning {gameState.GameBoard.Count} tiles on the board.");
             return gameState;
         }
     }

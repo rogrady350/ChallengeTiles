@@ -129,9 +129,6 @@ namespace ChallengeTiles.Server.Controllers
         [HttpPost("{gameId}/player-place-tile/{playerId}")]
         public ActionResult<ServiceResponse<string>> PlayerPlaceTile(int gameId, [FromBody] TilePlacementRequest request)
         {
-            //debug:
-            Console.WriteLine($"GameController PlayerPlaceTile debug - Received request: " +
-                $"gameId={gameId}, playerId={request?.PlayerId}, TileId={request?.Tile?.TileId}, Position={request?.Position}");
             if (request == null)
             {
                 Console.WriteLine("Error: Request body is null");
@@ -164,7 +161,6 @@ namespace ChallengeTiles.Server.Controllers
                 return BadRequest(new { message = response.Message });
             }
 
-            Console.WriteLine("Tile placed successfully.");
             return Ok(response);
         }
 

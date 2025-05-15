@@ -32,7 +32,7 @@ namespace ChallengeTiles.Server.Data
                 var existingHand = _dbContext.Hands
                     .FirstOrDefault(h => h.GameId == game.GameId && h.PlayerId == player.PlayerId);
 
-                Console.WriteLine($"Repository CreateGame debug - checking for existing hand for {player.PlayerId}");
+                Console.WriteLine($"GR CreateGame debug - checking for existing hand for {player.PlayerId}");
                 if (existingHand == null)
                 {
                     //create hand for each Player and associate it with current Game
@@ -42,7 +42,7 @@ namespace ChallengeTiles.Server.Data
                         PlayerId = player.PlayerId
                     };
 
-                    Console.WriteLine("Repository CreateGame debug - creating new hand");
+                    Console.WriteLine("GR CreateGame debug - creating new hand");
                     _dbContext.Hands.Add(playerHand);
                 }
             }
@@ -92,22 +92,19 @@ namespace ChallengeTiles.Server.Data
                 _dbContext.Hands.Update(existingHand);
             }
 
-            /*Console.WriteLine("EF ChangeTracker State:");
-            foreach (var entry in _dbContext.ChangeTracker.Entries())
-            {
-                Console.WriteLine($"Entity: {entry.Entity.GetType().Name}, State: {entry.State}");
-                if (entry.Entity is Player player)
-                {
-                    Console.WriteLine($"--> PlayerId: {player.PlayerId}, Email: {player.Email}, IsGuest: {player.IsGuest}");
-                }
-            }*/
-
             _dbContext.SaveChanges(); //commit the game update;
         }
 
         public void FinalizeGame(Game game, int finalScore)
         {
             game.Score = finalScore;
+
+            //detach Player references from Hands to prevent circular save graph
+            foreach (var hand in game.Hands)
+            {
+                hand.Player = null;
+            }
+
             _dbContext.Games.Update(game);
             _dbContext.SaveChanges();
         }
