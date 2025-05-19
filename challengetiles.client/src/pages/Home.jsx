@@ -12,6 +12,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 //services
 import gameSetupService from '../services/gameSetupService';
+import { handleLogin } from "../services/playerService";
 
 const Home = () => {
     //values to be set for game
@@ -22,6 +23,11 @@ const Home = () => {
     const [numTiles, setNumTiles] = useState(7);   //suggest playing with Hands of 7 Tiles
     const [message, setMessage] = useState('');    //message from back end
     const navigate = useNavigate();                //initialize React Router navigation feature
+
+    //values for logging in
+    const [loginData, setLoginData] = useState({ username: '', password: '' });
+    const [loggedInUser, setLoggedInUser] = useState(null);
+    const [loginError, setLoginError] = useState('');
 
     //fetch players from backend on page load
     useEffect(() => {
@@ -56,8 +62,27 @@ const Home = () => {
             //redirect to newly created game, display returned messages passed in state on new page load
             navigate(`/game/${response.gameId}`, { state: { message: response.message } });
         } catch (error) {
-            console.error("Error starting game:", error); //debug message if game does not start
+            console.error("Error starting game: ", error); //debug message if game does not start
             setMessage("Failed to start game. Please try again.");
+        }
+    };
+
+    //loogin function
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await handleLogin(loginData);
+
+            if (response.success) {
+                setLoggedInUser(response.data);
+                localStorage.setItem('loggedInUser', JSON.stringify(response.data));
+                setLoginError('');
+            } else {
+                setLoginError(response?.message || "Login failed");
+            }
+        } catch (error) {
+            console.error("Login error: ", error);
+            setLoginError("An error occurred during login. Please try again");
         }
     };
 

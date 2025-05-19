@@ -129,6 +129,28 @@ namespace ChallengeTiles.Server.Services
             return playerList;
         }
 
-        //no options to implement UpdatePlayer() or DeletePlayer(). Fepository methods available for future use
+        //no options to implement UpdatePlayer() or DeletePlayer(). Repository methods available for future use
+
+        //profile login
+        public ServiceResponse<Player> Login(string username, string password)
+        {
+            var response = new ServiceResponse<Player>();
+            var player = _playerRepository.GetPlayerByUsername(username);
+
+            if (player == null || !BCrypt.Net.BCrypt.Verify(password, player.Password))
+            {
+                response.Success = false;
+                response.Message = "Invalid username or password";
+                return response;
+            }
+            else
+            {
+                response.Success = true;
+                response.Data = player;
+                response.Message = "Login successful";
+            }
+
+            return response;
+        }
     }
 }

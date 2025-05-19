@@ -65,5 +65,25 @@ namespace ChallengeTiles.Server.Controllers
         }
 
         //no services created to update(PUT) or delete (DELETE). Repository methods available for future use
+
+        //POST user login
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginRequest request)
+        {
+            //validate requirements. return error message from Register player request if invalid input
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = _playerService.Login(request.Username, request.Password);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

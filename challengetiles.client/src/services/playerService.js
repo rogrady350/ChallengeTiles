@@ -21,6 +21,26 @@ export const registerPlayer = async (playerData) => {
     }
 };
 
+//POST - send login data to server
+export  const handleLogin = async (loginData) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Player/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(loginData),
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Failed to login");
+
+        return result;
+    } catch (error) {
+        console.error("Error logging in: ", error);
+        return null;
+    }
+};
+
 export default {
-    registerPlayer
+    registerPlayer,
+    handleLogin
 };
