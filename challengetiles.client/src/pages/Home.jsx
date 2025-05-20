@@ -25,9 +25,9 @@ const Home = () => {
     const navigate = useNavigate();                //initialize React Router navigation feature
 
     //values for logging in
-    const [loginData, setLoginData] = useState({ username: '', password: '' });
-    const [loggedInUser, setLoggedInUser] = useState(null);
-    const [loginError, setLoginError] = useState('');
+    const [loginData, setLoginData] = useState({ username: '', password: '' }); //stores user login input. passed to backend via handleLogin
+    const [loggedInUser, setLoggedInUser] = useState(null); //holds successfully authenticated user profile object
+    const [loginError, setLoginError] = useState(''); //recieves error message from backend end to be displayed for failed loggin
 
     //fetch players from backend on page load
     useEffect(() => {
@@ -67,18 +67,18 @@ const Home = () => {
         }
     };
 
-    //loogin function
+    //login function
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await handleLogin(loginData);
 
-            if (response.success) {
+            if (response?.success) {
                 setLoggedInUser(response.data);
                 localStorage.setItem('loggedInUser', JSON.stringify(response.data));
                 setLoginError('');
             } else {
-                setLoginError(response?.message || "Login failed");
+                setLoginError("Invalid usernamename or password");
             }
         } catch (error) {
             console.error("Login error: ", error);
